@@ -16,8 +16,9 @@ import type { IVerifiableStorageServiceConstructorOptions } from "./models/IVeri
 export class VerifiableStorageService implements IVerifiableStorageComponent {
 	/**
 	 * The namespace supported by the verifiableStorage service.
+	 * @internal
 	 */
-	public static readonly NAMESPACE: string = "verifiable";
+	private static readonly _NAMESPACE: string = "verifiable";
 
 	/**
 	 * Runtime name for the class.
@@ -171,9 +172,9 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	private getConnector(id: string): IVerifiableStorageConnector {
 		const idUri = Urn.fromValidString(id);
 
-		if (idUri.namespaceIdentifier() !== VerifiableStorageService.NAMESPACE) {
+		if (idUri.namespaceIdentifier() !== VerifiableStorageService._NAMESPACE) {
 			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
-				namespace: VerifiableStorageService.NAMESPACE,
+				namespace: VerifiableStorageService._NAMESPACE,
 				id
 			});
 		}
