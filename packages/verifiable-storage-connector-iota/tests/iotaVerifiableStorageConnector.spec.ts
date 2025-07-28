@@ -18,9 +18,6 @@ import type { IVerifiableStorageIotaReceipt } from "../src/models/IVerifiableSto
 
 let connector: IotaVerifiableStorageConnector;
 
-let itemId: string;
-let digest: string;
-
 describe("IotaVerifiableStorageConnector", () => {
 	beforeAll(async () => {
 		await setupTestEnv();
@@ -29,20 +26,12 @@ describe("IotaVerifiableStorageConnector", () => {
 				clientOptions: TEST_CLIENT_OPTIONS,
 				vaultMnemonicId: TEST_MNEMONIC_NAME,
 				network: TEST_NETWORK,
-				gasBudget: 1_000_000_000,
+				gasBudget: 100_000_000,
 				enableCostLogging: true
 			}
 		});
-		// Deploy the Move contract
-		const componentState: { contractDeployments?: { [id: string]: string } } = {};
-		await connector.start(TEST_NODE_IDENTITY, undefined, componentState);
-		console.debug("Component State", componentState);
-
-		const keys = Object.keys(componentState.contractDeployments ?? {});
-		console.debug(
-			"Deployed contract",
-			`${TEST_EXPLORER_URL}object/${componentState.contractDeployments?.[keys[0]]}?network=${TEST_NETWORK}`
-		);
+		// Start the connector (it will use pre-deployed packages)
+		await connector.start(TEST_NODE_IDENTITY);
 	});
 
 	test("Cannot store an item before bootstrap", async () => {
@@ -51,7 +40,7 @@ describe("IotaVerifiableStorageConnector", () => {
 				clientOptions: TEST_CLIENT_OPTIONS,
 				vaultMnemonicId: TEST_MNEMONIC_NAME,
 				network: TEST_NETWORK,
-				gasBudget: 1_000_000_000
+				gasBudget: 100_000_000
 			}
 		});
 		const data = Converter.utf8ToBytes("Test data");
@@ -63,7 +52,7 @@ describe("IotaVerifiableStorageConnector", () => {
 	test("Can store a verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data);
-		itemId = result.id;
+		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		expect(urn.namespaceIdentifier()).toEqual("verifiable");
 		const specificParts = urn.namespaceSpecificParts();
@@ -83,17 +72,30 @@ describe("IotaVerifiableStorageConnector", () => {
 		expect(receipt.epoch.length).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 
-		digest = receipt.digest;
+		const digest = receipt.digest;
 
 		console.debug(
 			"Digest",
 			`${TEST_EXPLORER_URL}txblock/${receipt.digest}?network=${TEST_NETWORK}`
 		);
+
+		const getResult = await connector.get(itemId);
+		expect(getResult.data).toEqual(Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!"));
+		const getReceipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt;
+		expect(getReceipt.digest).toEqual(digest);
 	});
 
 	test("Can retrieve a verifiable item", async () => {
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Retrieval!");
+		const result = await connector.create(TEST_USER_IDENTITY_0, data);
+		const itemId = result.id;
+		const createReceipt = result.receipt as unknown as IVerifiableStorageIotaReceipt;
+		const digest = createReceipt.digest;
+
 		const getResult = await connector.get(itemId);
-		expect(getResult.data).toEqual(Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!"));
+		expect(getResult.data).toEqual(
+			Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Retrieval!")
+		);
 		const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
@@ -109,8 +111,12 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can update a verifiable item", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
-		const result = await connector.update(TEST_USER_IDENTITY_0, itemId, data);
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update!");
+		const createResult = await connector.create(TEST_USER_IDENTITY_0, data);
+		const itemId = createResult.id;
+
+		const updateData = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
+		const result = await connector.update(TEST_USER_IDENTITY_0, itemId, updateData);
 
 		const receipt = result as unknown as IVerifiableStorageIotaReceipt;
 
@@ -119,18 +125,36 @@ describe("IotaVerifiableStorageConnector", () => {
 		expect(receipt.epoch.length).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 
-		digest = receipt.digest;
+		const digest = receipt.digest;
 
 		console.debug(
 			"Digest",
 			`${TEST_EXPLORER_URL}txblock/${receipt.digest}?network=${TEST_NETWORK}`
 		);
-	});
 
-	test("Can retrieve an updated verifiable item", async () => {
 		const getResult = await connector.get(itemId);
 		expect(getResult.data).toEqual(
 			Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!")
+		);
+		const getReceipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt;
+		expect(getReceipt.digest).toEqual(digest);
+	});
+
+	test("Can retrieve an updated verifiable item", async () => {
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update Retrieval!");
+		const createResult = await connector.create(TEST_USER_IDENTITY_0, data);
+		const itemId = createResult.id;
+
+		const updateData = Converter.utf8ToBytes(
+			"Hello, IOTA Verifiable Storage Updated for Retrieval!"
+		);
+		const updateResult = await connector.update(TEST_USER_IDENTITY_0, itemId, updateData);
+		const updateReceipt = updateResult as unknown as IVerifiableStorageIotaReceipt;
+		const digest = updateReceipt.digest;
+
+		const getResult = await connector.get(itemId);
+		expect(getResult.data).toEqual(
+			Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated for Retrieval!")
 		);
 		const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt;
 
@@ -156,9 +180,9 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can store a verifiable item with additional allow list", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage with Allow List!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data, [USER_ADDRESS_1]);
-		itemId = result.id;
+		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		const specificParts = urn.namespaceSpecificParts();
 
@@ -174,24 +198,24 @@ describe("IotaVerifiableStorageConnector", () => {
 		expect(receipt.epoch.length).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 
-		digest = receipt.digest;
-
 		console.debug(
 			"Digest",
 			`${TEST_EXPLORER_URL}txblock/${receipt.digest}?network=${TEST_NETWORK}`
 		);
 
 		const getResult = await connector.get(itemId);
-		expect(getResult.data).toEqual(Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!"));
+		expect(getResult.data).toEqual(
+			Converter.utf8ToBytes("Hello, IOTA Verifiable Storage with Allow List!")
+		);
 		expect(getResult.allowList).toEqual([USER_ADDRESS_0, USER_ADDRESS_1]);
 	});
 
 	test("Can fail to update a verifiable item when user is not in allow list", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Access Control Test!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data, [
 			"0x0000000000000000000000000000000000000000000000000000000000000000"
 		]);
-		itemId = result.id;
+		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		const specificParts = urn.namespaceSpecificParts();
 
@@ -207,9 +231,9 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can update a verifiable item when user is in allow list", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Allow List Update!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data, [USER_ADDRESS_1]);
-		itemId = result.id;
+		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		const specificParts = urn.namespaceSpecificParts();
 
@@ -218,7 +242,7 @@ describe("IotaVerifiableStorageConnector", () => {
 			`${TEST_EXPLORER_URL}object/${specificParts[2]}?network=${TEST_NETWORK}`
 		);
 
-		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
+		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated by User 1!");
 		const result2 = await connector.update(TEST_USER_IDENTITY_1, itemId, data2);
 
 		const receipt = result2 as unknown as IVerifiableStorageIotaReceipt;
@@ -227,8 +251,6 @@ describe("IotaVerifiableStorageConnector", () => {
 		expect(receipt.epoch.length).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 
-		digest = receipt.digest;
-
 		console.debug(
 			"Digest",
 			`${TEST_EXPLORER_URL}txblock/${receipt.digest}?network=${TEST_NETWORK}`
@@ -236,9 +258,9 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can update a verifiable item when user is in allow list, then fail when they are removed", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Allow List Removal!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data, [USER_ADDRESS_1]);
-		itemId = result.id;
+		const itemId = result.id;
 
 		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
 		// Updating but passing an empty allow list, which will remove user 1
@@ -251,15 +273,15 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can not remove a verifiable item unless you are the creator", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Creator Test!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data);
-		itemId = result.id;
+		const itemId = result.id;
 
 		await expect(connector.remove(TEST_USER_IDENTITY_1, itemId)).rejects.toThrow("notCreator");
 	});
 
 	test("Can fail to create verifiable item when the allow list exceeds the maximum size", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Max Size Test!");
 		await expect(
 			connector.create(TEST_USER_IDENTITY_0, data, [USER_ADDRESS_1], {
 				maxAllowListSize: 1
@@ -268,7 +290,7 @@ describe("IotaVerifiableStorageConnector", () => {
 	});
 
 	test("Can fail to update verifiable item when the allow list exceeds the maximum size", async () => {
-		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
+		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update Max Size Test!");
 		const result = await connector.create(TEST_USER_IDENTITY_0, data, [], {
 			maxAllowListSize: 1
 		});

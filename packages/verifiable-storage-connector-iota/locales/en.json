@@ -3,7 +3,8 @@
 		"iotaVerifiableStorageConnector": {
 			"contractAlreadyDeployed": "Contract already deployed",
 			"contractDeploymentStarted": "Contract deployment started",
-			"contractDeploymentCompleted": "Contract deployment completed"
+			"contractDeploymentCompleted": "Contract deployment completed",
+			"contractReady": "Contract ready for use"
 		}
 	},
 	"error": {
@@ -13,7 +14,7 @@
 			"updatingFailed": "Updating the verifiable item failed",
 			"gettingFailed": "Getting the verifiable item failed",
 			"removingFailed": "Removing the verifiable item failed",
-			"packageIdNotFound": "The package ID \"{id}\" was not found",
+			"packageIdNotFound": "Package ID not found for network \"{network}\"",
 			"storingTransactionFailed": "The transaction to store the data failed",
 			"removingTransactionFailed": "The transaction to remove the data failed",
 			"objectNotFound": "The object was not found",
@@ -25,7 +26,10 @@
 			"invalidGasBudget": "The gas budget must be greater than 0",
 			"notInAllowList": "The user is not in the allow list",
 			"notCreator": "Only the creator can remove the verifiable item",
-			"allowListTooBig": "The number of items in the allow list is larger than the maximum allowed"
+			"allowListTooBig": "The number of items in the allow list is larger than the maximum allowed",
+			"contractDataNotFound": "Contract data not found for network \"{network}\". Available networks: {availableNetworks}",
+			"deployedPackageIdRequired": "deployedPackageId is required for network operations on \"{network}\".",
+			"packageNotFoundOnNetwork": "Package \"{deployedPackageId}\" not found on \"{network}\" network"
 		},
 		"iotaVerifiableStorageUtils": {
 			"invalidVerifiableStorageIdFormat": "The verifiable storage ID \"{id}\" has an invalid format"
