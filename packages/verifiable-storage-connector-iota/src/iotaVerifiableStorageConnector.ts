@@ -413,7 +413,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			return receipt as unknown as IJsonLdNodeObject;
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notInAllowList", error);
+				throw new UnauthorizedError(this.CLASS_NAME, "notInAllowList", undefined, error);
 			}
 			if (Iota.isAbortError(error, 1001)) {
 				throw new GeneralError(this.CLASS_NAME, "allowListTooBig", undefined, error);
@@ -569,7 +569,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			}
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notCreator", error);
+				throw new UnauthorizedError(this.CLASS_NAME, "notCreator", undefined, error);
 			}
 
 			if (error instanceof GeneralError) {
