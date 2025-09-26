@@ -1,5 +1,19 @@
 # @twin.org/verifiable-storage-connector-entity-storage - Changelog
 
+## [0.0.2-next.5](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.2-next.4...verifiable-storage-connector-entity-storage-v0.0.2-next.5) (2025-09-26)
+
+
+### Features
+
+* eslint migration to flat config ([b0a0b85](https://github.com/twinfoundation/verifiable-storage/commit/b0a0b8585a77c1e541531d60b432916b9dc0867e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.2-next.4 to 0.0.2-next.5
+
 ## [0.0.2-next.4](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.2-next.3...verifiable-storage-connector-entity-storage-v0.0.2-next.4) (2025-08-20)
 
 

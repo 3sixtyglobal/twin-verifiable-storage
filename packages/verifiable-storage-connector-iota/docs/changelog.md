@@ -1,5 +1,21 @@
 # @twin.org/verifiable-storage-connector-iota - Changelog
 
+## [0.0.2-next.5](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.2-next.4...verifiable-storage-connector-iota-v0.0.2-next.5) (2025-09-26)
+
+
+### Features
+
+* eslint migration to flat config ([b0a0b85](https://github.com/twinfoundation/verifiable-storage/commit/b0a0b8585a77c1e541531d60b432916b9dc0867e))
+* update UnauthorizedError usage ([03ca23c](https://github.com/twinfoundation/verifiable-storage/commit/03ca23c6235e7a1f3824efb6704d9f09aa29e50f))
+* verifiable storage move-to-json integration and GitHub workflows ([#36](https://github.com/twinfoundation/verifiable-storage/issues/36)) ([1e8284e](https://github.com/twinfoundation/verifiable-storage/commit/1e8284e6acae5007ab336af427e6da9e0ef3b3a4))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.2-next.4 to 0.0.2-next.5
+
 ## [0.0.2-next.4](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.2-next.3...verifiable-storage-connector-iota-v0.0.2-next.4) (2025-08-20)
 
 
