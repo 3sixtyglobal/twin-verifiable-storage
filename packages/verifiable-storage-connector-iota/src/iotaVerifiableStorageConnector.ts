@@ -15,12 +15,8 @@ import {
 } from "@twin.org/core";
 import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
 import { Iota } from "@twin.org/dlt-iota";
+import type { IContractData, ISmartContractDeployments, NetworkTypes } from "@twin.org/dlt-iota";
 import type { ILoggingComponent } from "@twin.org/logging-models";
-import type {
-	IContractData,
-	ISmartContractDeployments,
-	NetworkTypes
-} from "@twin.org/move-to-json";
 import { nameof } from "@twin.org/nameof";
 import { VaultConnectorFactory, type IVaultConnector } from "@twin.org/vault-models";
 import {
@@ -91,6 +87,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	private _deployedPackageId: string | undefined;
 
 	/**
+	 * The smart contract deployment configuration.
+	 * @internal
+	 */
+	private readonly _deploymentConfig: ISmartContractDeployments;
+
+	/**
 	 * The logging component.
 	 * @internal
 	 */
@@ -113,6 +115,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		this._logging = ComponentFactory.getIfExists(options?.loggingComponentType ?? "logging");
 
 		this._config = options.config;
+
+		this._deploymentConfig =
+			options.deploymentConfig ?? (compiledModulesJson as unknown as ISmartContractDeployments);
 
 		this._contractName = this._config.contractName ?? "verifiable-storage";
 		Guards.stringValue(this.CLASS_NAME, nameof(this._contractName), this._contractName);
@@ -138,13 +143,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	public async start(nodeIdentity: string, nodeLoggingComponentType?: string): Promise<void> {
 		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);
 		try {
-			const typedCompiledModules = compiledModulesJson as unknown as ISmartContractDeployments;
-			const contractData = typedCompiledModules[this._config.network as NetworkTypes];
+			const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
 
 			if (!Is.objectValue<IContractData>(contractData)) {
 				throw new GeneralError(this.CLASS_NAME, "contractDataNotFound", {
 					network: this._config.network,
-					availableNetworks: Object.keys(typedCompiledModules)
+					availableNetworks: Object.keys(this._deploymentConfig)
 				});
 			}
 
@@ -184,7 +188,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 					nodeIdentity,
 					packageId: contractData.packageId,
 					deployedPackageId: this._deployedPackageId,
-					upgradeCap: contractData.upgradeCap
+					upgradeCapabilityId: contractData.upgradeCapabilityId
 				}
 			});
 		} catch (error) {
