@@ -140,7 +140,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @param nodeLoggingComponentType The node logging component type.
 	 * @returns True if the bootstrapping process was successful.
 	 */
-	public async start(nodeIdentity: string, nodeLoggingComponentType?: string): Promise<void> {
+	public async start(nodeIdentity?: string, nodeLoggingComponentType?: string): Promise<void> {
 		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);
 		try {
 			const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
@@ -185,7 +185,6 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				message: "contractReady",
 				data: {
 					network: this._config.network,
-					nodeIdentity,
 					packageId: contractData.packageId,
 					deployedPackageId: this._deployedPackageId,
 					upgradeCapabilityId: contractData.upgradeCapabilityId
@@ -199,8 +198,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				message: "startFailed",
 				error: BaseError.fromError(error),
 				data: {
-					network: this._config.network,
-					nodeIdentity
+					network: this._config.network
 				}
 			});
 
