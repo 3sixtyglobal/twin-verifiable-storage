@@ -91,5 +91,20 @@
 		"dist/types",
 		"locales",
 		"docs"
+	],
+	"keywords": [
+		"twin",
+		"trade",
+		"iota",
+		"framework",
+		"blockchain",
+		"verifiable-storage",
+		"verifiable",
+		"storage",
+		"proof",
+		"immutable",
+		"connector",
+		"adapter",
+		"integration"
 	]
 }
