@@ -15,15 +15,15 @@ import type { IVerifiableStorageServiceConstructorOptions } from "./models/IVeri
  */
 export class VerifiableStorageService implements IVerifiableStorageComponent {
 	/**
+	 * Runtime name for the class.
+	 */
+	public static readonly CLASS_NAME: string = nameof<VerifiableStorageService>();
+
+	/**
 	 * The namespace supported by the verifiableStorage service.
 	 * @internal
 	 */
 	private static readonly _NAMESPACE: string = "verifiable";
-
-	/**
-	 * Runtime name for the class.
-	 */
-	public readonly CLASS_NAME: string = nameof<VerifiableStorageService>();
 
 	/**
 	 * The default namespace for the connector to use.
@@ -38,7 +38,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	constructor(options?: IVerifiableStorageServiceConstructorOptions) {
 		const names = VerifiableStorageConnectorFactory.names();
 		if (names.length === 0) {
-			throw new GeneralError(this.CLASS_NAME, "noConnectors");
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "noConnectors");
 		}
 
 		this._defaultNamespace = options?.config?.defaultNamespace ?? names[0];
@@ -66,8 +66,8 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		id: string;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+		Guards.uint8Array(VerifiableStorageService.CLASS_NAME, nameof(data), data);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(identity), identity);
 
 		try {
 			const connectorNamespace = namespace ?? this._defaultNamespace;
@@ -84,7 +84,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 
 			return verifiableStorageResult;
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "createFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "createFailed", undefined, error);
 		}
 	}
 
@@ -102,8 +102,8 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		allowList?: string[],
 		identity?: string
 	): Promise<IJsonLdNodeObject> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(identity), identity);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
@@ -116,7 +116,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 
 			return verifiableStorageResult;
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "updateFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "updateFailed", undefined, error);
 		}
 	}
 
@@ -135,13 +135,13 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		data?: Uint8Array;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
 			return verifiableStorageConnector.get(id, options);
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "getFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "getFailed", undefined, error);
 		}
 	}
 
@@ -152,14 +152,14 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	 * @returns Nothing.
 	 */
 	public async remove(id: string, identity?: string): Promise<void> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(identity), identity);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
 			await verifiableStorageConnector.remove(identity, id);
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "removeFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "removeFailed", undefined, error);
 		}
 	}
 
@@ -173,7 +173,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		const idUri = Urn.fromValidString(id);
 
 		if (idUri.namespaceIdentifier() !== VerifiableStorageService._NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "namespaceMismatch", {
 				namespace: VerifiableStorageService._NAMESPACE,
 				id
 			});

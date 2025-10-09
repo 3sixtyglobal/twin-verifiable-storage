@@ -1,6 +1,7 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
 import {
+	BaseError,
 	Converter,
 	GeneralError,
 	Guards,
@@ -35,15 +36,15 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	public static NAMESPACE: string = "entity-storage";
 
 	/**
+	 * Runtime name for the class.
+	 */
+	public static readonly CLASS_NAME: string = nameof<EntityStorageVerifiableStorageConnector>();
+
+	/**
 	 * The default maximum size of the allow list.
 	 * @internal
 	 */
 	private static readonly _DEFAULT_ALLOW_LIST_SIZE: number = 100;
-
-	/**
-	 * Runtime name for the class.
-	 */
-	public readonly CLASS_NAME: string = nameof<EntityStorageVerifiableStorageConnector>();
 
 	/**
 	 * The entity storage for verifiable items.
@@ -81,13 +82,25 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 		id: string;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+		Guards.stringValue(
+			EntityStorageVerifiableStorageConnector.CLASS_NAME,
+			nameof(controller),
+			controller
+		);
+		Guards.uint8Array(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				nameof(allowList),
+				allowList
+			);
 		}
 		if (!Is.empty(options?.maxAllowListSize)) {
-			Guards.integer(this.CLASS_NAME, nameof(options.maxAllowListSize), options.maxAllowListSize);
+			Guards.integer(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				nameof(options.maxAllowListSize),
+				options.maxAllowListSize
+			);
 		}
 
 		try {
@@ -105,7 +118,10 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			finalAllowList.unshift(controller);
 
 			if (finalAllowList.length > maxAllowListSize) {
-				throw new GeneralError(this.CLASS_NAME, "allowListTooBig");
+				throw new GeneralError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"allowListTooBig"
+				);
 			}
 
 			const verifiableItem: VerifiableItem = {
@@ -129,10 +145,15 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 				receipt: receipt as unknown as IJsonLdNodeObject
 			};
 		} catch (error) {
-			if (error instanceof GeneralError) {
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
 				throw error;
 			}
-			throw new GeneralError(this.CLASS_NAME, "creatingFailed", undefined, error);
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"creatingFailed",
+				undefined,
+				error
+			);
 		}
 	}
 
@@ -150,22 +171,34 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(
+			EntityStorageVerifiableStorageConnector.CLASS_NAME,
+			nameof(controller),
+			controller
+		);
+		Urn.guard(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		if (!Is.empty(data)) {
-			Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+			Guards.uint8Array(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		}
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				nameof(allowList),
+				allowList
+			);
 		}
 
 		const urnParsed = Urn.fromValidString(id);
 
 		if (urnParsed.namespaceMethod() !== EntityStorageVerifiableStorageConnector.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
-				namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
-				id
-			});
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"namespaceMismatch",
+				{
+					namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
+					id
+				}
+			);
 		}
 
 		try {
@@ -173,10 +206,16 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			const verifiableItem = await this._verifiableStorageEntityStorage.get(itemId);
 
 			if (Is.empty(verifiableItem)) {
-				throw new NotFoundError(this.CLASS_NAME, "verifiableStorageNotFound");
+				throw new NotFoundError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"verifiableStorageNotFound"
+				);
 			}
 			if (!verifiableItem.allowList.includes(controller)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notInAllowList");
+				throw new UnauthorizedError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"notInAllowList"
+				);
 			}
 
 			if (Is.uint8Array(data) && data.length > 0) {
@@ -187,7 +226,10 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 				finalAllowList.unshift(verifiableItem.creator);
 
 				if (finalAllowList.length > verifiableItem.maxAllowListSize) {
-					throw new GeneralError(this.CLASS_NAME, "allowListTooBig");
+					throw new GeneralError(
+						EntityStorageVerifiableStorageConnector.CLASS_NAME,
+						"allowListTooBig"
+					);
 				}
 				verifiableItem.allowList = finalAllowList;
 			}
@@ -201,10 +243,18 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 
 			return receipt as unknown as IJsonLdNodeObject;
 		} catch (error) {
-			if (error instanceof UnauthorizedError || error instanceof GeneralError) {
+			if (
+				BaseError.isErrorName(error, GeneralError.CLASS_NAME) ||
+				BaseError.isErrorName(error, UnauthorizedError.CLASS_NAME)
+			) {
 				throw error;
 			}
-			throw new GeneralError(this.CLASS_NAME, "updatingFailed", undefined, error);
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"updatingFailed",
+				undefined,
+				error
+			);
 		}
 	}
 
@@ -224,16 +274,20 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 		receipt: IJsonLdNodeObject;
 		allowList?: string[];
 	}> {
-		Guards.stringValue(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Urn.guard(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		const urnParsed = Urn.fromValidString(id);
 
 		if (urnParsed.namespaceMethod() !== EntityStorageVerifiableStorageConnector.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
-				namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
-				id
-			});
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"namespaceMismatch",
+				{
+					namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
+					id
+				}
+			);
 		}
 
 		try {
@@ -241,7 +295,10 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			const verifiableItem = await this._verifiableStorageEntityStorage.get(itemId);
 
 			if (Is.empty(verifiableItem)) {
-				throw new NotFoundError(this.CLASS_NAME, "verifiableStorageNotFound");
+				throw new NotFoundError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"verifiableStorageNotFound"
+				);
 			}
 
 			const includeData = options?.includeData ?? true;
@@ -259,7 +316,12 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 				allowList: includeAllowList ? verifiableItem.allowList : undefined
 			};
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "gettingFailed", undefined, error);
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"gettingFailed",
+				undefined,
+				error
+			);
 		}
 	}
 
@@ -270,15 +332,23 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	 * @returns Nothing.
 	 */
 	public async remove(controller: string, id: string): Promise<void> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(
+			EntityStorageVerifiableStorageConnector.CLASS_NAME,
+			nameof(controller),
+			controller
+		);
+		Urn.guard(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const urnParsed = Urn.fromValidString(id);
 		if (urnParsed.namespaceMethod() !== EntityStorageVerifiableStorageConnector.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
-				namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
-				id
-			});
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"namespaceMismatch",
+				{
+					namespace: EntityStorageVerifiableStorageConnector.NAMESPACE,
+					id
+				}
+			);
 		}
 
 		try {
@@ -286,19 +356,31 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			const verifiableItem = await this._verifiableStorageEntityStorage.get(itemId);
 
 			if (Is.empty(verifiableItem)) {
-				throw new NotFoundError(this.CLASS_NAME, "verifiableStorageNotFound");
+				throw new NotFoundError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"verifiableStorageNotFound",
+					id
+				);
 			}
 
 			if (verifiableItem.creator !== controller) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notCreator");
+				throw new UnauthorizedError(
+					EntityStorageVerifiableStorageConnector.CLASS_NAME,
+					"notCreator"
+				);
 			}
 
 			await this._verifiableStorageEntityStorage.remove(itemId);
 		} catch (error) {
-			if (error instanceof UnauthorizedError) {
+			if (BaseError.isErrorName(error, UnauthorizedError.CLASS_NAME)) {
 				throw error;
 			}
-			throw new GeneralError(this.CLASS_NAME, "removingFailed", undefined, error);
+			throw new GeneralError(
+				EntityStorageVerifiableStorageConnector.CLASS_NAME,
+				"removingFailed",
+				undefined,
+				error
+			);
 		}
 	}
 }

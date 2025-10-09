@@ -40,15 +40,15 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	public static readonly NAMESPACE: string = "iota";
 
 	/**
+	 * Runtime name for the class.
+	 */
+	public static readonly CLASS_NAME: string = nameof<IotaVerifiableStorageConnector>();
+
+	/**
 	 * The default maximum size of the allow list.
 	 * @internal
 	 */
 	private static readonly _DEFAULT_ALLOW_LIST_SIZE: number = 100;
-
-	/**
-	 * Runtime name for the class.
-	 */
-	public readonly CLASS_NAME: string = nameof<IotaVerifiableStorageConnector>();
 
 	/**
 	 * The vault connector.
@@ -103,13 +103,17 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @param options The options for the storage connector.
 	 */
 	constructor(options: IIotaVerifiableStorageConnectorConstructorOptions) {
-		Guards.object(this.CLASS_NAME, nameof(options), options);
+		Guards.object(IotaVerifiableStorageConnector.CLASS_NAME, nameof(options), options);
 		Guards.object<IIotaVerifiableStorageConnectorConfig>(
-			this.CLASS_NAME,
+			IotaVerifiableStorageConnector.CLASS_NAME,
 			nameof(options.config),
 			options.config
 		);
-		Guards.stringValue(this.CLASS_NAME, nameof(options.config.network), options.config.network);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(options.config.network),
+			options.config.network
+		);
 		this._vaultConnector = VaultConnectorFactory.get(options?.vaultConnectorType ?? "vault");
 
 		this._logging = ComponentFactory.getIfExists(options?.loggingComponentType ?? "logging");
@@ -120,12 +124,20 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			options.deploymentConfig ?? (compiledModulesJson as unknown as ISmartContractDeployments);
 
 		this._contractName = this._config.contractName ?? "verifiable-storage";
-		Guards.stringValue(this.CLASS_NAME, nameof(this._contractName), this._contractName);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(this._contractName),
+			this._contractName
+		);
 
 		this._gasBudget = this._config.gasBudget ?? 1_000_000_000;
-		Guards.number(this.CLASS_NAME, nameof(this._gasBudget), this._gasBudget);
+		Guards.number(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(this._gasBudget),
+			this._gasBudget
+		);
 		if (this._gasBudget <= 0) {
-			throw new GeneralError(this.CLASS_NAME, "invalidGasBudget", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "invalidGasBudget", {
 				gasBudget: this._gasBudget
 			});
 		}
@@ -146,22 +158,26 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
 
 			if (!Is.objectValue<IContractData>(contractData)) {
-				throw new GeneralError(this.CLASS_NAME, "contractDataNotFound", {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "contractDataNotFound", {
 					network: this._config.network,
 					availableNetworks: Object.keys(this._deploymentConfig)
 				});
 			}
 
 			if (!Is.stringValue(contractData.deployedPackageId)) {
-				throw new GeneralError(this.CLASS_NAME, "deployedPackageIdRequired", {
-					network: this._config.network
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"deployedPackageIdRequired",
+					{
+						network: this._config.network
+					}
+				);
 			}
 
 			this._deployedPackageId = contractData.deployedPackageId;
 
 			if (!this._deployedPackageId) {
-				throw new GeneralError(this.CLASS_NAME, "packageIdNotFound", {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "packageIdNotFound", {
 					network: this._config.network
 				});
 			}
@@ -172,15 +188,19 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (!packageExists) {
-				throw new GeneralError(this.CLASS_NAME, "packageNotFoundOnNetwork", {
-					network: this._config.network,
-					deployedPackageId: this._deployedPackageId
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"packageNotFoundOnNetwork",
+					{
+						network: this._config.network,
+						deployedPackageId: this._deployedPackageId
+					}
+				);
 			}
 
 			await nodeLogging?.log({
 				level: "info",
-				source: this.CLASS_NAME,
+				source: IotaVerifiableStorageConnector.CLASS_NAME,
 				ts: Date.now(),
 				message: "contractReady",
 				data: {
@@ -193,7 +213,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		} catch (error) {
 			await nodeLogging?.log({
 				level: "error",
-				source: this.CLASS_NAME,
+				source: IotaVerifiableStorageConnector.CLASS_NAME,
 				ts: Date.now(),
 				message: "startFailed",
 				error: BaseError.fromError(error),
@@ -227,13 +247,17 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		receipt: IJsonLdNodeObject;
 	}> {
 		this.ensureStarted();
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+		Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(IotaVerifiableStorageConnector.CLASS_NAME, nameof(allowList), allowList);
 		}
 		if (!Is.empty(options?.maxAllowListSize)) {
-			Guards.integer(this.CLASS_NAME, nameof(options.maxAllowListSize), options.maxAllowListSize);
+			Guards.integer(
+				IotaVerifiableStorageConnector.CLASS_NAME,
+				nameof(options.maxAllowListSize),
+				options.maxAllowListSize
+			);
 		}
 		const maxAllowListSize = Math.max(
 			options?.maxAllowListSize ?? IotaVerifiableStorageConnector._DEFAULT_ALLOW_LIST_SIZE,
@@ -279,9 +303,13 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "storingTransactionFailed", {
-					error: result.effects?.status?.error
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"storingTransactionFailed",
+					{
+						error: result.effects?.status?.error
+					}
+				);
 			}
 
 			const storageEvent = result.events?.find(event =>
@@ -292,10 +320,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 			const objectId = parsedJson?.id;
 
-			if (!objectId) {
-				throw new GeneralError(this.CLASS_NAME, "objectIdNotFound", {
-					namespace: IotaVerifiableStorageConnector.NAMESPACE,
-					id: objectId
+			if (!Is.stringValue(objectId)) {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "objectIdNotFound", {
+					namespace: IotaVerifiableStorageConnector.NAMESPACE
 				});
 			}
 
@@ -317,10 +344,15 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			};
 		} catch (error) {
 			if (Iota.isAbortError(error, 1001)) {
-				throw new GeneralError(this.CLASS_NAME, "allowListTooBig", undefined, error);
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"allowListTooBig",
+					undefined,
+					error
+				);
 			}
 			throw new GeneralError(
-				this.CLASS_NAME,
+				IotaVerifiableStorageConnector.CLASS_NAME,
 				"creatingFailed",
 				undefined,
 				Iota.extractPayloadError(error)
@@ -342,13 +374,13 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		if (!Is.empty(data)) {
-			Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+			Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		}
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(IotaVerifiableStorageConnector.CLASS_NAME, nameof(allowList), allowList);
 		}
 
 		const objectId = IotaVerifiableStorageUtils.verifiableStorageIdToObjectId(id);
@@ -394,7 +426,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "updateFailed", {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "updateFailed", {
 					error: result.effects?.status?.error
 				});
 			}
@@ -415,17 +447,27 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			return receipt as unknown as IJsonLdNodeObject;
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notInAllowList", undefined, error);
+				throw new UnauthorizedError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"notInAllowList",
+					undefined,
+					error
+				);
 			}
 			if (Iota.isAbortError(error, 1001)) {
-				throw new GeneralError(this.CLASS_NAME, "allowListTooBig", undefined, error);
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"allowListTooBig",
+					undefined,
+					error
+				);
 			}
-			if (error instanceof GeneralError) {
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
 				throw error;
 			}
 
 			throw new GeneralError(
-				this.CLASS_NAME,
+				IotaVerifiableStorageConnector.CLASS_NAME,
 				"updatingFailed",
 				undefined,
 				Iota.extractPayloadError(error)
@@ -449,7 +491,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		receipt: IJsonLdNodeObject;
 		allowList?: string[];
 	}> {
-		Guards.stringValue(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const includeData = options?.includeData ?? true;
 		const includeAllowList = options?.includeAllowList ?? true;
@@ -465,7 +507,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			});
 
 			if (!objectData.data?.content) {
-				throw new GeneralError(this.CLASS_NAME, "objectNotFound");
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "objectNotFound");
 			}
 
 			const parsedData = objectData.data.content as unknown as {
@@ -497,11 +539,11 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				allowList: includeAllowList ? parsedData.fields.allowlist : undefined
 			};
 		} catch (error) {
-			if (error instanceof GeneralError) {
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
 				throw error;
 			} else {
 				throw new GeneralError(
-					this.CLASS_NAME,
+					IotaVerifiableStorageConnector.CLASS_NAME,
 					"gettingFailed",
 					undefined,
 					Iota.extractPayloadError(error)
@@ -517,13 +559,13 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @returns A promise that resolves when the item is removed.
 	 */
 	public async remove(controller: string, id: string): Promise<void> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const urnParsed = Urn.fromValidString(id);
 
 		if (urnParsed.namespaceMethod() !== IotaVerifiableStorageConnector.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "namespaceMismatch", {
 				namespace: IotaVerifiableStorageConnector.NAMESPACE,
 				id
 			});
@@ -565,29 +607,34 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "removingTransactionFailed", {
-					error: result.effects?.status?.error
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"removingTransactionFailed",
+					{
+						error: result.effects?.status?.error
+					}
+				);
 			}
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notCreator", undefined, error);
-			}
-
-			if (error instanceof GeneralError) {
-				throw error;
-			}
-
-			if (error instanceof GeneralError) {
-				throw error;
-			} else {
-				throw new GeneralError(
-					this.CLASS_NAME,
-					"removingFailed",
+				throw new UnauthorizedError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"notCreator",
 					undefined,
-					Iota.extractPayloadError(error)
+					error
 				);
 			}
+
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
+				throw error;
+			}
+
+			throw new GeneralError(
+				IotaVerifiableStorageConnector.CLASS_NAME,
+				"removingFailed",
+				undefined,
+				Iota.extractPayloadError(error)
+			);
 		}
 	}
 
@@ -619,7 +666,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 */
 	private ensureStarted(): void {
 		if (!this._deployedPackageId) {
-			throw new GeneralError(this.CLASS_NAME, "connectorNotStarted", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "connectorNotStarted", {
 				packageId: this._deployedPackageId
 			});
 		}

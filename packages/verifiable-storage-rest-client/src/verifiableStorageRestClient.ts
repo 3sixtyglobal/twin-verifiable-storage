@@ -19,18 +19,21 @@ import type {
 /**
  * Client for performing Verifiable Storage through to REST endpoints.
  */
-export class VerifiableStorageClient extends BaseRestClient implements IVerifiableStorageComponent {
+export class VerifiableStorageRestClient
+	extends BaseRestClient
+	implements IVerifiableStorageComponent
+{
 	/**
 	 * Runtime name for the class.
 	 */
-	public readonly CLASS_NAME: string = nameof<VerifiableStorageClient>();
+	public static readonly CLASS_NAME: string = nameof<VerifiableStorageRestClient>();
 
 	/**
 	 * Create a new instance of VerifiableStorageClient.
 	 * @param config The configuration for the client.
 	 */
 	constructor(config: IBaseRestClientConfig) {
-		super(nameof<VerifiableStorageClient>(), config, "verifiable");
+		super(nameof<VerifiableStorageRestClient>(), config, "verifiable");
 	}
 
 	/**
@@ -51,7 +54,7 @@ export class VerifiableStorageClient extends BaseRestClient implements IVerifiab
 		id: string;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+		Guards.uint8Array(VerifiableStorageRestClient.CLASS_NAME, nameof(data), data);
 
 		const response = await this.fetch<
 			IVerifiableStorageCreateRequest,
@@ -79,7 +82,7 @@ export class VerifiableStorageClient extends BaseRestClient implements IVerifiab
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Urn.guard(VerifiableStorageRestClient.CLASS_NAME, nameof(id), id);
 
 		const response = await this.fetch<
 			IVerifiableStorageUpdateRequest,
@@ -111,7 +114,7 @@ export class VerifiableStorageClient extends BaseRestClient implements IVerifiab
 		data?: Uint8Array;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Guards.stringValue(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(VerifiableStorageRestClient.CLASS_NAME, nameof(id), id);
 
 		const response = await this.fetch<IVerifiableStorageGetRequest, IVerifiableStorageGetResponse>(
 			"/:id",
@@ -138,7 +141,7 @@ export class VerifiableStorageClient extends BaseRestClient implements IVerifiab
 	 * @returns Nothing.
 	 */
 	public async remove(id: string): Promise<void> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Urn.guard(VerifiableStorageRestClient.CLASS_NAME, nameof(id), id);
 
 		await this.fetch<IVerifiableStorageRemoveRequest, INoContentResponse>("/:id", "DELETE", {
 			pathParams: {

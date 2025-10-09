@@ -84,7 +84,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			});
 
 			expect(connector).toBeDefined();
-			expect(connector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
+			expect(IotaVerifiableStorageConnector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
 		});
 
 		test("Should create verifiable storage connector without gas station configuration", () => {
@@ -94,7 +94,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			});
 
 			expect(connector).toBeDefined();
-			expect(connector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
+			expect(IotaVerifiableStorageConnector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
 		});
 
 		test("Should create verifiable storage connector with custom gas budget", () => {
@@ -115,7 +115,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			});
 
 			expect(connector).toBeDefined();
-			expect(connector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
+			expect(IotaVerifiableStorageConnector.CLASS_NAME).toBe("IotaVerifiableStorageConnector");
 		});
 	});
 

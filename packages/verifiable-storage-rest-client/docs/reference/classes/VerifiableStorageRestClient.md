@@ -1,4 +1,4 @@
-# Class: VerifiableStorageClient
+# Class: VerifiableStorageRestClient
 
 Client for performing Verifiable Storage through to REST endpoints.
 
@@ -14,7 +14,7 @@ Client for performing Verifiable Storage through to REST endpoints.
 
 ### Constructor
 
-> **new VerifiableStorageClient**(`config`): `VerifiableStorageClient`
+> **new VerifiableStorageRestClient**(`config`): `VerifiableStorageRestClient`
 
 Create a new instance of VerifiableStorageClient.
 
@@ -28,7 +28,7 @@ The configuration for the client.
 
 #### Returns
 
-`VerifiableStorageClient`
+`VerifiableStorageRestClient`
 
 #### Overrides
 
@@ -38,13 +38,9 @@ The configuration for the client.
 
 ### CLASS\_NAME
 
-> `readonly` **CLASS\_NAME**: `string`
+> `readonly` `static` **CLASS\_NAME**: `string`
 
 Runtime name for the class.
-
-#### Implementation of
-
-`IVerifiableStorageComponent.CLASS_NAME`
 
 ## Methods
 
