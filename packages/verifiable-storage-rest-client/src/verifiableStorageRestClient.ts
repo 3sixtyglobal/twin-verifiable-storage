@@ -29,7 +29,7 @@ export class VerifiableStorageRestClient
 	public static readonly CLASS_NAME: string = nameof<VerifiableStorageRestClient>();
 
 	/**
-	 * Create a new instance of VerifiableStorageClient.
+	 * Create a new instance of VerifiableStorageRestClient.
 	 * @param config The configuration for the client.
 	 */
 	constructor(config: IBaseRestClientConfig) {
