@@ -1,5 +1,12 @@
 # @twin.org/verifiable-storage-models - Changelog
 
+## [0.0.2-next.6](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-models-v0.0.2-next.5...verifiable-storage-models-v0.0.2-next.6) (2025-10-09)
+
+
+### Features
+
+* add validate-locales ([326384f](https://github.com/twinfoundation/verifiable-storage/commit/326384fe867604e7cd450460a6a56c6c7bdc8f98))
+
 ## [0.0.2-next.5](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-models-v0.0.2-next.4...verifiable-storage-models-v0.0.2-next.5) (2025-09-26)
 
 
