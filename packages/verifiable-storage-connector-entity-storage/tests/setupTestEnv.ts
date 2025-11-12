@@ -5,8 +5,8 @@ import { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector
 import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
 import { nameof } from "@twin.org/nameof";
 import * as dotenv from "dotenv";
-import type { VerifiableItem } from "../src/entities/verifiableItem";
-import { initSchema } from "../src/schema";
+import type { VerifiableItem } from "../src/entities/verifiableItem.js";
+import { initSchema } from "../src/schema.js";
 
 console.debug("Setting up test environment from .env and .env.dev files");
 

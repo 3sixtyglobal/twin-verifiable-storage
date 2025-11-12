@@ -2,25 +2,24 @@
 // SPDX-License-Identifier: Apache-2.0.
 import { Converter, Urn } from "@twin.org/core";
 import {
-	setupTestEnv,
 	cleanupTestEnv,
 	getTestDeploymentConfig,
-	TEST_CLIENT_OPTIONS,
-	TEST_EXPLORER_URL,
-	TEST_MNEMONIC_NAME,
-	TEST_NETWORK,
-	TEST_NODE_IDENTITY,
-	TEST_USER_IDENTITY_ID,
-	TEST_USER_IDENTITY_ID_2,
+	setupTestEnv,
 	TEST_ADDRESS,
 	TEST_ADDRESS_2,
-	TEST_GAS_STATION_URL,
+	TEST_CLIENT_OPTIONS,
+	TEST_EXPLORER_URL,
+	TEST_GAS_BUDGET,
 	TEST_GAS_STATION_AUTH_TOKEN,
-	TEST_GAS_BUDGET
-} from "./setupTestEnv";
-import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector";
-import type { IIotaVerifiableStorageConnectorConfig } from "../src/models/IIotaVerifiableStorageConnectorConfig";
-import type { IVerifiableStorageIotaReceipt } from "../src/models/IVerifiableStorageIotaReceipt";
+	TEST_GAS_STATION_URL,
+	TEST_MNEMONIC_NAME,
+	TEST_NETWORK,
+	TEST_USER_IDENTITY_ID,
+	TEST_USER_IDENTITY_ID_2
+} from "./setupTestEnv.js";
+import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector.js";
+import type { IIotaVerifiableStorageConnectorConfig } from "../src/models/IIotaVerifiableStorageConnectorConfig.js";
+import type { IVerifiableStorageIotaReceipt } from "../src/models/IVerifiableStorageIotaReceipt.js";
 
 let gasStationConnector: IotaVerifiableStorageConnector;
 let regularConnector: IotaVerifiableStorageConnector;
@@ -67,9 +66,9 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 		});
 
 		// Start the connectors (they will use pre-deployed packages)
-		await gasStationConnector.start(TEST_NODE_IDENTITY);
+		await gasStationConnector.start();
 
-		await regularConnector.start(TEST_NODE_IDENTITY);
+		await regularConnector.start();
 	});
 
 	afterAll(async () => {
@@ -177,7 +176,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 		test("Should compare regular vs gas station item creation", async () => {
 			// Start the regular connector first (deploy contract without gas station)
-			await regularConnector.start(TEST_NODE_IDENTITY);
+			await regularConnector.start();
 
 			// Create with regular connector
 			const regularData = Converter.utf8ToBytes("Regular verifiable storage item");
@@ -386,7 +385,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			});
 
 			// Start the connector (this should succeed since it uses pre-deployed packages)
-			await connector.start(TEST_NODE_IDENTITY);
+			await connector.start();
 
 			// The gas station unavailability should be detected during storage operations
 			const testData = Converter.utf8ToBytes("Test data for gas station error");
@@ -410,7 +409,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			});
 
 			// Start the connector (this should succeed since it uses pre-deployed packages)
-			await connector.start(TEST_NODE_IDENTITY);
+			await connector.start();
 
 			// The invalid auth token should be detected during storage operations
 			const testData = Converter.utf8ToBytes("Test data for invalid auth error");

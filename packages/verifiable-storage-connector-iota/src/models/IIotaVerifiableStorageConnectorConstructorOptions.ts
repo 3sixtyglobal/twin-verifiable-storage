@@ -1,7 +1,7 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
 import type { ISmartContractDeployments } from "@twin.org/dlt-iota";
-import type { IIotaVerifiableStorageConnectorConfig } from "./IIotaVerifiableStorageConnectorConfig";
+import type { IIotaVerifiableStorageConnectorConfig } from "./IIotaVerifiableStorageConnectorConfig.js";
 
 /**
  * Options for the IotaVerifiableStorageConnector.

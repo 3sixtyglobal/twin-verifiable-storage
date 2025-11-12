@@ -3,9 +3,9 @@
 import { Converter, ObjectHelper, Urn } from "@twin.org/core";
 import type { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector-memory";
 import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
-import { TEST_USER_IDENTITY_0, TEST_USER_IDENTITY_1 } from "./setupTestEnv";
-import type { VerifiableItem } from "../src/entities/verifiableItem";
-import { EntityStorageVerifiableStorageConnector } from "../src/entityStorageVerifiableStorageConnector";
+import { TEST_USER_IDENTITY_0, TEST_USER_IDENTITY_1 } from "./setupTestEnv.js";
+import type { VerifiableItem } from "../src/entities/verifiableItem.js";
+import { EntityStorageVerifiableStorageConnector } from "../src/entityStorageVerifiableStorageConnector.js";
 
 let verifiableItemId: string;
 

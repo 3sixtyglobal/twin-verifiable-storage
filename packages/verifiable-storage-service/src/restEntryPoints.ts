@@ -4,7 +4,7 @@ import type { IRestRouteEntryPoint } from "@twin.org/api-models";
 import {
 	generateRestRoutesVerifiableStorage,
 	tagsVerifiableStorage
-} from "./verifiableStorageRoutes";
+} from "./verifiableStorageRoutes.js";
 
 export const restEntryPoints: IRestRouteEntryPoint[] = [
 	{

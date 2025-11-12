@@ -2,21 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0.
 import { Converter, Urn } from "@twin.org/core";
 import {
-	setupTestEnv,
 	cleanupTestEnv,
 	getTestDeploymentConfig,
+	setupTestEnv,
+	TEST_ADDRESS,
+	TEST_ADDRESS_2,
 	TEST_CLIENT_OPTIONS,
 	TEST_EXPLORER_URL,
 	TEST_MNEMONIC_NAME,
 	TEST_NETWORK,
-	TEST_NODE_IDENTITY,
 	TEST_USER_IDENTITY_ID,
-	TEST_USER_IDENTITY_ID_2,
-	TEST_ADDRESS,
-	TEST_ADDRESS_2
-} from "./setupTestEnv";
-import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector";
-import type { IVerifiableStorageIotaReceipt } from "../src/models/IVerifiableStorageIotaReceipt";
+	TEST_USER_IDENTITY_ID_2
+} from "./setupTestEnv.js";
+import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector.js";
+import type { IVerifiableStorageIotaReceipt } from "../src/models/IVerifiableStorageIotaReceipt.js";
 
 let connector: IotaVerifiableStorageConnector;
 
@@ -34,7 +33,7 @@ describe("IotaVerifiableStorageConnector", () => {
 			deploymentConfig: getTestDeploymentConfig()
 		});
 		// Start the connector (it will use test-deployed packages)
-		await connector.start(TEST_NODE_IDENTITY);
+		await connector.start();
 	});
 
 	afterAll(async () => {

@@ -1,6 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { VerifiableStorageRestClient } from "../src/verifiableStorageRestClient";
+import { VerifiableStorageRestClient } from "../src/verifiableStorageRestClient.js";
 
 describe("VerifiableStorageRestClient", () => {
 	test("Can create an instance", async () => {

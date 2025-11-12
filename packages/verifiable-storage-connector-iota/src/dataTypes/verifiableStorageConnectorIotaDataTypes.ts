@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0.
 import { DataTypeHandlerFactory, type IJsonSchema } from "@twin.org/data-core";
 import { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
-import { IotaVerifiableStorageTypes } from "../models/iotaVerifiableStorageTypes";
-import VerifiableStorageIotaReceiptSchema from "../schemas/VerifiableStorageIotaReceipt.json";
+import { IotaVerifiableStorageTypes } from "../models/iotaVerifiableStorageTypes.js";
+import VerifiableStorageIotaReceiptSchema from "../schemas/VerifiableStorageIotaReceipt.json" with { type: "json" };
 
 /**
  * Handle all the data types for verifiable storage connector entity storage.

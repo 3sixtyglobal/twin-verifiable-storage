@@ -36,9 +36,27 @@ Runtime name for the class.
 
 ## Methods
 
+### className()
+
+> **className**(): `string`
+
+Returns the class name of the component.
+
+#### Returns
+
+`string`
+
+The class name of the component.
+
+#### Implementation of
+
+`IVerifiableStorageComponent.className`
+
+***
+
 ### create()
 
-> **create**(`data`, `allowList?`, `options?`, `identity?`, `namespace?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
+> **create**(`data`, `allowList?`, `options?`, `namespace?`, `controller?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
 Create a verifiable storage item.
 
@@ -66,17 +84,17 @@ Additional options for creating the item.
 
 The maximum size of the allow list.
 
-##### identity?
-
-`string`
-
-The identity to store the Verifiable Storage operation on.
-
 ##### namespace?
 
 `string`
 
-The namespace to use for the Verifiable Storage.
+The namespace to use for the connector to use.
+
+##### controller?
+
+`string`
+
+The identity of the controller to access the vault keys.
 
 #### Returns
 
@@ -92,7 +110,7 @@ The id of the created verifiable storage item.
 
 ### update()
 
-> **update**(`id`, `data?`, `allowList?`, `identity?`): `Promise`\<`IJsonLdNodeObject`\>
+> **update**(`id`, `data?`, `allowList?`, `controller?`): `Promise`\<`IJsonLdNodeObject`\>
 
 Update an item in verifiable storage.
 
@@ -116,11 +134,11 @@ The data to store, optional if updating the allow list.
 
 Updated list of identities that are allowed to modify the item.
 
-##### identity?
+##### controller?
 
 `string`
 
-The identity of the user to access the vault keys.
+The identity of the controller to access the vault keys.
 
 #### Returns
 
@@ -178,7 +196,7 @@ The data for the verifiable storage item.
 
 ### remove()
 
-> **remove**(`id`, `identity?`): `Promise`\<`void`\>
+> **remove**(`id`, `controller?`): `Promise`\<`void`\>
 
 Remove a verifiable storage item.
 
@@ -190,11 +208,11 @@ Remove a verifiable storage item.
 
 The id of the Verifiable Storage to remove.
 
-##### identity?
+##### controller?
 
 `string`
 
-The identity to perform the verifiableStorage operation on.
+The identity of the controller to access the vault keys.
 
 #### Returns
 

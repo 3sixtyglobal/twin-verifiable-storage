@@ -23,12 +23,12 @@ import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
 } from "@twin.org/verifiable-storage-models";
-import compiledModulesJson from "./contracts/smart-contract-deployments/smart-contract-deployments.json";
-import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils";
-import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig";
-import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions";
-import { IotaVerifiableStorageTypes } from "./models/iotaVerifiableStorageTypes";
-import type { IVerifiableStorageIotaReceipt } from "./models/IVerifiableStorageIotaReceipt";
+import compiledModulesJson from "./contracts/smart-contract-deployments/smart-contract-deployments.json" with { type: "json" };
+import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils.js";
+import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig.js";
+import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions.js";
+import { IotaVerifiableStorageTypes } from "./models/iotaVerifiableStorageTypes.js";
+import type { IVerifiableStorageIotaReceipt } from "./models/IVerifiableStorageIotaReceipt.js";
 
 /**
  * Class for performing verifiable storage operations on IOTA.
@@ -147,12 +147,19 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	}
 
 	/**
+	 * Returns the class name of the component.
+	 * @returns The class name of the component.
+	 */
+	public className(): string {
+		return IotaVerifiableStorageConnector.CLASS_NAME;
+	}
+
+	/**
 	 * Bootstrap the Verifiable Storage contract.
-	 * @param nodeIdentity The identity of the node.
 	 * @param nodeLoggingComponentType The node logging component type.
 	 * @returns True if the bootstrapping process was successful.
 	 */
-	public async start(nodeIdentity?: string, nodeLoggingComponentType?: string): Promise<void> {
+	public async start(nodeLoggingComponentType?: string): Promise<void> {
 		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);
 		try {
 			const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
@@ -228,7 +235,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Create an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param data The data to store.
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
@@ -236,7 +243,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @returns The id of the stored verifiable item in URN format and the receipt.
 	 */
 	public async create(
-		controller: string,
+		controllerIdentity: string,
 		data: Uint8Array,
 		allowList?: string[],
 		options?: {
@@ -247,7 +254,11 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		receipt: IJsonLdNodeObject;
 	}> {
 		this.ensureStarted();
-		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
 		Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		if (!Is.empty(allowList)) {
 			Guards.array<string>(IotaVerifiableStorageConnector.CLASS_NAME, nameof(allowList), allowList);
@@ -280,7 +291,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
+			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
 			const addresses = Iota.getAddresses(
 				seed,
 				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
@@ -293,7 +304,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
 				addresses[0],
 				txb,
@@ -362,19 +373,23 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Update an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the item to update.
 	 * @param data The data to store.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
 	 * @returns The updated receipt.
 	 */
 	public async update(
-		controller: string,
+		controllerIdentity: string,
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
-		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
 		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		if (!Is.empty(data)) {
 			Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
@@ -403,7 +418,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
+			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
 			const addresses = Iota.getAddresses(
 				seed,
 				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
@@ -416,7 +431,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
 				addresses[0],
 				txb,
@@ -554,12 +569,16 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Remove the item from verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in URN format.
 	 * @returns A promise that resolves when the item is removed.
 	 */
-	public async remove(controller: string, id: string): Promise<void> {
-		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(controller), controller);
+	public async remove(controllerIdentity: string, id: string): Promise<void> {
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
 		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const urnParsed = Urn.fromValidString(id);
@@ -579,7 +598,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			const packageId = IotaVerifiableStorageUtils.verifiableStorageIdToPackageId(id);
 			const moduleName = this.getModuleName();
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
+			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
 			const addresses = Iota.getAddresses(
 				seed,
 				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
@@ -597,7 +616,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
 				addresses[0],
 				txb,

@@ -6,6 +6,7 @@ import type {
 	IRestRoute,
 	ITag
 } from "@twin.org/api-models";
+import { ContextIdHelper, ContextIdKeys, ContextIdStore } from "@twin.org/context";
 import { ComponentFactory, Converter, Guards, Is } from "@twin.org/core";
 import { nameof } from "@twin.org/nameof";
 import type {
@@ -229,6 +230,10 @@ export async function verifiableStorageCreate(
 		request.body
 	);
 	Guards.stringBase64(ROUTES_SOURCE, nameof(request.body.data), request.body.data);
+
+	const contextIds = await ContextIdStore.getContextIds();
+	ContextIdHelper.guard(contextIds, ContextIdKeys.Organization);
+
 	const component = ComponentFactory.get<IVerifiableStorageComponent>(componentName);
 	const result = await component.create(
 		Converter.base64ToBytes(request.body.data),
@@ -236,8 +241,8 @@ export async function verifiableStorageCreate(
 		{
 			maxAllowListSize: request.body.maxAllowListSize
 		},
-		httpRequestContext.userIdentity,
-		request.body.namespace
+		request.body.namespace,
+		contextIds[ContextIdKeys.Organization]
 	);
 	return {
 		statusCode: HttpStatusCode.created,
@@ -276,12 +281,16 @@ export async function verifiableStorageUpdate(
 		request.body
 	);
 	Guards.stringBase64(ROUTES_SOURCE, nameof(request.body.data), request.body.data);
+
+	const contextIds = await ContextIdStore.getContextIds();
+	ContextIdHelper.guard(contextIds, ContextIdKeys.Organization);
+
 	const component = ComponentFactory.get<IVerifiableStorageComponent>(componentName);
 	const result = await component.update(
 		request.pathParams.id,
 		Is.stringBase64(request.body.data) ? Converter.base64ToBytes(request.body.data) : undefined,
 		request.body.allowList,
-		httpRequestContext.userIdentity
+		contextIds[ContextIdKeys.Organization]
 	);
 	return {
 		body: result
@@ -337,8 +346,11 @@ export async function verifiableStorageRemove(
 	);
 	Guards.stringValue(ROUTES_SOURCE, nameof(request.pathParams.id), request.pathParams.id);
 
+	const contextIds = await ContextIdStore.getContextIds();
+	ContextIdHelper.guard(contextIds, ContextIdKeys.Organization);
+
 	const component = ComponentFactory.get<IVerifiableStorageComponent>(componentName);
-	await component.remove(request.pathParams.id, httpRequestContext.userIdentity);
+	await component.remove(request.pathParams.id, contextIds[ContextIdKeys.Organization]);
 
 	return {
 		statusCode: HttpStatusCode.noContent

@@ -37,6 +37,14 @@ export class VerifiableStorageRestClient
 	}
 
 	/**
+	 * Returns the class name of the component.
+	 * @returns The class name of the component.
+	 */
+	public className(): string {
+		return VerifiableStorageRestClient.CLASS_NAME;
+	}
+
+	/**
 	 * Create a verifiable storage item.
 	 * @param data The data for the verifiable storage item.
 	 * @param allowList The list of identities that are allowed to modify the item.

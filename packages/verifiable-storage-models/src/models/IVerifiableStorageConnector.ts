@@ -9,7 +9,7 @@ import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
 export interface IVerifiableStorageConnector extends IComponent {
 	/**
 	 * Create an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param data The data to store.
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
@@ -17,7 +17,7 @@ export interface IVerifiableStorageConnector extends IComponent {
 	 * @returns The id of the stored verifiable item in urn format and the receipt.
 	 */
 	create(
-		controller: string,
+		controllerIdentity: string,
 		data: Uint8Array,
 		allowList?: string[],
 		options?: {
@@ -30,14 +30,14 @@ export interface IVerifiableStorageConnector extends IComponent {
 
 	/**
 	 * Update an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the item to update.
 	 * @param data The data to store, optional if updating the allow list.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
 	 * @returns The updated receipt.
 	 */
 	update(
-		controller: string,
+		controllerIdentity: string,
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[]
@@ -62,9 +62,9 @@ export interface IVerifiableStorageConnector extends IComponent {
 
 	/**
 	 * Remove the item from verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in urn format.
 	 * @returns Nothing.
 	 */
-	remove(controller: string, id: string): Promise<void>;
+	remove(controllerIdentity: string, id: string): Promise<void>;
 }

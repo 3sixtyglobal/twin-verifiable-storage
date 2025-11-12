@@ -21,10 +21,10 @@ import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
 } from "@twin.org/verifiable-storage-models";
-import type { VerifiableItem } from "./entities/verifiableItem";
-import { EntityStorageVerifiableStorageTypes } from "./models/entityStorageVerifiableStorageTypes";
-import type { IEntityStorageVerifiableStorageConnectorConstructorOptions } from "./models/IEntityStorageVerifiableStorageConnectorConstructorOptions";
-import type { IVerifiableStorageEntityStorageReceipt } from "./models/IVerifiableStorageEntityStorageReceipt";
+import type { VerifiableItem } from "./entities/verifiableItem.js";
+import { EntityStorageVerifiableStorageTypes } from "./models/entityStorageVerifiableStorageTypes.js";
+import type { IEntityStorageVerifiableStorageConnectorConstructorOptions } from "./models/IEntityStorageVerifiableStorageConnectorConstructorOptions.js";
+import type { IVerifiableStorageEntityStorageReceipt } from "./models/IVerifiableStorageEntityStorageReceipt.js";
 
 /**
  * Class for performing verifiable storage operations on entity storage.
@@ -63,8 +63,16 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	}
 
 	/**
+	 * Returns the class name of the component.
+	 * @returns The class name of the component.
+	 */
+	public className(): string {
+		return EntityStorageVerifiableStorageConnector.CLASS_NAME;
+	}
+
+	/**
 	 * Create an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param data The data to store.
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
@@ -72,7 +80,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	 * @returns The id of the stored verifiable item in URN format and the receipt.
 	 */
 	public async create(
-		controller: string,
+		controllerIdentity: string,
 		data: Uint8Array,
 		allowList?: string[],
 		options?: {
@@ -84,8 +92,8 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	}> {
 		Guards.stringValue(
 			EntityStorageVerifiableStorageConnector.CLASS_NAME,
-			nameof(controller),
-			controller
+			nameof(controllerIdentity),
+			controllerIdentity
 		);
 		Guards.uint8Array(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		if (!Is.empty(allowList)) {
@@ -113,9 +121,9 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			);
 
 			const finalAllowList = Array.from(
-				new Set((allowList ?? []).filter(item => item !== controller))
+				new Set((allowList ?? []).filter(item => item !== controllerIdentity))
 			);
-			finalAllowList.unshift(controller);
+			finalAllowList.unshift(controllerIdentity);
 
 			if (finalAllowList.length > maxAllowListSize) {
 				throw new GeneralError(
@@ -126,7 +134,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 
 			const verifiableItem: VerifiableItem = {
 				id: itemId,
-				creator: controller,
+				creator: controllerIdentity,
 				data: Converter.bytesToBase64(data),
 				allowList: finalAllowList,
 				maxAllowListSize
@@ -159,22 +167,22 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 
 	/**
 	 * Update an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the item to update.
 	 * @param data The data to store.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
 	 * @returns The updated receipt.
 	 */
 	public async update(
-		controller: string,
+		controllerIdentity: string,
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
 		Guards.stringValue(
 			EntityStorageVerifiableStorageConnector.CLASS_NAME,
-			nameof(controller),
-			controller
+			nameof(controllerIdentity),
+			controllerIdentity
 		);
 		Urn.guard(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		if (!Is.empty(data)) {
@@ -211,7 +219,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 					"verifiableStorageNotFound"
 				);
 			}
-			if (!verifiableItem.allowList.includes(controller)) {
+			if (!verifiableItem.allowList.includes(controllerIdentity)) {
 				throw new UnauthorizedError(
 					EntityStorageVerifiableStorageConnector.CLASS_NAME,
 					"notInAllowList"
@@ -222,7 +230,9 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 				verifiableItem.data = Converter.bytesToBase64(data);
 			}
 			if (Is.array(allowList)) {
-				const finalAllowList = Array.from(new Set(allowList.filter(item => item !== controller)));
+				const finalAllowList = Array.from(
+					new Set(allowList.filter(item => item !== controllerIdentity))
+				);
 				finalAllowList.unshift(verifiableItem.creator);
 
 				if (finalAllowList.length > verifiableItem.maxAllowListSize) {
@@ -327,15 +337,15 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 
 	/**
 	 * Remove the item from verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in urn format.
 	 * @returns Nothing.
 	 */
-	public async remove(controller: string, id: string): Promise<void> {
+	public async remove(controllerIdentity: string, id: string): Promise<void> {
 		Guards.stringValue(
 			EntityStorageVerifiableStorageConnector.CLASS_NAME,
-			nameof(controller),
-			controller
+			nameof(controllerIdentity),
+			controllerIdentity
 		);
 		Urn.guard(EntityStorageVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
@@ -363,7 +373,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 				);
 			}
 
-			if (verifiableItem.creator !== controller) {
+			if (verifiableItem.creator !== controllerIdentity) {
 				throw new UnauthorizedError(
 					EntityStorageVerifiableStorageConnector.CLASS_NAME,
 					"notCreator"
