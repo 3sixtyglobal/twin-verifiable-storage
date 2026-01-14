@@ -14,9 +14,9 @@ export class VerifiableStorageConnectorIotaDataTypes {
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(
-			`${VerifiableStorageContexts.ContextRoot}${IotaVerifiableStorageTypes.IotaReceipt}`,
+			`${VerifiableStorageContexts.Namespace}${IotaVerifiableStorageTypes.IotaReceipt}`,
 			() => ({
-				context: VerifiableStorageContexts.ContextRoot,
+				namespace: VerifiableStorageContexts.Namespace,
 				type: IotaVerifiableStorageTypes.IotaReceipt,
 				defaultValue: {},
 				jsonSchema: async () => VerifiableStorageIotaReceiptSchema as IJsonSchema

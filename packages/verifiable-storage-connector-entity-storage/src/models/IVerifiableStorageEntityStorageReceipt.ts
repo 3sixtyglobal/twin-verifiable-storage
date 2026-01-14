@@ -10,7 +10,7 @@ export interface IVerifiableStorageEntityStorageReceipt {
 	/**
 	 * JSON-LD Context.
 	 */
-	"@context": typeof VerifiableStorageContexts.ContextRoot;
+	"@context": typeof VerifiableStorageContexts.Namespace;
 
 	/**
 	 * JSON-LD Type.

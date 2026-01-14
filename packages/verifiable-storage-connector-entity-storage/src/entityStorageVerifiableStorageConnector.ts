@@ -143,7 +143,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			await this._verifiableStorageEntityStorage.set(verifiableItem);
 
 			const receipt: IVerifiableStorageEntityStorageReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
+				"@context": VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				entityStorageId: itemId
 			};
@@ -246,7 +246,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			await this._verifiableStorageEntityStorage.set(verifiableItem);
 
 			const receipt: IVerifiableStorageEntityStorageReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
+				"@context": VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				entityStorageId: itemId
 			};
@@ -315,7 +315,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 			const includeAllowList = options?.includeAllowList ?? true;
 
 			const receipt: IVerifiableStorageEntityStorageReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
+				"@context": VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				entityStorageId: itemId
 			};

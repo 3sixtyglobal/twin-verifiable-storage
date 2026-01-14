@@ -6,8 +6,8 @@ The contexts of verifiable storage data.
 
 ## Type Declaration
 
-### ContextRoot
+### Namespace
 
-> `readonly` **ContextRoot**: `"https://schema.twindev.org/verifiable-storage/"` = `"https://schema.twindev.org/verifiable-storage/"`
+> `readonly` **Namespace**: `"https://schema.twindev.org/verifiable-storage/"` = `"https://schema.twindev.org/verifiable-storage/"`
 
-The context root for the verifiable storage types.
+The namespace.

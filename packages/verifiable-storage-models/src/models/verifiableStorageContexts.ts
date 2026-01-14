@@ -7,9 +7,9 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const VerifiableStorageContexts = {
 	/**
-	 * The context root for the verifiable storage types.
+	 * The namespace.
 	 */
-	ContextRoot: "https://schema.twindev.org/verifiable-storage/"
+	Namespace: "https://schema.twindev.org/verifiable-storage/"
 } as const;
 
 /**

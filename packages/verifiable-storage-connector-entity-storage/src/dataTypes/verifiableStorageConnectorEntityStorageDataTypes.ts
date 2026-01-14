@@ -14,9 +14,9 @@ export class VerifiableStorageConnectorEntityStorageDataTypes {
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(
-			`${VerifiableStorageContexts.ContextRoot}${EntityStorageVerifiableStorageTypes.EntityStorageReceipt}`,
+			`${VerifiableStorageContexts.Namespace}${EntityStorageVerifiableStorageTypes.EntityStorageReceipt}`,
 			() => ({
-				context: VerifiableStorageContexts.ContextRoot,
+				namespace: VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				defaultValue: {},
 				jsonSchema: async () => VerifiableStorageEntityStorageReceiptSchema as IJsonSchema
