@@ -1,5 +1,12 @@
 # @twin.org/verifiable-storage-models - Changelog
 
+## [0.0.3-next.2](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-models-v0.0.3-next.1...verifiable-storage-models-v0.0.3-next.2) (2026-01-14)
+
+
+### Features
+
+* update context and namespaces ([#42](https://github.com/twinfoundation/verifiable-storage/issues/42)) ([7863833](https://github.com/twinfoundation/verifiable-storage/commit/78638336c5cd7dce0c53aaf598aef603fbed7a9e))
+
 ## [0.0.3-next.1](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-models-v0.0.3-next.0...verifiable-storage-models-v0.0.3-next.1) (2025-11-12)
 
 
