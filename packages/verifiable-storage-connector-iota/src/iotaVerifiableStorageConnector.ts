@@ -338,7 +338,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			}
 
 			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.Namespace,
+				"@context": VerifiableStorageContexts.Context,
 				type: IotaVerifiableStorageTypes.IotaReceipt,
 				epoch: parsedJson?.epoch ?? "",
 				digest: result?.digest ?? ""
@@ -453,7 +453,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			const parsedJson = storageEvent?.parsedJson as { id: string; epoch: string };
 
 			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.Namespace,
+				"@context": VerifiableStorageContexts.Context,
 				type: IotaVerifiableStorageTypes.IotaReceipt,
 				epoch: parsedJson?.epoch ?? "",
 				digest: result?.digest ?? ""
@@ -535,7 +535,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			};
 
 			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.Namespace,
+				"@context": VerifiableStorageContexts.Context,
 				type: IotaVerifiableStorageTypes.IotaReceipt,
 				epoch: parsedData.fields.epoch ?? "",
 				digest: objectData.data?.previousTransaction ?? ""
