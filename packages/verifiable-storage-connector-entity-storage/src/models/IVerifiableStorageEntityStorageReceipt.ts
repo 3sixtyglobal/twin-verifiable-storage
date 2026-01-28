@@ -19,6 +19,7 @@ export interface IVerifiableStorageEntityStorageReceipt {
 
 	/**
 	 * The entity storage Id.
+	 * json-ld type:schema:identifier
 	 */
 	entityStorageId: string;
 }

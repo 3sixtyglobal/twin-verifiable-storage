@@ -25,3 +25,4 @@ JSON-LD Type.
 > **entityStorageId**: `string`
 
 The entity storage Id.
+json-ld type:schema:identifier

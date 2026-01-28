@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@protected": true,
+    "twin-verifiable-storage": "https://schema.twindev.org/verifiable-storage/",
+    "schema": "http://schema.org/",
+    "id": "@id",
+    "type": "@type",
+    "VerifiableStorageIotaReceipt": "twin-verifiable-storage:VerifiableStorageIotaReceipt",
+    "digest": {
+      "@id": "twin-verifiable-storage:digest",
+      "@type": "schema:Text"
+    },
+    "epoch": {
+      "@id": "twin-verifiable-storage:epoch",
+      "@type": "schema:Text"
+    }
+  }
+}

@@ -25,6 +25,7 @@ JSON-LD Type.
 > **epoch**: `string`
 
 The epoch of the transaction.
+json-ld type:schema:Text
 
 ***
 
@@ -33,3 +34,4 @@ The epoch of the transaction.
 > **digest**: `string`
 
 The digest of the transaction.
+json-ld type:schema:Text

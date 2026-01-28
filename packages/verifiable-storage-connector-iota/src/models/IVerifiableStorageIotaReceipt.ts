@@ -19,11 +19,13 @@ export interface IVerifiableStorageIotaReceipt {
 
 	/**
 	 * The epoch of the transaction.
+	 * json-ld type:schema:Text
 	 */
 	epoch: string;
 
 	/**
 	 * The digest of the transaction.
+	 * json-ld type:schema:Text
 	 */
 	digest: string;
 }
