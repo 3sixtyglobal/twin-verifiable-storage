@@ -1,5 +1,19 @@
 # @twin.org/verifiable-storage-connector-entity-storage - Changelog
 
+## [0.0.3-next.4](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.3...verifiable-storage-connector-entity-storage-v0.0.3-next.4) (2026-02-09)
+
+
+### Features
+
+* add ts-to-jsonld-context tool ([6ec770b](https://github.com/twinfoundation/verifiable-storage/commit/6ec770b3f4bb905dcffd73ca2fea033fd5263fdc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.3 to 0.0.3-next.4
+
 ## [0.0.3-next.3](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.2...verifiable-storage-connector-entity-storage-v0.0.3-next.3) (2026-01-21)
 
 

@@ -1,5 +1,20 @@
 # @twin.org/verifiable-storage-connector-iota - Changelog
 
+## [0.0.3-next.4](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.3...verifiable-storage-connector-iota-v0.0.3-next.4) (2026-02-09)
+
+
+### Features
+
+* add ts-to-jsonld-context tool ([6ec770b](https://github.com/twinfoundation/verifiable-storage/commit/6ec770b3f4bb905dcffd73ca2fea033fd5263fdc))
+* update receipt signature ([#48](https://github.com/twinfoundation/verifiable-storage/issues/48)) ([34f3021](https://github.com/twinfoundation/verifiable-storage/commit/34f30217653254e033ee91011890cd73615f2a0a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.3 to 0.0.3-next.4
+
 ## [0.0.3-next.3](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.2...verifiable-storage-connector-iota-v0.0.3-next.3) (2026-01-21)
 
 
