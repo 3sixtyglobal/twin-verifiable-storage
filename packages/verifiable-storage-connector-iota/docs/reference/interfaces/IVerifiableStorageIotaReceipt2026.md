@@ -1,4 +1,4 @@
-# Interface: IVerifiableStorageIotaReceipt
+# Interface: IVerifiableStorageIotaReceipt2026
 
 Receipt for the IOTA Verifiable Storage connector.
 
@@ -14,7 +14,7 @@ JSON-LD Context.
 
 ### type
 
-> **type**: `"VerifiableStorageIotaReceipt"`
+> **type**: `"VerifiableStorageIotaReceipt2026"`
 
 JSON-LD Type.
 
@@ -22,10 +22,10 @@ JSON-LD Type.
 
 ### epoch
 
-> **epoch**: `string`
+> **epoch**: `number`
 
 The epoch of the transaction.
-json-ld type:schema:Text
+json-ld type:schema:Integer
 
 ***
 
@@ -34,4 +34,13 @@ json-ld type:schema:Text
 > **digest**: `string`
 
 The digest of the transaction.
+json-ld type:schema:Text
+
+***
+
+### network
+
+> **network**: `string`
+
+The network of the transaction.
 json-ld type:schema:Text

@@ -6,4 +6,4 @@ export * from "./iotaVerifiableStorageUtils.js";
 export * from "./models/IIotaVerifiableStorageConnectorConfig.js";
 export * from "./models/IIotaVerifiableStorageConnectorConstructorOptions.js";
 export * from "./models/iotaVerifiableStorageTypes.js";
-export * from "./models/IVerifiableStorageIotaReceipt.js";
+export * from "./models/IVerifiableStorageIotaReceipt2026.js";

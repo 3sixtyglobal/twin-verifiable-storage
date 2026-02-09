@@ -9,7 +9,7 @@ export const IotaVerifiableStorageTypes = {
 	/**
 	 * Represents IOTA receipt.
 	 */
-	IotaReceipt: "VerifiableStorageIotaReceipt"
+	IotaReceipt2026: "VerifiableStorageIotaReceipt2026"
 } as const;
 
 /**

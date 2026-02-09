@@ -4,6 +4,7 @@ import type { IotaClient } from "@iota/iota-sdk/client";
 import { Transaction } from "@iota/iota-sdk/transactions";
 import {
 	BaseError,
+	Coerce,
 	ComponentFactory,
 	Converter,
 	GeneralError,
@@ -28,7 +29,7 @@ import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils.js";
 import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig.js";
 import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions.js";
 import { IotaVerifiableStorageTypes } from "./models/iotaVerifiableStorageTypes.js";
-import type { IVerifiableStorageIotaReceipt } from "./models/IVerifiableStorageIotaReceipt.js";
+import type { IVerifiableStorageIotaReceipt2026 } from "./models/IVerifiableStorageIotaReceipt2026.js";
 
 /**
  * Class for performing verifiable storage operations on IOTA.
@@ -337,11 +338,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				});
 			}
 
-			const receipt: IVerifiableStorageIotaReceipt = {
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
 				"@context": VerifiableStorageContexts.Context,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedJson?.epoch ?? "",
-				digest: result?.digest ?? ""
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
+				digest: result?.digest ?? "",
+				network: this._config.network
 			};
 
 			const urn = new Urn(
@@ -452,11 +454,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 			const parsedJson = storageEvent?.parsedJson as { id: string; epoch: string };
 
-			const receipt: IVerifiableStorageIotaReceipt = {
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
 				"@context": VerifiableStorageContexts.Context,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedJson?.epoch ?? "",
-				digest: result?.digest ?? ""
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
+				digest: result?.digest ?? "",
+				network: this._config.network
 			};
 
 			return receipt as unknown as IJsonLdNodeObject;
@@ -534,11 +537,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				};
 			};
 
-			const receipt: IVerifiableStorageIotaReceipt = {
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
 				"@context": VerifiableStorageContexts.Context,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedData.fields.epoch ?? "",
-				digest: objectData.data?.previousTransaction ?? ""
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedData.fields.epoch) ?? 0,
+				digest: objectData.data?.previousTransaction ?? "",
+				network: this._config.network
 			};
 
 			let dataResult: Uint8Array | undefined;

@@ -3,7 +3,7 @@
 import { DataTypeHandlerFactory, type IJsonSchema } from "@twin.org/data-core";
 import { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
 import { IotaVerifiableStorageTypes } from "../models/iotaVerifiableStorageTypes.js";
-import VerifiableStorageIotaReceiptSchema from "../schemas/VerifiableStorageIotaReceipt.json" with { type: "json" };
+import VerifiableStorageIotaReceipt2026Schema from "../schemas/VerifiableStorageIotaReceipt2026.json" with { type: "json" };
 
 /**
  * Handle all the data types for verifiable storage connector entity storage.
@@ -14,12 +14,12 @@ export class VerifiableStorageConnectorIotaDataTypes {
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(
-			`${VerifiableStorageContexts.Namespace}${IotaVerifiableStorageTypes.IotaReceipt}`,
+			`${VerifiableStorageContexts.Namespace}${IotaVerifiableStorageTypes.IotaReceipt2026}`,
 			() => ({
 				namespace: VerifiableStorageContexts.Namespace,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
 				defaultValue: {},
-				jsonSchema: async () => VerifiableStorageIotaReceiptSchema as IJsonSchema
+				jsonSchema: async () => VerifiableStorageIotaReceipt2026Schema as IJsonSchema
 			})
 		);
 	}

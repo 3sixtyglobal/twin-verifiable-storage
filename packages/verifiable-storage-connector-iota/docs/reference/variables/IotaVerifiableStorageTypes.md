@@ -6,8 +6,8 @@ The types of IOTA verifiable storage data.
 
 ## Type Declaration
 
-### IotaReceipt
+### IotaReceipt2026
 
-> `readonly` **IotaReceipt**: `"VerifiableStorageIotaReceipt"` = `"VerifiableStorageIotaReceipt"`
+> `readonly` **IotaReceipt2026**: `"VerifiableStorageIotaReceipt2026"` = `"VerifiableStorageIotaReceipt2026"`
 
 Represents IOTA receipt.

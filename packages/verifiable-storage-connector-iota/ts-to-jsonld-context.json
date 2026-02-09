@@ -9,5 +9,5 @@
 		"id": "@id",
 		"type": "@type"
 	},
-	"types": ["./src/models/IVerifiableStorageIotaReceipt.ts"]
+	"types": ["./src/models/IVerifiableStorageIotaReceipt2026.ts"]
 }

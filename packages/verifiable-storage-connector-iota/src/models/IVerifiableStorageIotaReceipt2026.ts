@@ -6,7 +6,7 @@ import type { IotaVerifiableStorageTypes } from "./iotaVerifiableStorageTypes.js
 /**
  * Receipt for the IOTA Verifiable Storage connector.
  */
-export interface IVerifiableStorageIotaReceipt {
+export interface IVerifiableStorageIotaReceipt2026 {
 	/**
 	 * JSON-LD Context.
 	 */
@@ -15,17 +15,23 @@ export interface IVerifiableStorageIotaReceipt {
 	/**
 	 * JSON-LD Type.
 	 */
-	type: typeof IotaVerifiableStorageTypes.IotaReceipt;
+	type: typeof IotaVerifiableStorageTypes.IotaReceipt2026;
 
 	/**
 	 * The epoch of the transaction.
-	 * json-ld type:schema:Text
+	 * json-ld type:schema:Integer
 	 */
-	epoch: string;
+	epoch: number;
 
 	/**
 	 * The digest of the transaction.
 	 * json-ld type:schema:Text
 	 */
 	digest: string;
+
+	/**
+	 * The network of the transaction.
+	 * json-ld type:schema:Text
+	 */
+	network: string;
 }
