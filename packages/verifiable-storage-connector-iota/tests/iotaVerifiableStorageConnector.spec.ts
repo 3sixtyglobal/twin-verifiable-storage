@@ -75,7 +75,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const receipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.network).toEqual(TEST_NETWORK);
@@ -107,7 +107,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.digest).toEqual(digest);
@@ -130,7 +130,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const receipt = result as unknown as IVerifiableStorageIotaReceipt2026;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.network).toEqual(TEST_NETWORK);
@@ -169,7 +169,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.digest).toEqual(digest);
@@ -205,7 +205,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const receipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.network).toEqual(TEST_NETWORK);
@@ -259,7 +259,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 		const receipt = result2 as unknown as IVerifiableStorageIotaReceipt2026;
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
-		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt");
+		expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 		expect(receipt.epoch).greaterThan(0);
 		expect(receipt.digest.length).greaterThan(0);
 		expect(receipt.network).toEqual(TEST_NETWORK);

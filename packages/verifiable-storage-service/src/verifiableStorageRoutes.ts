@@ -83,7 +83,7 @@ export function generateRestRoutesVerifiableStorage(
 								body: {
 									receipt: {
 										"@context": "https://schema.twindev.org/verifiable-storage/",
-										type: "VerifiableStorageIotaReceipt"
+										type: "VerifiableStorageIotaReceipt2026"
 									},
 									id: "verifiable:iota:aW90YS1uZnQ6dHN0OjB4NzYyYjljNDllYTg2OWUwZWJkYTliYmZhNzY5Mzk0NDdhNDI4ZGNmMTc4YzVkMTVhYjQ0N2UyZDRmYmJiNGViMg=="
 								}
@@ -128,7 +128,7 @@ export function generateRestRoutesVerifiableStorage(
 							response: {
 								body: {
 									"@context": "https://schema.twindev.org/verifiable-storage/",
-									type: "VerifiableStorageIotaReceipt"
+									type: "VerifiableStorageIotaReceipt2026"
 								}
 							}
 						}
