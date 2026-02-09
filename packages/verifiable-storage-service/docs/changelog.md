@@ -1,5 +1,26 @@
 # @twin.org/verifiable-storage-service - Changelog
 
+## [0.0.3-next.5](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-service-v0.0.3-next.4...verifiable-storage-service-v0.0.3-next.5) (2026-02-09)
+
+
+### Features
+
+* additional fields in IOTA receipt ([f1ddffa](https://github.com/twinfoundation/verifiable-storage/commit/f1ddffa82b5d3fafe00bfe2ca938e9c6982e5aca))
+
+
+### Bug Fixes
+
+* tests ([e30075e](https://github.com/twinfoundation/verifiable-storage/commit/e30075e0100a7eb956d4042b01b40fe3bd9ec62a))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.4 to 0.0.3-next.5
+  * devDependencies
+    * @twin.org/verifiable-storage-connector-entity-storage bumped from 0.0.3-next.4 to 0.0.3-next.5
+
 ## [0.0.3-next.4](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-service-v0.0.3-next.3...verifiable-storage-service-v0.0.3-next.4) (2026-02-09)
 
 
