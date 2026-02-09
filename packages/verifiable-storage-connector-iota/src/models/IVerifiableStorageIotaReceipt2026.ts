@@ -34,4 +34,16 @@ export interface IVerifiableStorageIotaReceipt2026 {
 	 * json-ld type:schema:Text
 	 */
 	network: string;
+
+	/**
+	 * The object id of the transaction.
+	 * json-ld type:schema:Text
+	 */
+	objectId: string;
+
+	/**
+	 * The smart contract id of the transaction.
+	 * json-ld type:schema:Text
+	 */
+	smartContractId: string;
 }

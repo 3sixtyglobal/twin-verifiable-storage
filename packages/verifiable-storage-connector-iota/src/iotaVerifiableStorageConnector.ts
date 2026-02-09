@@ -343,7 +343,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				type: IotaVerifiableStorageTypes.IotaReceipt2026,
 				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
 				digest: result?.digest ?? "",
-				network: this._config.network
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			const urn = new Urn(
@@ -459,7 +461,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				type: IotaVerifiableStorageTypes.IotaReceipt2026,
 				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
 				digest: result?.digest ?? "",
-				network: this._config.network
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			return receipt as unknown as IJsonLdNodeObject;
@@ -542,7 +546,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				type: IotaVerifiableStorageTypes.IotaReceipt2026,
 				epoch: Coerce.integer(parsedData.fields.epoch) ?? 0,
 				digest: objectData.data?.previousTransaction ?? "",
-				network: this._config.network
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			let dataResult: Uint8Array | undefined;

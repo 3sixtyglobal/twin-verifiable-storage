@@ -25,6 +25,14 @@
 		"network": {
 			"type": "string",
 			"description": "The network of the transaction. json-ld type:schema:Text"
+		},
+		"objectId": {
+			"type": "string",
+			"description": "The object id of the transaction. json-ld type:schema:Text"
+		},
+		"smartContractId": {
+			"type": "string",
+			"description": "The smart contract id of the transaction. json-ld type:schema:Text"
 		}
 	},
 	"required": [
@@ -32,7 +40,9 @@
 		"type",
 		"epoch",
 		"digest",
-		"network"
+		"network",
+		"objectId",
+		"smartContractId"
 	],
 	"additionalProperties": false
 }

@@ -18,6 +18,14 @@
     "network": {
       "@id": "twin-verifiable-storage:network",
       "@type": "schema:Text"
+    },
+    "objectId": {
+      "@id": "twin-verifiable-storage:objectId",
+      "@type": "schema:Text"
+    },
+    "smartContractId": {
+      "@id": "twin-verifiable-storage:smartContractId",
+      "@type": "schema:Text"
     }
   }
 }

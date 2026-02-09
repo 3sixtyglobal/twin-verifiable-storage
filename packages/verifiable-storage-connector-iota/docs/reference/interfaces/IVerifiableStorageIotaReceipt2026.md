@@ -44,3 +44,21 @@ json-ld type:schema:Text
 
 The network of the transaction.
 json-ld type:schema:Text
+
+***
+
+### objectId
+
+> **objectId**: `string`
+
+The object id of the transaction.
+json-ld type:schema:Text
+
+***
+
+### smartContractId
+
+> **smartContractId**: `string`
+
+The smart contract id of the transaction.
+json-ld type:schema:Text
