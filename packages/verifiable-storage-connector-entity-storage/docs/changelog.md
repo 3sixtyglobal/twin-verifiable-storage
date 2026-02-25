@@ -1,5 +1,19 @@
 # @twin.org/verifiable-storage-connector-entity-storage - Changelog
 
+## [0.0.3-next.6](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.5...verifiable-storage-connector-entity-storage-v0.0.3-next.6) (2026-02-25)
+
+
+### Features
+
+* update schemas ([a44dd16](https://github.com/twinfoundation/verifiable-storage/commit/a44dd164d03b799a38786dae655a42b1a5dcf9cc))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.5 to 0.0.3-next.6
+
 ## [0.0.3-next.5](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.4...verifiable-storage-connector-entity-storage-v0.0.3-next.5) (2026-02-09)
 
 
