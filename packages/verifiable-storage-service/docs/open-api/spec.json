@@ -503,7 +503,6 @@
 					"name",
 					"message"
 				],
-				"additionalProperties": false,
 				"description": "Model to describe serialized error."
 			},
 			"JsonLdContainerType": {
@@ -739,8 +738,7 @@
 						},
 						"required": [
 							"@container"
-						],
-						"additionalProperties": false
+						]
 					},
 					"@version": {
 						"type": "string",
@@ -800,7 +798,6 @@
 				"anyOf": [
 					{
 						"type": "object",
-						"additionalProperties": false,
 						"properties": {
 							"@id": {
 								"anyOf": [
@@ -885,7 +882,6 @@
 					},
 					{
 						"type": "object",
-						"additionalProperties": false,
 						"properties": {
 							"@reverse": {
 								"type": "string"
@@ -969,7 +965,6 @@
 				"required": [
 					"@graph"
 				],
-				"additionalProperties": false,
 				"description": "A graph object represents a named graph, which MAY include an explicit graph name."
 			},
 			"JsonLdIdMap": {
@@ -1126,7 +1121,6 @@
 				"required": [
 					"@list"
 				],
-				"additionalProperties": false,
 				"description": "A list represents an ordered set of values."
 			},
 			"JsonLdListOrSetItem": {
@@ -1305,7 +1299,6 @@
 				"required": [
 					"@set"
 				],
-				"additionalProperties": false,
 				"description": "A set represents an unordered set of values."
 			},
 			"JsonLdTypeMap": {
@@ -1326,7 +1319,6 @@
 				"anyOf": [
 					{
 						"type": "object",
-						"additionalProperties": false,
 						"properties": {
 							"@value": {
 								"type": [
@@ -1363,7 +1355,6 @@
 					},
 					{
 						"type": "object",
-						"additionalProperties": false,
 						"properties": {
 							"@value": {
 								"type": [
@@ -1390,7 +1381,6 @@
 					},
 					{
 						"type": "object",
-						"additionalProperties": false,
 						"properties": {
 							"@value": {
 								"anyOf": [
@@ -1460,7 +1450,6 @@
 				"required": [
 					"data"
 				],
-				"additionalProperties": false,
 				"description": "The data to be stored."
 			},
 			"VerifiableStorageCreateResponse": {
@@ -1478,7 +1467,6 @@
 					"receipt",
 					"id"
 				],
-				"additionalProperties": false,
 				"description": "The data that was stored."
 			},
 			"VerifiableStorageGetRequest": {
@@ -1495,7 +1483,6 @@
 						"default": true
 					}
 				},
-				"additionalProperties": false,
 				"description": "The body optional param."
 			},
 			"VerifiableStorageGetResponse": {
@@ -1519,7 +1506,6 @@
 				"required": [
 					"receipt"
 				],
-				"additionalProperties": false,
 				"description": "The data that was obtained."
 			},
 			"VerifiableStorageUpdateRequest": {
@@ -1537,7 +1523,6 @@
 						"description": "An updated list of identities that are allowed to modify the item, send an empty list to remove all entries."
 					}
 				},
-				"additionalProperties": false,
 				"description": "The data to be updated."
 			}
 		},

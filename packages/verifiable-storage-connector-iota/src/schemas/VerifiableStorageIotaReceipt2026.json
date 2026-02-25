@@ -43,6 +43,5 @@
 		"network",
 		"objectId",
 		"smartContractId"
-	],
-	"additionalProperties": false
+	]
 }
