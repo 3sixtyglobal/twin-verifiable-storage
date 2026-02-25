@@ -1,5 +1,38 @@
 # @twin.org/verifiable-storage-connector-entity-storage - Changelog
 
+## [0.0.3-next.7](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.6...verifiable-storage-connector-entity-storage-v0.0.3-next.7) (2026-02-25)
+
+
+### Features
+
+* add context id features ([#40](https://github.com/twinfoundation/verifiable-storage/issues/40)) ([260b96a](https://github.com/twinfoundation/verifiable-storage/commit/260b96a8b7d1a26c6c415f2de12e09671ee70220))
+* add data types ([d9ad58a](https://github.com/twinfoundation/verifiable-storage/commit/d9ad58afb0c86b80bcb1229d87d2d7f522b20fcd))
+* add support for allowlist ([#17](https://github.com/twinfoundation/verifiable-storage/issues/17)) ([9341ea6](https://github.com/twinfoundation/verifiable-storage/commit/9341ea6b95dfbf2a5dc70a53e5979d7d0e8b2de6))
+* add ts-to-jsonld-context tool ([6ec770b](https://github.com/twinfoundation/verifiable-storage/commit/6ec770b3f4bb905dcffd73ca2fea033fd5263fdc))
+* add validate-locales ([326384f](https://github.com/twinfoundation/verifiable-storage/commit/326384fe867604e7cd450460a6a56c6c7bdc8f98))
+* context updates ([#44](https://github.com/twinfoundation/verifiable-storage/issues/44)) ([2f92558](https://github.com/twinfoundation/verifiable-storage/commit/2f9255835eddc9620268b6eb3bba723bc38a0591))
+* eslint migration to flat config ([b0a0b85](https://github.com/twinfoundation/verifiable-storage/commit/b0a0b8585a77c1e541531d60b432916b9dc0867e))
+* update allow list name case ([278a787](https://github.com/twinfoundation/verifiable-storage/commit/278a787e96864c95438f87adaac6f2fc8b6bebcd))
+* update context and namespaces ([#42](https://github.com/twinfoundation/verifiable-storage/issues/42)) ([7863833](https://github.com/twinfoundation/verifiable-storage/commit/78638336c5cd7dce0c53aaf598aef603fbed7a9e))
+* update dependencies ([a16a772](https://github.com/twinfoundation/verifiable-storage/commit/a16a77244cb1d312ea5ee74232bcdadd25f2b330))
+* update framework core ([efa612e](https://github.com/twinfoundation/verifiable-storage/commit/efa612e54dbe2d8f223f27ff9e315e08a2fed04b))
+* update schemas ([a44dd16](https://github.com/twinfoundation/verifiable-storage/commit/a44dd164d03b799a38786dae655a42b1a5dcf9cc))
+* update ts-to-schema generation ([cd41401](https://github.com/twinfoundation/verifiable-storage/commit/cd41401dd4e91f111ddf8ae68eb7b40a976fb232))
+* use new dlt packages with latency fix ([#6](https://github.com/twinfoundation/verifiable-storage/issues/6)) ([d81c45b](https://github.com/twinfoundation/verifiable-storage/commit/d81c45bce035864a41bbd498815169d7257fbcb8))
+* use shared store mechanism ([#8](https://github.com/twinfoundation/verifiable-storage/issues/8)) ([8c8ecb8](https://github.com/twinfoundation/verifiable-storage/commit/8c8ecb83d32431952c594ea23d37040991f5b4d3))
+
+
+### Bug Fixes
+
+* add missing rollup plugin ([274bd09](https://github.com/twinfoundation/verifiable-storage/commit/274bd090cf013e49d14c90185ff7248000adcde3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.6 to 0.0.3-next.7
+
 ## [0.0.3-next.6](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.5...verifiable-storage-connector-entity-storage-v0.0.3-next.6) (2026-02-25)
 
 
