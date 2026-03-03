@@ -101,7 +101,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 				clientOptions: TEST_CLIENT_OPTIONS,
 				vaultMnemonicId: TEST_MNEMONIC_NAME,
 				network: TEST_NETWORK,
-				gasBudget: TEST_GAS_BUDGET * 2, // Double the default gas budget
+				gasBudget: TEST_GAS_BUDGET * 2, // Double the gas budget
 				gasStation: {
 					gasStationUrl: TEST_GAS_STATION_URL,
 					gasStationAuthToken: TEST_GAS_STATION_AUTH_TOKEN
