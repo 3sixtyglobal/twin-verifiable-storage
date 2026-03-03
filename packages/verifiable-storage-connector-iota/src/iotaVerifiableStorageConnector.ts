@@ -1,7 +1,5 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type { IotaClient } from "@iota/iota-sdk/client";
-import { Transaction } from "@iota/iota-sdk/transactions";
 import {
 	BaseError,
 	Coerce,
@@ -15,8 +13,13 @@ import {
 	Urn
 } from "@twin.org/core";
 import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
-import { Iota } from "@twin.org/dlt-iota";
-import type { IContractData, ISmartContractDeployments, NetworkTypes } from "@twin.org/dlt-iota";
+import {
+	type IContractData,
+	type ISmartContractDeployments,
+	type NetworkTypes,
+	type IIotaClient,
+	Iota
+} from "@twin.org/dlt-iota";
 import type { ILoggingComponent } from "@twin.org/logging-models";
 import { nameof } from "@twin.org/nameof";
 import { VaultConnectorFactory, type IVaultConnector } from "@twin.org/vault-models";
@@ -73,7 +76,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * The IOTA client.
 	 * @internal
 	 */
-	private readonly _client: IotaClient;
+	private readonly _client: IIotaClient;
 
 	/**
 	 * The name of the contract to use.
@@ -277,7 +280,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		);
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const packageId = this._deployedPackageId;
@@ -405,7 +408,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		const objectId = IotaVerifiableStorageUtils.verifiableStorageIdToObjectId(id);
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const packageId = this._deployedPackageId;
@@ -601,7 +604,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		}
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const objectId = IotaVerifiableStorageUtils.verifiableStorageIdToObjectId(id);
