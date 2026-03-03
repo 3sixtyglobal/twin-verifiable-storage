@@ -1,5 +1,21 @@
 # @twin.org/verifiable-storage-service - Changelog
 
+## [0.0.3-next.8](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-service-v0.0.3-next.7...verifiable-storage-service-v0.0.3-next.8) (2026-03-03)
+
+
+### Miscellaneous Chores
+
+* **verifiable-storage-service:** Synchronize repo versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.7 to 0.0.3-next.8
+  * devDependencies
+    * @twin.org/verifiable-storage-connector-entity-storage bumped from 0.0.3-next.7 to 0.0.3-next.8
+
 ## [0.0.3-next.7](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-service-v0.0.3-next.6...verifiable-storage-service-v0.0.3-next.7) (2026-02-25)
 
 
