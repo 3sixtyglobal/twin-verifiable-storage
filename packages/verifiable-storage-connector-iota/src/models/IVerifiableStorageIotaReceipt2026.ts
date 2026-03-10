@@ -19,31 +19,31 @@ export interface IVerifiableStorageIotaReceipt2026 {
 
 	/**
 	 * The epoch of the transaction.
-	 * json-ld type:schema:Integer
+	 * @json-ld type:schema:Integer
 	 */
 	epoch: number;
 
 	/**
 	 * The digest of the transaction.
-	 * json-ld type:schema:Text
+	 * @json-ld type:schema:Text
 	 */
 	digest: string;
 
 	/**
 	 * The network of the transaction.
-	 * json-ld type:schema:Text
+	 * @json-ld type:schema:Text
 	 */
 	network: string;
 
 	/**
 	 * The object id of the transaction.
-	 * json-ld type:schema:Text
+	 * @json-ld type:schema:Text
 	 */
 	objectId: string;
 
 	/**
 	 * The smart contract id of the transaction.
-	 * json-ld type:schema:Text
+	 * @json-ld type:schema:Text
 	 */
 	smartContractId: string;
 }
