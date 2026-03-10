@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage-connector-entity-storage",
 	"version": "0.0.3-next.8",
-	"description": "Implementation of the Verifiable Storage connector using entity storage",
+	"description": "Entity storage connector that persists verifiable items with allow list controls",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",

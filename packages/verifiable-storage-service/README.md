@@ -1,6 +1,8 @@
 # TWIN Verifiable Storage Service
 
-Verifiable Storage contract implementation and REST endpoint definitions.
+This package provides the service layer for verifiable storage, exposing component logic and REST route definitions that can be mounted in API applications. It translates storage operations into a consistent service interface for upstream consumers.
+
+The package is useful when you need to host verifiable storage capabilities behind HTTP endpoints while retaining the same contracts used by connectors and clients.
 
 ## Installation
 

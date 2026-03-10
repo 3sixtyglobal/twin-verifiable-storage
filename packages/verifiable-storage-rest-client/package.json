@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage-rest-client",
 	"version": "0.0.3-next.8",
-	"description": "Verifiable Storage contract implementation which can connect to REST endpoints",
+	"description": "REST client component for calling verifiable storage service endpoints",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",

@@ -1,6 +1,8 @@
 # TWIN Verifiable Storage Connector IOTA
 
-Implementation of the Verifiable Storage connector using IOTA.
+This package provides an IOTA based connector for verifiable storage operations, including receipt generation tied to on-chain activity. It is designed for scenarios where verification data needs to be anchored to the IOTA network while keeping a consistent connector interface.
+
+It includes contract and integration support for creation, update, retrieval, and removal flows, along with testing support for sponsored transaction paths.
 
 ## Installation
 
@@ -20,10 +22,10 @@ The tests developed are functional tests and need the following components to be
 
 ### Gas Station Setup
 
-To run the comprehensive gas station integration tests, you need to start the gas station Docker container:
+To run the comprehensive gas station integration tests, start the gas station Docker container locally:
 
 ```sh
-docker run -d --name twin-gas-station-test -p 6379:6379 -p 9527:9527 -p 9184:9184 twinfoundation/twin-gas-station-test:latest
+docker run -d --name twin-verifiable-storage-iota -p 6379:6379 -p 9527:9527 -p 9184:9184 -e IOTA_NODE_URL="https://api.testnet.iota.cafe" -e GAS_STATION_AUTH="qEyCL6d9BKKFl/tfDGAKeGFkhUlf7FkqiGV7Xw4JUsI=" twinfoundation/twin-gas-station-test:latest
 ```
 
 This starts:
@@ -42,7 +44,7 @@ TEST_2_MNEMONIC="second test mnemonic phrase here"
 TEST_NODE_MNEMONIC="node mnemonic phrase here"
 ```
 
-You can generate test mnemonics using the TWIN crypto CLI:
+You can generate test mnemonics using the crypto CLI:
 
 ```sh
 npx "@twin.org/crypto-cli" mnemonic --env ./tests/.env.dev --merge-env
@@ -111,7 +113,7 @@ Common solutions:
 
 - Restart the gas station container if connectivity issues occur
 - Regenerate test mnemonics if wallet-related errors appear
-- Check Docker logs: `docker logs twin-gas-station-test`
+- Check Docker logs: `docker logs twin-verifiable-storage-iota`
 
 ## Examples
 

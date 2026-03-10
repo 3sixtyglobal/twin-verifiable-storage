@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage-service",
 	"version": "0.0.3-next.8",
-	"description": "Verifiable Storage contract implementation and REST endpoint definitions",
+	"description": "Service component and REST routes that expose verifiable storage operations",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",

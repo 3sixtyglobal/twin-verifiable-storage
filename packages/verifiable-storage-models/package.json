@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage-models",
 	"version": "0.0.3-next.8",
-	"description": "Contains models and classes for use with verifiable storage",
+	"description": "Shared interfaces, API payload models, and connector factory contracts for verifiable storage",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",

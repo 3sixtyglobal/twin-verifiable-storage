@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage",
 	"version": "0.0.0",
-	"description": "Verifiable Storage",
+	"description": "Modular components for modelling, exposing, and consuming verifiable storage operations",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git"

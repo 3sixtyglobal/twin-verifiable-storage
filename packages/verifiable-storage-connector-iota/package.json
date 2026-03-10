@@ -1,7 +1,7 @@
 {
 	"name": "@twin.org/verifiable-storage-connector-iota",
 	"version": "0.0.3-next.8",
-	"description": "Implementation of the Verifiable Storage connector using IOTA",
+	"description": "IOTA connector that anchors verifiable storage operations on-chain and returns receipts",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",
