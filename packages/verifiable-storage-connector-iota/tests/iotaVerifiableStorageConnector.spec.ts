@@ -270,6 +270,49 @@ describe("IotaVerifiableStorageConnector", () => {
 		);
 	});
 
+	test("Can update data without affecting the allowlist", async () => {
+		const data = Converter.utf8ToBytes("Hello, data-only update test!");
+		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const itemId = result.id;
+
+		// Verify initial allowlist
+		const getResult1 = await connector.get(itemId);
+		expect(getResult1.allowList).toEqual([TEST_ADDRESS, TEST_ADDRESS_2]);
+
+		// Update data only (no allowList parameter) — allowlist must be preserved
+		const updateData = Converter.utf8ToBytes("Updated data, allowlist should be intact!");
+		await connector.update(TEST_USER_IDENTITY_ID, itemId, updateData);
+
+		const getResult2 = await connector.get(itemId);
+		expect(getResult2.data).toEqual(updateData);
+		expect(getResult2.allowList).toEqual([TEST_ADDRESS, TEST_ADDRESS_2]);
+
+		// Verify the second user can still update (proves they're still in allowlist)
+		const updateData2 = Converter.utf8ToBytes("User 2 can still update!");
+		await connector.update(TEST_USER_IDENTITY_ID_2, itemId, updateData2);
+
+		const getResult3 = await connector.get(itemId);
+		expect(getResult3.data).toEqual(updateData2);
+	});
+
+	test("Can replace allowlist with new addresses when explicitly provided", async () => {
+		const data = Converter.utf8ToBytes("Replace allowlist test!");
+		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const itemId = result.id;
+
+		// Verify initial allowlist contains creator and addr2
+		const getResult1 = await connector.get(itemId);
+		expect(getResult1.allowList).toEqual([TEST_ADDRESS, TEST_ADDRESS_2]);
+
+		// Update with a new address — should replace, not merge
+		const newAddress = "0x0000000000000000000000000000000000000000000000000000000000000001";
+		await connector.update(TEST_USER_IDENTITY_ID, itemId, undefined, [newAddress]);
+
+		const getResult2 = await connector.get(itemId);
+		// Should contain creator + new address only, addr2 is removed
+		expect(getResult2.allowList).toEqual([TEST_ADDRESS, newAddress]);
+	});
+
 	test("Can update a verifiable item when user is in allow list, then fail when they are removed", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Allow List Removal!");
 		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);

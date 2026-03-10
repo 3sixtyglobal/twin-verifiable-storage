@@ -110,13 +110,16 @@ module verifiable_storage::verifiable_storage {
         };
         storage.epoch = epoch;
 
-        // Only update allowlist if the length > 0, always including the creator
-        let mut allowlist = vector::empty<address>();
-        vector::push_back(&mut allowlist, storage.creator);
-        if (!remove_allowlist) {
-            append_unique(&mut allowlist, &updated_allowlist, storage.max_allowlist_size);
+        // Only modify allowlist when the caller signals intent to change it.
+        // If updated_allowlist is empty and remove_allowlist is false, preserve the existing allowlist.
+        if (remove_allowlist || vector::length(&updated_allowlist) > 0) {
+            let mut allowlist = vector::empty<address>();
+            vector::push_back(&mut allowlist, storage.creator);
+            if (!remove_allowlist) {
+                append_unique(&mut allowlist, &updated_allowlist, storage.max_allowlist_size);
+            };
+            storage.allowlist = allowlist;
         };
-        storage.allowlist = allowlist;
 
         // Emit event for storage update
         event::emit(

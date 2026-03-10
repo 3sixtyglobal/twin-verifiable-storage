@@ -420,7 +420,6 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 					txb.object(objectId),
 					txb.pure.string(Is.empty(data) ? "" : Converter.bytesToBase64(data)),
 					txb.pure.vector("address", allowList ?? []),
-					// If the allow list is an array with no elements, we need to set the remove_allowlist flag
 					txb.pure.bool(Is.array(allowList) && allowList.length === 0)
 				]
 			});
