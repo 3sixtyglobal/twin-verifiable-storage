@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-connector-iota - Examples
+# Examples
 
 ## Note
 

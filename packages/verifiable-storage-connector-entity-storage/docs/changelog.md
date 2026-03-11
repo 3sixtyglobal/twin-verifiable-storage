@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-connector-entity-storage - Changelog
+# Changelog
 
 ## [0.0.3-next.8](https://github.com/twinfoundation/verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.7...verifiable-storage-connector-entity-storage-v0.0.3-next.8) (2026-03-03)
 
