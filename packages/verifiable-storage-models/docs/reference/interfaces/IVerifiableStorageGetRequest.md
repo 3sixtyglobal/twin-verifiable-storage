@@ -4,7 +4,7 @@ Get the verifiable storage item.
 
 ## Properties
 
-### pathParams
+### pathParams {#pathparams}
 
 > **pathParams**: `object`
 
@@ -18,7 +18,7 @@ The id of the verifiable storage item to resolve.
 
 ***
 
-### body?
+### body? {#body}
 
 > `optional` **body**: `object`
 
@@ -30,20 +30,8 @@ The body optional param.
 
 The flag to include the data.
 
-##### Default
-
-```ts
-true
-```
-
 #### includeAllowList?
 
 > `optional` **includeAllowList**: `boolean`
 
 The flag to include the allow list.
-
-##### Default
-
-```ts
-true
-```

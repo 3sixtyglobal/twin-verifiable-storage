@@ -4,7 +4,7 @@ Response to getting the verifiable storage item.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 

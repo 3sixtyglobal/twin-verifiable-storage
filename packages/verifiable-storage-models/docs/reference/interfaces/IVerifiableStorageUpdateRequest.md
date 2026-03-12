@@ -4,7 +4,7 @@ Update the data and return the receipt.
 
 ## Properties
 
-### pathParams
+### pathParams {#pathparams}
 
 > **pathParams**: `object`
 
@@ -18,7 +18,7 @@ The id of the verifiable storage item to update.
 
 ***
 
-### body
+### body {#body}
 
 > **body**: `object`
 

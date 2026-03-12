@@ -14,7 +14,7 @@ Utility functions for the iota verifiable storage.
 
 ## Properties
 
-### CLASS\_NAME
+### CLASS\_NAME {#class_name}
 
 > `readonly` `static` **CLASS\_NAME**: `string`
 
@@ -22,7 +22,7 @@ Runtime name for the class.
 
 ## Methods
 
-### verifiableStorageIdToObjectId()
+### verifiableStorageIdToObjectId() {#verifiablestorageidtoobjectid}
 
 > `static` **verifiableStorageIdToObjectId**(`verifiableStorageIdUrn`): `string`
 
@@ -48,7 +48,7 @@ GeneralError if the verifiable storage id is invalid.
 
 ***
 
-### verifiableStorageIdToPackageId()
+### verifiableStorageIdToPackageId() {#verifiablestorageidtopackageid}
 
 > `static` **verifiableStorageIdToPackageId**(`verifiableStorageIdUrn`): `string`
 

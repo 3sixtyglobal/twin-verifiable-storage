@@ -4,7 +4,7 @@ Store the data and return the verifiable storage item id.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 
@@ -27,12 +27,6 @@ The list of identities that are allowed to modify the item.
 > `optional` **maxAllowListSize**: `number`
 
 The maximum size of the allow list.
-
-##### Default
-
-```ts
-100
-```
 
 #### namespace?
 

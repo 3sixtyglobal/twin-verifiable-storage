@@ -4,7 +4,7 @@ Remove the verifiable storage item.
 
 ## Properties
 
-### pathParams
+### pathParams {#pathparams}
 
 > **pathParams**: `object`
 

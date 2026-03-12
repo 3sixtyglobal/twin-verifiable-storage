@@ -8,59 +8,35 @@ Configuration interface for IOTA VerifiableStorageConnector.
 
 ## Properties
 
-### contractName?
+### contractName? {#contractname}
 
 > `optional` **contractName**: `string`
 
 The name of the contract to use.
 
-#### Default
-
-```ts
-"verifiable-storage"
-```
-
 ***
 
-### walletAddressIndex?
+### walletAddressIndex? {#walletaddressindex}
 
 > `optional` **walletAddressIndex**: `number`
 
 The wallet address index to use when deriving addresses.
 
-#### Default
-
-```ts
-0
-```
-
 ***
 
-### packageControllerAddressIndex?
+### packageControllerAddressIndex? {#packagecontrolleraddressindex}
 
 > `optional` **packageControllerAddressIndex**: `number`
 
 The package controller address index to use when creating package.
 
-#### Default
-
-```ts
-0
-```
-
 ***
 
-### enableCostLogging?
+### enableCostLogging? {#enablecostlogging}
 
 > `optional` **enableCostLogging**: `boolean`
 
 Enable cost logging.
-
-#### Default
-
-```ts
-false
-```
 
 #### Overrides
 

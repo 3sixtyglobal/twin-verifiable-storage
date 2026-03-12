@@ -4,7 +4,7 @@ Configuration for the Verifiable Storage Service.
 
 ## Properties
 
-### defaultNamespace?
+### defaultNamespace? {#defaultnamespace}
 
 > `optional` **defaultNamespace**: `string`
 

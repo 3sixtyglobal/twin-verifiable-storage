@@ -28,7 +28,7 @@ The options for the service.
 
 ## Properties
 
-### CLASS\_NAME
+### CLASS\_NAME {#class_name}
 
 > `readonly` `static` **CLASS\_NAME**: `string`
 
@@ -36,7 +36,7 @@ Runtime name for the class.
 
 ## Methods
 
-### className()
+### className() {#classname}
 
 > **className**(): `string`
 
@@ -54,7 +54,7 @@ The class name of the component.
 
 ***
 
-### create()
+### create() {#create}
 
 > **create**(`data`, `allowList?`, `options?`, `namespace?`, `controller?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
@@ -108,7 +108,7 @@ The id of the created verifiable storage item.
 
 ***
 
-### update()
+### update() {#update}
 
 > **update**(`id`, `data?`, `allowList?`, `controller?`): `Promise`\<`IJsonLdNodeObject`\>
 
@@ -152,7 +152,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
@@ -194,7 +194,7 @@ The data for the verifiable storage item.
 
 ***
 
-### remove()
+### remove() {#remove}
 
 > **remove**(`id`, `controller?`): `Promise`\<`void`\>
 

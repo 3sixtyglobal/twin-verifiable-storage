@@ -8,7 +8,7 @@ Interface describing a Verifiable Storage component.
 
 ## Methods
 
-### create()
+### create() {#create}
 
 > **create**(`data`, `allowList?`, `options?`, `namespace?`, `controller?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
@@ -58,7 +58,7 @@ The id of the stored verifiable item in urn format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
 > **update**(`id`, `data?`, `allowList?`, `controller?`): `Promise`\<`IJsonLdNodeObject`\>
 
@@ -98,7 +98,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
@@ -136,7 +136,7 @@ The data for the item and the receipt.
 
 ***
 
-### remove()
+### remove() {#remove}
 
 > **remove**(`id`, `controller?`): `Promise`\<`void`\>
 

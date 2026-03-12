@@ -8,7 +8,7 @@ Response to storing the verifiable storage item.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 

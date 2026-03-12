@@ -14,7 +14,7 @@ Handle all the data types for verifiable storage connector entity storage.
 
 ## Methods
 
-### registerTypes()
+### registerTypes() {#registertypes}
 
 > `static` **registerTypes**(): `void`
 

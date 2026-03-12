@@ -28,7 +28,7 @@ The options for the class.
 
 ## Properties
 
-### NAMESPACE
+### NAMESPACE {#namespace}
 
 > `static` **NAMESPACE**: `string` = `"entity-storage"`
 
@@ -36,7 +36,7 @@ The namespace supported by the verifiable storage connector.
 
 ***
 
-### CLASS\_NAME
+### CLASS\_NAME {#class_name}
 
 > `readonly` `static` **CLASS\_NAME**: `string`
 
@@ -44,7 +44,7 @@ Runtime name for the class.
 
 ## Methods
 
-### className()
+### className() {#classname}
 
 > **className**(): `string`
 
@@ -62,7 +62,7 @@ The class name of the component.
 
 ***
 
-### create()
+### create() {#create}
 
 > **create**(`controllerIdentity`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
@@ -110,7 +110,7 @@ The id of the stored verifiable item in URN format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
 > **update**(`controllerIdentity`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
 
@@ -154,7 +154,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
@@ -196,7 +196,7 @@ The data for the item, the receipt and the allow list.
 
 ***
 
-### remove()
+### remove() {#remove}
 
 > **remove**(`controllerIdentity`, `id`): `Promise`\<`void`\>
 

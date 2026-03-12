@@ -8,7 +8,7 @@ Interface describing a verifiable storage connector.
 
 ## Methods
 
-### create()
+### create() {#create}
 
 > **create**(`controllerIdentity`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
@@ -52,7 +52,7 @@ The id of the stored verifiable item in urn format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
 > **update**(`controllerIdentity`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
 
@@ -92,7 +92,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
@@ -130,7 +130,7 @@ The data for the item, the receipt and the allow list.
 
 ***
 
-### remove()
+### remove() {#remove}
 
 > **remove**(`controllerIdentity`, `id`): `Promise`\<`void`\>
 

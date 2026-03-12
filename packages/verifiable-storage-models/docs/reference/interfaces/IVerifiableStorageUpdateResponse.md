@@ -4,7 +4,7 @@ Response to updating the verifiable storage item.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `IJsonLdNodeObject`
 
