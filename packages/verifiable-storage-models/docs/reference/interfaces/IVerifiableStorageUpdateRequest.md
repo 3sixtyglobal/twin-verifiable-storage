@@ -26,12 +26,12 @@ The data to be updated.
 
 #### data?
 
-> `optional` **data**: `string`
+> `optional` **data?**: `string`
 
 The data which is a string serialized as base64, leave empty if just updating the allow list.
 
 #### allowList?
 
-> `optional` **allowList**: `string`[]
+> `optional` **allowList?**: `string`[]
 
 An updated list of identities that are allowed to modify the item, send an empty list to remove all entries.

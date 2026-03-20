@@ -20,18 +20,30 @@ The id of the verifiable storage item to resolve.
 
 ### body? {#body}
 
-> `optional` **body**: `object`
+> `optional` **body?**: `object`
 
 The body optional param.
 
 #### includeData?
 
-> `optional` **includeData**: `boolean`
+> `optional` **includeData?**: `boolean`
 
 The flag to include the data.
 
+##### Default
+
+```ts
+true
+```
+
 #### includeAllowList?
 
-> `optional` **includeAllowList**: `boolean`
+> `optional` **includeAllowList?**: `boolean`
 
 The flag to include the allow list.
+
+##### Default
+
+```ts
+true
+```
