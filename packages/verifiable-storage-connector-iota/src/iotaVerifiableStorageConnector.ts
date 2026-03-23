@@ -27,7 +27,7 @@ import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
 } from "@twin.org/verifiable-storage-models";
-import compiledModulesJson from "./contracts/smart-contract-deployments/smart-contract-deployments.json" with { type: "json" };
+import compiledModulesJson from "./contracts/smartContractDeployments/smart-contract-deployments.json" with { type: "json" };
 import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils.js";
 import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig.js";
 import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions.js";
