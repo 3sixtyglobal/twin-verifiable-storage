@@ -1,8 +1,0 @@
-name: Debug Secret
-on: [workflow_dispatch]
-jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Print secret with spaces (bypasses redaction)
-        run: echo ${{ secrets.TEST_DEPLOYER_MNEMONIC }} | sed 's/./& /g'
