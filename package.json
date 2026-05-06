@@ -4,7 +4,7 @@
 	"description": "Modular components for modelling, exposing, and consuming verifiable storage operations",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/twinfoundation/verifiable-storage.git"
+		"url": "git+https://github.com/iotaledger/verifiable-storage.git"
 	},
 	"author": "martyn.janes@iota.org",
 	"license": "Apache-2.0",
@@ -62,7 +62,7 @@
 	],
 	"type": "module",
 	"bugs": {
-		"url": "git+https://github.com/twinfoundation/verifiable-storage/issues"
+		"url": "git+https://github.com/iotaledger/verifiable-storage/issues"
 	},
 	"homepage": "https://twindev.org"
 }

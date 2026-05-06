@@ -4,7 +4,7 @@
 	"description": "Service component and REST routes that expose verifiable storage operations",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/twinfoundation/verifiable-storage.git",
+		"url": "git+https://github.com/iotaledger/verifiable-storage.git",
 		"directory": "packages/verifiable-storage-service"
 	},
 	"contributors": [
@@ -88,7 +88,7 @@
 		"business-logic"
 	],
 	"bugs": {
-		"url": "git+https://github.com/twinfoundation/verifiable-storage/issues"
+		"url": "git+https://github.com/iotaledger/verifiable-storage/issues"
 	},
 	"homepage": "https://twindev.org"
 }
