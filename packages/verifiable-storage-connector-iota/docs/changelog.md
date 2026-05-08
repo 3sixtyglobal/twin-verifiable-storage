@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.0.3-next.9](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.8...verifiable-storage-connector-iota-v0.0.3-next.9) (2026-05-08)
+
+
+### Bug Fixes
+
+* preserve existing allowlist when update_data is called without allowlist changes ([#55](https://github.com/iotaledger/twin-verifiable-storage/issues/55)) ([d134122](https://github.com/iotaledger/twin-verifiable-storage/commit/d13412241c9409245ca794ac61765146cef08ebd))
+* sync mainnet deployedPackageId with on-chain state ([#57](https://github.com/iotaledger/twin-verifiable-storage/issues/57)) ([8225dbb](https://github.com/iotaledger/twin-verifiable-storage/commit/8225dbb780603fd80e98e372bdd64de7497362ac))
+* update mainnet deployedPackageId to current on-chain state ([#58](https://github.com/iotaledger/twin-verifiable-storage/issues/58)) ([2f37888](https://github.com/iotaledger/twin-verifiable-storage/commit/2f37888f36d2c88d42ba20a3ae4b671a1b15898e))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.8 to 0.0.3-next.9
+
 ## [0.0.3-next.8](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.7...verifiable-storage-connector-iota-v0.0.3-next.8) (2026-03-03)
 
 
