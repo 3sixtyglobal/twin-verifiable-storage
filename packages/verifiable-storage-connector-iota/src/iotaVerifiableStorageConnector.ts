@@ -124,8 +124,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 		this._config = options.config;
 
-		this._deploymentConfig =
-			options.deploymentConfig ?? (compiledModulesJson as unknown as ISmartContractDeployments);
+		this._deploymentConfig = options.deploymentConfig ?? compiledModulesJson;
 
 		this._contractName = this._config.contractName ?? "verifiable-storage";
 		Guards.stringValue(
@@ -295,13 +294,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			const result = await Iota.prepareAndPostTransaction(
@@ -310,7 +308,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._logging,
 				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "store" : undefined
@@ -424,13 +422,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			const result = await Iota.prepareAndPostTransaction(
@@ -439,7 +436,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._logging,
 				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "update" : undefined
@@ -610,13 +607,12 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			const packageId = IotaVerifiableStorageUtils.verifiableStorageIdToPackageId(id);
 			const moduleName = this.getModuleName();
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controllerIdentity);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			txb.moveCall({
@@ -630,7 +626,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._logging,
 				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "remove" : undefined
@@ -667,27 +663,6 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				Iota.extractPayloadError(error)
 			);
 		}
-	}
-
-	/**
-	 * Get the package controller's address.
-	 * @param identity The identity of the user to access the vault keys.
-	 * @returns The controller's address.
-	 * @internal
-	 */
-	private async getPackageControllerAddress(identity: string): Promise<string> {
-		const seed = await Iota.getSeed(this._config, this._vaultConnector, identity);
-		const walletAddressIndex = this._config.packageControllerAddressIndex ?? 0;
-		const addresses = Iota.getAddresses(
-			seed,
-			this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-			0,
-			walletAddressIndex,
-			1,
-			false
-		);
-
-		return addresses[0];
 	}
 
 	/**

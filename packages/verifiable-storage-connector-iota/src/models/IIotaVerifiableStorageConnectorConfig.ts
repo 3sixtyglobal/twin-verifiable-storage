@@ -13,6 +13,12 @@ export interface IIotaVerifiableStorageConnectorConfig extends IIotaConfig {
 	contractName?: string;
 
 	/**
+	 * The account address index to use when deriving addresses.
+	 * @default 0
+	 */
+	accountAddressIndex?: number;
+
+	/**
 	 * The wallet address index to use when deriving addresses.
 	 * @default 0
 	 */

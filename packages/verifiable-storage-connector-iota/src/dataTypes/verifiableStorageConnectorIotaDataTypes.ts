@@ -1,6 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { DataTypeHandlerFactory, type IJsonSchema } from "@twin.org/data-core";
+import { DataTypeHandlerFactory } from "@twin.org/data-core";
 import { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
 import { IotaVerifiableStorageTypes } from "../models/iotaVerifiableStorageTypes.js";
 import VerifiableStorageIotaReceipt2026Schema from "../schemas/VerifiableStorageIotaReceipt2026.json" with { type: "json" };
@@ -19,7 +19,7 @@ export class VerifiableStorageConnectorIotaDataTypes {
 				namespace: VerifiableStorageContexts.Namespace,
 				type: IotaVerifiableStorageTypes.IotaReceipt2026,
 				defaultValue: {},
-				jsonSchema: async () => VerifiableStorageIotaReceipt2026Schema as IJsonSchema
+				jsonSchema: async () => VerifiableStorageIotaReceipt2026Schema
 			})
 		);
 	}

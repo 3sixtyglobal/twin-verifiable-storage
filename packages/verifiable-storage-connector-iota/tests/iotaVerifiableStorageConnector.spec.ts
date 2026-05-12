@@ -11,8 +11,8 @@ import {
 	TEST_EXPLORER_URL,
 	TEST_MNEMONIC_NAME,
 	TEST_NETWORK,
-	TEST_USER_IDENTITY_ID,
-	TEST_USER_IDENTITY_ID_2
+	TEST_USER_IDENTITY,
+	TEST_USER_IDENTITY_2
 } from "./setupTestEnv.js";
 import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector.js";
 import type { IVerifiableStorageIotaReceipt2026 } from "../src/models/IVerifiableStorageIotaReceipt2026.js";
@@ -51,14 +51,14 @@ describe("IotaVerifiableStorageConnector", () => {
 			deploymentConfig: getTestDeploymentConfig()
 		});
 		const data = Converter.utf8ToBytes("Test data");
-		await expect(unstartedConnector.create(TEST_USER_IDENTITY_ID, data)).rejects.toThrow(
+		await expect(unstartedConnector.create(TEST_USER_IDENTITY, data)).rejects.toThrow(
 			"connectorNotStarted"
 		);
 	});
 
 	test("Can store a verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const result = await connector.create(TEST_USER_IDENTITY, data);
 		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		expect(urn.namespaceIdentifier()).toEqual("verifiable");
@@ -95,7 +95,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can retrieve a verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Retrieval!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const result = await connector.create(TEST_USER_IDENTITY, data);
 		const itemId = result.id;
 		const createReceipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 		const digest = createReceipt.digest;
@@ -121,11 +121,11 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can update a verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update!");
-		const createResult = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const createResult = await connector.create(TEST_USER_IDENTITY, data);
 		const itemId = createResult.id;
 
 		const updateData = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
-		const result = await connector.update(TEST_USER_IDENTITY_ID, itemId, updateData);
+		const result = await connector.update(TEST_USER_IDENTITY, itemId, updateData);
 
 		const receipt = result as unknown as IVerifiableStorageIotaReceipt2026;
 
@@ -152,13 +152,13 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can retrieve an updated verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update Retrieval!");
-		const createResult = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const createResult = await connector.create(TEST_USER_IDENTITY, data);
 		const itemId = createResult.id;
 
 		const updateData = Converter.utf8ToBytes(
 			"Hello, IOTA Verifiable Storage Updated for Retrieval!"
 		);
-		const updateResult = await connector.update(TEST_USER_IDENTITY_ID, itemId, updateData);
+		const updateResult = await connector.update(TEST_USER_IDENTITY, itemId, updateData);
 		const updateReceipt = updateResult as unknown as IVerifiableStorageIotaReceipt2026;
 		const digest = updateReceipt.digest;
 
@@ -183,16 +183,16 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can remove a verifiable item", async () => {
 		const data = Converter.utf8ToBytes("Data to be deleted");
-		const storeResult = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const storeResult = await connector.create(TEST_USER_IDENTITY, data);
 		const getResult = await connector.get(storeResult.id);
 		expect(getResult.data).toEqual(data);
-		await connector.remove(TEST_USER_IDENTITY_ID, storeResult.id);
+		await connector.remove(TEST_USER_IDENTITY, storeResult.id);
 		await expect(connector.get(storeResult.id)).rejects.toThrow("objectNotFound");
 	});
 
 	test("Can store a verifiable item with additional allow list", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage with Allow List!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const result = await connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		const specificParts = urn.namespaceSpecificParts();
@@ -224,7 +224,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can fail to update a verifiable item when user is not in allow list", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Access Control Test!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [
+		const result = await connector.create(TEST_USER_IDENTITY, data, [
 			"0x0000000000000000000000000000000000000000000000000000000000000000"
 		]);
 		const itemId = result.id;
@@ -237,14 +237,14 @@ describe("IotaVerifiableStorageConnector", () => {
 		);
 
 		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
-		await expect(connector.update(TEST_USER_IDENTITY_ID_2, itemId, data2)).rejects.toThrow(
+		await expect(connector.update(TEST_USER_IDENTITY_2, itemId, data2)).rejects.toThrow(
 			"notInAllowList"
 		);
 	});
 
 	test("Can update a verifiable item when user is in allow list", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Allow List Update!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const result = await connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 		const itemId = result.id;
 		const urn = Urn.fromValidString(result.id);
 		const specificParts = urn.namespaceSpecificParts();
@@ -255,7 +255,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		);
 
 		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated by User 1!");
-		const result2 = await connector.update(TEST_USER_IDENTITY_ID_2, itemId, data2);
+		const result2 = await connector.update(TEST_USER_IDENTITY_2, itemId, data2);
 
 		const receipt = result2 as unknown as IVerifiableStorageIotaReceipt2026;
 		expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
@@ -272,7 +272,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can update data without affecting the allowlist", async () => {
 		const data = Converter.utf8ToBytes("Hello, data-only update test!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const result = await connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 		const itemId = result.id;
 
 		// Verify initial allowlist
@@ -281,7 +281,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 		// Update data only (no allowList parameter) — allowlist must be preserved
 		const updateData = Converter.utf8ToBytes("Updated data, allowlist should be intact!");
-		await connector.update(TEST_USER_IDENTITY_ID, itemId, updateData);
+		await connector.update(TEST_USER_IDENTITY, itemId, updateData);
 
 		const getResult2 = await connector.get(itemId);
 		expect(getResult2.data).toEqual(updateData);
@@ -289,7 +289,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 		// Verify the second user can still update (proves they're still in allowlist)
 		const updateData2 = Converter.utf8ToBytes("User 2 can still update!");
-		await connector.update(TEST_USER_IDENTITY_ID_2, itemId, updateData2);
+		await connector.update(TEST_USER_IDENTITY_2, itemId, updateData2);
 
 		const getResult3 = await connector.get(itemId);
 		expect(getResult3.data).toEqual(updateData2);
@@ -297,7 +297,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can replace allowlist with new addresses when explicitly provided", async () => {
 		const data = Converter.utf8ToBytes("Replace allowlist test!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const result = await connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 		const itemId = result.id;
 
 		// Verify initial allowlist contains creator and addr2
@@ -306,7 +306,7 @@ describe("IotaVerifiableStorageConnector", () => {
 
 		// Update with a new address — should replace, not merge
 		const newAddress = "0x0000000000000000000000000000000000000000000000000000000000000001";
-		await connector.update(TEST_USER_IDENTITY_ID, itemId, undefined, [newAddress]);
+		await connector.update(TEST_USER_IDENTITY, itemId, undefined, [newAddress]);
 
 		const getResult2 = await connector.get(itemId);
 		// Should contain creator + new address only, addr2 is removed
@@ -315,31 +315,31 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can update a verifiable item when user is in allow list, then fail when they are removed", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Allow List Removal!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2]);
+		const result = await connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 		const itemId = result.id;
 
 		const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
 		// Updating but passing an empty allow list, which will remove user 1
-		await connector.update(TEST_USER_IDENTITY_ID_2, itemId, data2, []);
+		await connector.update(TEST_USER_IDENTITY_2, itemId, data2, []);
 
 		// Now try to update again, which should fail
-		await expect(connector.update(TEST_USER_IDENTITY_ID_2, itemId, data2)).rejects.toThrow(
+		await expect(connector.update(TEST_USER_IDENTITY_2, itemId, data2)).rejects.toThrow(
 			"notInAllowList"
 		);
 	});
 
 	test("Can not remove a verifiable item unless you are the creator", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Creator Test!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data);
+		const result = await connector.create(TEST_USER_IDENTITY, data);
 		const itemId = result.id;
 
-		await expect(connector.remove(TEST_USER_IDENTITY_ID_2, itemId)).rejects.toThrow("notCreator");
+		await expect(connector.remove(TEST_USER_IDENTITY_2, itemId)).rejects.toThrow("notCreator");
 	});
 
 	test("Can fail to create verifiable item when the allow list exceeds the maximum size", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Max Size Test!");
 		await expect(
-			connector.create(TEST_USER_IDENTITY_ID, data, [TEST_ADDRESS_2], {
+			connector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2], {
 				maxAllowListSize: 1
 			})
 		).rejects.toThrow("allowListTooBig");
@@ -347,11 +347,11 @@ describe("IotaVerifiableStorageConnector", () => {
 
 	test("Can fail to update verifiable item when the allow list exceeds the maximum size", async () => {
 		const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Update Max Size Test!");
-		const result = await connector.create(TEST_USER_IDENTITY_ID, data, [], {
+		const result = await connector.create(TEST_USER_IDENTITY, data, [], {
 			maxAllowListSize: 1
 		});
 		await expect(
-			connector.update(TEST_USER_IDENTITY_ID, result.id, data, [TEST_ADDRESS_2])
+			connector.update(TEST_USER_IDENTITY, result.id, data, [TEST_ADDRESS_2])
 		).rejects.toThrow("allowListTooBig");
 	});
 });

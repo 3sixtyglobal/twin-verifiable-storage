@@ -14,8 +14,8 @@ import {
 	TEST_GAS_STATION_URL,
 	TEST_MNEMONIC_NAME,
 	TEST_NETWORK,
-	TEST_USER_IDENTITY_ID,
-	TEST_USER_IDENTITY_ID_2
+	TEST_USER_IDENTITY,
+	TEST_USER_IDENTITY_2
 } from "./setupTestEnv.js";
 import { IotaVerifiableStorageConnector } from "../src/iotaVerifiableStorageConnector.js";
 import type { IIotaVerifiableStorageConnectorConfig } from "../src/models/IIotaVerifiableStorageConnectorConfig.js";
@@ -131,14 +131,14 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 				deploymentConfig: getTestDeploymentConfig()
 			});
 			const data = Converter.utf8ToBytes("Test data");
-			await expect(unstartedConnector.create(TEST_USER_IDENTITY_ID, data)).rejects.toThrow(
+			await expect(unstartedConnector.create(TEST_USER_IDENTITY, data)).rejects.toThrow(
 				"connectorNotStarted"
 			);
 		});
 
 		test("Can store a verifiable item using gas station", async () => {
 			const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage with Gas Station!");
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const itemId = result.id;
 			const urn = Urn.fromValidString(result.id);
 			expect(urn.namespaceIdentifier()).toEqual("verifiable");
@@ -181,14 +181,11 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			// Create with regular connector
 			const regularData = Converter.utf8ToBytes("Regular verifiable storage item");
-			const regularResult = await regularConnector.create(TEST_USER_IDENTITY_ID, regularData);
+			const regularResult = await regularConnector.create(TEST_USER_IDENTITY, regularData);
 
 			// Create with gas station connector
 			const gasStationData = Converter.utf8ToBytes("Gas station verifiable storage item");
-			const gasStationResult = await gasStationConnector.create(
-				TEST_USER_IDENTITY_ID,
-				gasStationData
-			);
+			const gasStationResult = await gasStationConnector.create(TEST_USER_IDENTITY, gasStationData);
 
 			expect(regularResult.id).toBeDefined();
 			expect(gasStationResult.id).toBeDefined();
@@ -208,7 +205,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const data = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage with Gas Station for Retrieval!"
 			);
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const itemId = result.id;
 			const createReceipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 			const digest = createReceipt.digest;
@@ -236,13 +233,13 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const data = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage with Gas Station for Update!"
 			);
-			const createResult = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const createResult = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const itemId = createResult.id;
 
 			const updateData = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage Updated with Gas Station!"
 			);
-			const result = await gasStationConnector.update(TEST_USER_IDENTITY_ID, itemId, updateData);
+			const result = await gasStationConnector.update(TEST_USER_IDENTITY, itemId, updateData);
 
 			const receipt = result as unknown as IVerifiableStorageIotaReceipt2026;
 
@@ -267,17 +264,13 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const data = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage with Gas Station for Update Retrieval!"
 			);
-			const createResult = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const createResult = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const itemId = createResult.id;
 
 			const updateData = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage Updated with Gas Station for Retrieval!"
 			);
-			const updateResult = await gasStationConnector.update(
-				TEST_USER_IDENTITY_ID,
-				itemId,
-				updateData
-			);
+			const updateResult = await gasStationConnector.update(TEST_USER_IDENTITY, itemId, updateData);
 			const updateReceipt = updateResult as unknown as IVerifiableStorageIotaReceipt2026;
 			const digest = updateReceipt.digest;
 
@@ -304,18 +297,16 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 		test("Can remove a verifiable item using gas station", async () => {
 			const data = Converter.utf8ToBytes("Data to be deleted with gas station");
-			const storeResult = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const storeResult = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const getResult = await gasStationConnector.get(storeResult.id);
 			expect(getResult.data).toEqual(data);
-			await gasStationConnector.remove(TEST_USER_IDENTITY_ID, storeResult.id);
+			await gasStationConnector.remove(TEST_USER_IDENTITY, storeResult.id);
 			await expect(gasStationConnector.get(storeResult.id)).rejects.toThrow("objectNotFound");
 		}, 30000);
 
 		test("Can store a verifiable item with additional allow list using gas station", async () => {
 			const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage with Allow List!");
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data, [
-				TEST_ADDRESS_2
-			]);
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 			const testItemId = result.id;
 			const urn = Urn.fromValidString(result.id);
 			const specificParts = urn.namespaceSpecificParts();
@@ -344,9 +335,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const data = Converter.utf8ToBytes(
 				"Hello, IOTA Verifiable Storage with Gas Station for Allow List Update!"
 			);
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data, [
-				TEST_ADDRESS_2
-			]);
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data, [TEST_ADDRESS_2]);
 			const testItemId = result.id;
 			const urn = Urn.fromValidString(result.id);
 			const specificParts = urn.namespaceSpecificParts();
@@ -357,7 +346,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			);
 
 			const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated by User 1!");
-			const result2 = await gasStationConnector.update(TEST_USER_IDENTITY_ID_2, testItemId, data2);
+			const result2 = await gasStationConnector.update(TEST_USER_IDENTITY_2, testItemId, data2);
 
 			const receipt = result2 as unknown as IVerifiableStorageIotaReceipt2026;
 			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
@@ -395,7 +384,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			// The gas station unavailability should be detected during storage operations
 			const testData = Converter.utf8ToBytes("Test data for gas station error");
-			await expect(connector.create(TEST_USER_IDENTITY_ID, testData)).rejects.toThrow();
+			await expect(connector.create(TEST_USER_IDENTITY, testData)).rejects.toThrow();
 		}, 20000);
 
 		test("Should handle invalid gas station auth token", async () => {
@@ -419,12 +408,12 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			// The invalid auth token should be detected during storage operations
 			const testData = Converter.utf8ToBytes("Test data for invalid auth error");
-			await expect(connector.create(TEST_USER_IDENTITY_ID, testData)).rejects.toThrow();
+			await expect(connector.create(TEST_USER_IDENTITY, testData)).rejects.toThrow();
 		}, 20000);
 
 		test("Should fail to update a verifiable item when user is not in allow list (gas station)", async () => {
 			const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Access Control Test!");
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data, [
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data, [
 				"0x0000000000000000000000000000000000000000000000000000000000000000"
 			]);
 			const testItemId = result.id;
@@ -432,16 +421,16 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const data2 = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage Updated!");
 
 			await expect(
-				gasStationConnector.update(TEST_USER_IDENTITY_ID_2, testItemId, data2)
+				gasStationConnector.update(TEST_USER_IDENTITY_2, testItemId, data2)
 			).rejects.toThrow("notInAllowList");
 		}, 30000);
 
 		test("Should fail to remove a verifiable item unless you are the creator (gas station)", async () => {
 			const data = Converter.utf8ToBytes("Hello, IOTA Verifiable Storage for Creator Test!");
-			const result = await gasStationConnector.create(TEST_USER_IDENTITY_ID, data);
+			const result = await gasStationConnector.create(TEST_USER_IDENTITY, data);
 			const testItemId = result.id;
 
-			await expect(gasStationConnector.remove(TEST_USER_IDENTITY_ID_2, testItemId)).rejects.toThrow(
+			await expect(gasStationConnector.remove(TEST_USER_IDENTITY_2, testItemId)).rejects.toThrow(
 				"notCreator"
 			);
 		}, 30000);
