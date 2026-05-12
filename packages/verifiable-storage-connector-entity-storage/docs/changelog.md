@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.3-next.10](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.9...verifiable-storage-connector-entity-storage-v0.0.3-next.10) (2026-05-12)
+
+
+### Features
+
+* typescript 6 update ([66823cf](https://github.com/iotaledger/twin-verifiable-storage/commit/66823cf7a6522622c889afdc49005d016e8574fe))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.9 to 0.0.3-next.10
+
 ## [0.0.3-next.9](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.8...verifiable-storage-connector-entity-storage-v0.0.3-next.9) (2026-05-08)
 
 

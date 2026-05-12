@@ -1,6 +1,6 @@
 {
 	"name": "@twin.org/verifiable-storage-rest-client",
-	"version": "0.0.3-next.9",
+	"version": "0.0.3-next.10",
 	"description": "REST client component for calling verifiable storage service endpoints",
 	"repository": {
 		"type": "git",
@@ -36,7 +36,7 @@
 		"@twin.org/core": "next",
 		"@twin.org/entity": "next",
 		"@twin.org/nameof": "next",
-		"@twin.org/verifiable-storage-models": "0.0.3-next.9",
+		"@twin.org/verifiable-storage-models": "0.0.3-next.10",
 		"@twin.org/web": "next"
 	},
 	"devDependencies": {
