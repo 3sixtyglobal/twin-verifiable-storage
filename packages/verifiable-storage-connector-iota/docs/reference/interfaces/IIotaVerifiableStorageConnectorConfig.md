@@ -22,6 +22,20 @@ The name of the contract to use.
 
 ***
 
+### accountAddressIndex? {#accountaddressindex}
+
+> `optional` **accountAddressIndex?**: `number`
+
+The account address index to use when deriving addresses.
+
+#### Default
+
+```ts
+0
+```
+
+***
+
 ### walletAddressIndex? {#walletaddressindex}
 
 > `optional` **walletAddressIndex?**: `number`
