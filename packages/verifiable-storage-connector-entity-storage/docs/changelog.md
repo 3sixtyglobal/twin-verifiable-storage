@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.3-next.11](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.10...verifiable-storage-connector-entity-storage-v0.0.3-next.11) (2026-05-20)
+
+
+### Features
+
+* update dependencies ([44f2a99](https://github.com/iotaledger/twin-verifiable-storage/commit/44f2a99954ab54ecc0726c8c984bccffc3eaa433))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.10 to 0.0.3-next.11
+
 ## [0.0.3-next.10](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-entity-storage-v0.0.3-next.9...verifiable-storage-connector-entity-storage-v0.0.3-next.10) (2026-05-12)
 
 

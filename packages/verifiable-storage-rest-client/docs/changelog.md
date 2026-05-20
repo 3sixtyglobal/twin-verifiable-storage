@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.3-next.11](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-rest-client-v0.0.3-next.10...verifiable-storage-rest-client-v0.0.3-next.11) (2026-05-20)
+
+
+### Miscellaneous Chores
+
+* **verifiable-storage-rest-client:** Synchronize repo versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.10 to 0.0.3-next.11
+
 ## [0.0.3-next.10](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-rest-client-v0.0.3-next.9...verifiable-storage-rest-client-v0.0.3-next.10) (2026-05-12)
 
 
