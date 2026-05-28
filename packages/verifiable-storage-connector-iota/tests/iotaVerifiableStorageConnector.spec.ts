@@ -28,9 +28,9 @@ describe("IotaVerifiableStorageConnector", () => {
 				vaultMnemonicId: TEST_MNEMONIC_NAME,
 				network: TEST_NETWORK,
 				gasBudget: 100_000_000,
-				enableCostLogging: true
-			},
-			deploymentConfig: getTestDeploymentConfig()
+				enableCostLogging: true,
+				deploymentConfig: getTestDeploymentConfig()
+			}
 		});
 		// Start the connector (it will use test-deployed packages)
 		await connector.start();
@@ -46,9 +46,9 @@ describe("IotaVerifiableStorageConnector", () => {
 				clientOptions: TEST_CLIENT_OPTIONS,
 				vaultMnemonicId: TEST_MNEMONIC_NAME,
 				network: TEST_NETWORK,
-				gasBudget: 100_000_000
-			},
-			deploymentConfig: getTestDeploymentConfig()
+				gasBudget: 100_000_000,
+				deploymentConfig: getTestDeploymentConfig()
+			}
 		});
 		const data = Converter.utf8ToBytes("Test data");
 		await expect(unstartedConnector.create(TEST_USER_IDENTITY, data)).rejects.toThrow(

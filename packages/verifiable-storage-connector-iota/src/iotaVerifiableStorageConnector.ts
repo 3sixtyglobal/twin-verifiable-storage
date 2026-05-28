@@ -88,7 +88,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * The package ID of the deployed storage Move module.
 	 * @internal
 	 */
-	private _deployedPackageId: string | undefined;
+	private _deployedPackageId?: string;
 
 	/**
 	 * The smart contract deployment configuration.
@@ -107,7 +107,11 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @param options The options for the storage connector.
 	 */
 	constructor(options: IIotaVerifiableStorageConnectorConstructorOptions) {
-		Guards.object(IotaVerifiableStorageConnector.CLASS_NAME, nameof(options), options);
+		Guards.object<IIotaVerifiableStorageConnectorConstructorOptions>(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(options),
+			options
+		);
 		Guards.object<IIotaVerifiableStorageConnectorConfig>(
 			IotaVerifiableStorageConnector.CLASS_NAME,
 			nameof(options.config),
@@ -124,7 +128,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 		this._config = options.config;
 
-		this._deploymentConfig = options.deploymentConfig ?? compiledModulesJson;
+		this._deploymentConfig = options?.config?.deploymentConfig ?? compiledModulesJson;
 
 		this._contractName = this._config.contractName ?? "verifiable-storage";
 		Guards.stringValue(
@@ -165,16 +169,26 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	public async start(nodeLoggingComponentType?: string): Promise<void> {
 		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);
 		try {
-			const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
+			let deploymentPackageId: string | undefined = this._config.deploymentPkgId;
 
-			if (!Is.objectValue<IContractData>(contractData)) {
-				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "contractDataNotFound", {
-					network: this._config.network,
-					availableNetworks: Object.keys(this._deploymentConfig)
-				});
+			if (!Is.stringValue(deploymentPackageId)) {
+				const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
+
+				if (!Is.objectValue<IContractData>(contractData)) {
+					throw new GeneralError(
+						IotaVerifiableStorageConnector.CLASS_NAME,
+						"contractDataNotFound",
+						{
+							network: this._config.network,
+							availableNetworks: Object.keys(this._deploymentConfig)
+						}
+					);
+				}
+
+				deploymentPackageId = contractData.deployedPackageId;
 			}
 
-			if (!Is.stringValue(contractData.deployedPackageId)) {
+			if (!Is.stringValue(deploymentPackageId)) {
 				throw new GeneralError(
 					IotaVerifiableStorageConnector.CLASS_NAME,
 					"deployedPackageIdRequired",
@@ -184,7 +198,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				);
 			}
 
-			this._deployedPackageId = contractData.deployedPackageId;
+			this._deployedPackageId = deploymentPackageId;
 
 			if (!this._deployedPackageId) {
 				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "packageIdNotFound", {
@@ -215,9 +229,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				message: "contractReady",
 				data: {
 					network: this._config.network,
-					packageId: contractData.packageId,
-					deployedPackageId: this._deployedPackageId,
-					upgradeCapabilityId: contractData.upgradeCapabilityId
+					deployedPackageId: this._deployedPackageId
 				}
 			});
 		} catch (error) {

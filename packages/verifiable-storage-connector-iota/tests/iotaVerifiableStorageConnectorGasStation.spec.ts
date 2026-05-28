@@ -41,7 +41,8 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			gasStation: {
 				gasStationUrl: TEST_GAS_STATION_URL,
 				gasStationAuthToken: TEST_GAS_STATION_AUTH_TOKEN
-			}
+			},
+			deploymentConfig: getTestDeploymentConfig()
 		};
 
 		// Regular configuration (without gas station)
@@ -50,19 +51,18 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			vaultMnemonicId: TEST_MNEMONIC_NAME,
 			network: TEST_NETWORK,
 			gasBudget: TEST_GAS_BUDGET,
-			enableCostLogging: true
+			enableCostLogging: true,
+			deploymentConfig: getTestDeploymentConfig()
 		};
 
 		// Connector for deployment with gas station (using node/deployer mnemonic)
 		gasStationConnector = new IotaVerifiableStorageConnector({
-			config: gasStationConfig,
-			deploymentConfig: getTestDeploymentConfig()
+			config: gasStationConfig
 		});
 
 		// Regular connector for comparison
 		regularConnector = new IotaVerifiableStorageConnector({
-			config: regularConfig,
-			deploymentConfig: getTestDeploymentConfig()
+			config: regularConfig
 		});
 
 		// Start the connectors (they will use pre-deployed packages)
@@ -78,8 +78,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 	describe("Configuration", () => {
 		test("Should create verifiable storage connector with gas station configuration", () => {
 			const connector = new IotaVerifiableStorageConnector({
-				config: gasStationConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: gasStationConfig
 			});
 
 			expect(connector).toBeDefined();
@@ -88,8 +87,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 		test("Should create verifiable storage connector without gas station configuration", () => {
 			const connector = new IotaVerifiableStorageConnector({
-				config: regularConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: regularConfig
 			});
 
 			expect(connector).toBeDefined();
@@ -109,8 +107,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			};
 
 			const connector = new IotaVerifiableStorageConnector({
-				config: customGasBudgetConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: customGasBudgetConfig
 			});
 
 			expect(connector).toBeDefined();
@@ -127,8 +124,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 		test("Cannot store an item before start (gas station)", async () => {
 			const unstartedConnector = new IotaVerifiableStorageConnector({
-				config: gasStationConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: gasStationConfig
 			});
 			const data = Converter.utf8ToBytes("Test data");
 			await expect(unstartedConnector.create(TEST_USER_IDENTITY, data)).rejects.toThrow(
@@ -375,8 +371,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			};
 
 			const connector = new IotaVerifiableStorageConnector({
-				config: invalidGasStationConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: invalidGasStationConfig
 			});
 
 			// Start the connector (this should succeed since it uses pre-deployed packages)
@@ -399,8 +394,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			};
 
 			const connector = new IotaVerifiableStorageConnector({
-				config: invalidAuthConfig,
-				deploymentConfig: getTestDeploymentConfig()
+				config: invalidAuthConfig
 			});
 
 			// Start the connector (this should succeed since it uses pre-deployed packages)
