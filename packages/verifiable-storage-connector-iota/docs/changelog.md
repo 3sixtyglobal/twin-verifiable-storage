@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.3-next.12](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.11...verifiable-storage-connector-iota-v0.0.3-next.12) (2026-05-28)
+
+
+### Features
+
+* simple deployment pkg config ([#65](https://github.com/iotaledger/twin-verifiable-storage/issues/65)) ([6ad8fdf](https://github.com/iotaledger/twin-verifiable-storage/commit/6ad8fdf40fd01242e7725d2b13f9f7c78fc46c80))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.11 to 0.0.3-next.12
+
 ## [0.0.3-next.11](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.10...verifiable-storage-connector-iota-v0.0.3-next.11) (2026-05-20)
 
 
