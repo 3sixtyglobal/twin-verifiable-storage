@@ -4,7 +4,7 @@
 	"description": "Shared interfaces, API payload models, and connector factory contracts for verifiable storage",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/iotaledger/verifiable-storage.git",
+		"url": "git+https://github.com/iotaledger/twin-verifiable-storage.git",
 		"directory": "packages/verifiable-storage-models"
 	},
 	"author": "martyn.janes@iota.org",
@@ -80,7 +80,7 @@
 		"schemas"
 	],
 	"bugs": {
-		"url": "git+https://github.com/iotaledger/verifiable-storage/issues"
+		"url": "git+https://github.com/iotaledger/twin-verifiable-storage/issues"
 	},
 	"homepage": "https://twindev.org"
 }
