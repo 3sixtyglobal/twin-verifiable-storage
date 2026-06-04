@@ -176,6 +176,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	 * Get the connector from the uri.
 	 * @param id The id of the item in urn format.
 	 * @returns The connector.
+	 * @throws GeneralError If the namespace does not match.
 	 * @internal
 	 */
 	private getConnector(id: string): IVerifiableStorageConnector {

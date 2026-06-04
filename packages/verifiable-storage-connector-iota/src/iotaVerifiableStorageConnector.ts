@@ -679,7 +679,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Ensure that the connector is bootstrapped.
-	 * @returns void
+	 * @throws GeneralError If the connector has not been started.
 	 * @internal
 	 */
 	private ensureStarted(): void {
