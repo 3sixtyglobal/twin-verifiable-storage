@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.0.3-next.13](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.12...verifiable-storage-connector-iota-v0.0.3-next.13) (2026-06-11)
+
+
+### Features
+
+* remove default logging ([021e40f](https://github.com/iotaledger/twin-verifiable-storage/commit/021e40f0a3063d0e75468c86c8cede30e4bb0af6))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.0.3-next.12 to 0.0.3-next.13
+
 ## [0.0.3-next.12](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.0.3-next.11...verifiable-storage-connector-iota-v0.0.3-next.12) (2026-05-28)
 
 
