@@ -19,7 +19,6 @@ export interface IIotaVerifiableStorageConnectorConstructorOptions {
 
 	/**
 	 * The logging component type.
-	 * @default logging
 	 */
 	loggingComponentType?: string;
 }
