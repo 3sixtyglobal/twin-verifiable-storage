@@ -129,12 +129,12 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	}
 
 	/**
-	 * Get an Verifiable Storage.
+	 * Get a verifiable storage item.
 	 * @param id The id of the verifiable storage item to get.
 	 * @param options Additional options for getting the verifiable storage item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
 	 * @param options.includeAllowList Should the allow list be included in the response, defaults to true.
-	 * @returns The data for the verifiable storage item.
+	 * @returns The data and receipt for the verifiable storage item.
 	 */
 	public async get(
 		id: string,
@@ -156,9 +156,9 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 
 	/**
 	 * Remove a verifiable storage item.
-	 * @param id The id of the Verifiable Storage to remove.
+	 * @param id The id of the verifiable storage item to remove.
 	 * @param controller The identity of the controller to access the vault keys.
-	 * @returns Nothing.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
 	public async remove(id: string, controller?: string): Promise<void> {
 		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);

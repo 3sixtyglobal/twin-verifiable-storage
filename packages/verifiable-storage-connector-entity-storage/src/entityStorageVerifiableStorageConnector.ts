@@ -339,7 +339,7 @@ export class EntityStorageVerifiableStorageConnector implements IVerifiableStora
 	 * Remove the item from verifiable storage.
 	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in urn format.
-	 * @returns Nothing.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
 	public async remove(controllerIdentity: string, id: string): Promise<void> {
 		Guards.stringValue(

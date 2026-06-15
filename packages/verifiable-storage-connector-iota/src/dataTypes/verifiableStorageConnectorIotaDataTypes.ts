@@ -6,11 +6,11 @@ import { IotaVerifiableStorageTypes } from "../models/iotaVerifiableStorageTypes
 import VerifiableStorageIotaReceipt2026Schema from "../schemas/VerifiableStorageIotaReceipt2026.json" with { type: "json" };
 
 /**
- * Handle all the data types for verifiable storage connector entity storage.
+ * Handles all the data types for the IOTA verifiable storage connector.
  */
 export class VerifiableStorageConnectorIotaDataTypes {
 	/**
-	 * Register all the data types.
+	 * Registers all data types for the IOTA verifiable storage connector.
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(

@@ -162,9 +162,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	}
 
 	/**
-	 * Bootstrap the Verifiable Storage contract.
+	 * Resolves and validates the deployed contract package on the configured network.
 	 * @param nodeLoggingComponentType The node logging component type.
-	 * @returns True if the bootstrapping process was successful.
+	 * @returns A promise that resolves when the contract has been verified and the connector is ready to use.
 	 */
 	public async start(nodeLoggingComponentType?: string): Promise<void> {
 		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);

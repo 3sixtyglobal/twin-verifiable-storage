@@ -44,7 +44,7 @@ export interface IVerifiableStorageConnector extends IComponent {
 	): Promise<IJsonLdNodeObject>;
 
 	/**
-	 * Get an verifiable item.
+	 * Get a verifiable item.
 	 * @param id The id of the item to get.
 	 * @param options Additional options for getting the item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
@@ -64,7 +64,7 @@ export interface IVerifiableStorageConnector extends IComponent {
 	 * Remove the item from verifiable storage.
 	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in urn format.
-	 * @returns Nothing.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
 	remove(controllerIdentity: string, id: string): Promise<void>;
 }

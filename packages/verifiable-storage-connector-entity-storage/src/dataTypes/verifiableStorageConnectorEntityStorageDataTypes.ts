@@ -6,11 +6,11 @@ import { EntityStorageVerifiableStorageTypes } from "../models/entityStorageVeri
 import VerifiableStorageEntityStorageReceiptSchema from "../schemas/VerifiableStorageEntityStorageReceipt.json" with { type: "json" };
 
 /**
- * Handle all the data types for verifiable storage connector entity storage.
+ * Handles all the data types for the entity storage verifiable storage connector.
  */
 export class VerifiableStorageConnectorEntityStorageDataTypes {
 	/**
-	 * Register all the data types.
+	 * Registers all data types for the entity storage verifiable storage connector.
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(

@@ -257,7 +257,7 @@ export async function verifiableStorageCreate(
 }
 
 /**
- * UPdate an Verifiable Storage.
+ * Update a verifiable storage item.
  * @param httpRequestContext The request context for the API.
  * @param componentName The name of the component to use in the routes.
  * @param request The request.
@@ -298,7 +298,7 @@ export async function verifiableStorageUpdate(
 }
 
 /**
- * Get an Verifiable Storage.
+ * Get a verifiable storage item.
  * @param componentName The name of the component to use in the routes.
  * @param request The request.
  * @returns The response object with additional http response properties.

@@ -6,6 +6,9 @@ import {
 	tagsVerifiableStorage
 } from "./verifiableStorageRoutes.js";
 
+/**
+ * The REST entry points for the verifiable storage service.
+ */
 export const restEntryPoints: IRestRouteEntryPoint[] = [
 	{
 		name: "verifiable",

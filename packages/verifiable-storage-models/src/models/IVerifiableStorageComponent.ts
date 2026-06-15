@@ -46,7 +46,7 @@ export interface IVerifiableStorageComponent extends IComponent {
 	): Promise<IJsonLdNodeObject>;
 
 	/**
-	 * Get an verifiable item.
+	 * Get a verifiable item.
 	 * @param id The id of the item to get.
 	 * @param options Additional options for getting the item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
@@ -66,7 +66,7 @@ export interface IVerifiableStorageComponent extends IComponent {
 	 * Remove the item from verifiable storage.
 	 * @param id The id of the verifiable item to remove in urn format.
 	 * @param controller The identity of the controller.
-	 * @returns Nothing.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
 	remove(id: string, controller?: string): Promise<void>;
 }

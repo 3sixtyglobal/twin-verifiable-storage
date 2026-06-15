@@ -109,11 +109,11 @@ export class VerifiableStorageRestClient
 	}
 
 	/**
-	 * Get an verifiable storage item.
+	 * Get a verifiable storage item.
 	 * @param id The id of the verifiable storage item to get.
 	 * @param options Additional options for getting the verifiable storage item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
-	 * @returns The data for the verifiable storage item.
+	 * @returns The data and receipt for the verifiable storage item.
 	 */
 	public async get(
 		id: string,
@@ -146,7 +146,7 @@ export class VerifiableStorageRestClient
 	/**
 	 * Remove a verifiable storage item.
 	 * @param id The id of the verifiable storage item to remove.
-	 * @returns Nothing.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
 	public async remove(id: string): Promise<void> {
 		Urn.guard(VerifiableStorageRestClient.CLASS_NAME, nameof(id), id);
