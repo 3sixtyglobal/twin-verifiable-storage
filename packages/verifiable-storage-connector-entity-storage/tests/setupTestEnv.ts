@@ -27,6 +27,7 @@ EntityStorageConnectorFactory.register(
 	"verifiable-item",
 	() =>
 		new MemoryEntityStorageConnector<VerifiableItem>({
-			entitySchema: nameof<VerifiableItem>()
+			entitySchema: nameof<VerifiableItem>(),
+			config: { storageKey: "verifiable-item" }
 		})
 );

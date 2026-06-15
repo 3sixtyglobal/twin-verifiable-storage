@@ -28,7 +28,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		expect(result.receipt.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store[0].id).toEqual(urn.namespaceSpecific(1));
@@ -53,7 +53,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		expect(result.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store[0].creator).toEqual(TEST_USER_IDENTITY_0);
@@ -75,7 +75,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		await connector.remove(TEST_USER_IDENTITY_0, verifiableItemId);
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store?.length).toEqual(0);
