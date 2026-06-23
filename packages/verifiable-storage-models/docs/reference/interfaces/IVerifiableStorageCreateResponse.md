@@ -12,7 +12,7 @@ Response to storing the verifiable storage item.
 
 > **body**: `object`
 
-The data that was stored.
+The created verifiable storage item details.
 
 #### receipt
 

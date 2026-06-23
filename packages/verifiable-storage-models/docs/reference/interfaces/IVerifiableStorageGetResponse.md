@@ -8,7 +8,7 @@ Response to getting the verifiable storage item.
 
 > **body**: `object`
 
-The data that was obtained.
+The retrieved verifiable storage item contents.
 
 #### receipt
 

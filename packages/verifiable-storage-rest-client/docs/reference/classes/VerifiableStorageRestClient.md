@@ -146,7 +146,7 @@ The updated receipt.
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-Get an verifiable storage item.
+Get a verifiable storage item.
 
 #### Parameters
 
@@ -170,7 +170,7 @@ Should the data be included in the response, defaults to true.
 
 `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-The data for the verifiable storage item.
+The data and receipt for the verifiable storage item.
 
 #### Implementation of
 
@@ -196,7 +196,7 @@ The id of the verifiable storage item to remove.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
 
 #### Implementation of
 

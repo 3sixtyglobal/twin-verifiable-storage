@@ -220,7 +220,7 @@ The id of the verifiable item to remove in urn format.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
 
 #### Implementation of
 

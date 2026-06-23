@@ -1,6 +1,6 @@
 # Class: VerifiableStorageConnectorEntityStorageDataTypes
 
-Handle all the data types for verifiable storage connector entity storage.
+Handles all the data types for the entity storage verifiable storage connector.
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Handle all the data types for verifiable storage connector entity storage.
 
 > `static` **registerTypes**(): `void`
 
-Register all the data types.
+Registers all data types for the entity storage verifiable storage connector.
 
 #### Returns
 

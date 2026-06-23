@@ -8,7 +8,7 @@ Remove the verifiable storage item.
 
 > **pathParams**: `object`
 
-The data to be used for resolving.
+The path parameters for the request.
 
 #### id
 

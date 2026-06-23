@@ -96,7 +96,7 @@ The updated receipt.
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
-Get an verifiable item.
+Get a verifiable item.
 
 #### Parameters
 
@@ -154,4 +154,4 @@ The id of the verifiable item to remove in urn format.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.

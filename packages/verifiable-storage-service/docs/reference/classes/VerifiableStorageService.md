@@ -26,6 +26,10 @@ The options for the service.
 
 `VerifiableStorageService`
 
+#### Throws
+
+If no connectors are registered.
+
 ## Properties
 
 ### CLASS\_NAME {#class_name}
@@ -156,7 +160,7 @@ The updated receipt.
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-Get an Verifiable Storage.
+Get a verifiable storage item.
 
 #### Parameters
 
@@ -186,7 +190,7 @@ Should the allow list be included in the response, defaults to true.
 
 `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-The data for the verifiable storage item.
+The data and receipt for the verifiable storage item.
 
 #### Implementation of
 
@@ -206,7 +210,7 @@ Remove a verifiable storage item.
 
 `string`
 
-The id of the Verifiable Storage to remove.
+The id of the verifiable storage item to remove.
 
 ##### controller?
 
@@ -218,7 +222,7 @@ The identity of the controller to access the vault keys.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
 
 #### Implementation of
 

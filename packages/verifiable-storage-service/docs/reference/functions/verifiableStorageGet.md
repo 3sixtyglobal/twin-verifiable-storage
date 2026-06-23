@@ -2,7 +2,7 @@
 
 > **verifiableStorageGet**(`componentName`, `request`): `Promise`\<`IVerifiableStorageGetResponse`\>
 
-Get an Verifiable Storage.
+Get a verifiable storage item.
 
 ## Parameters
 

@@ -102,7 +102,7 @@ The updated receipt.
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
-Get an verifiable item.
+Get a verifiable item.
 
 #### Parameters
 
@@ -160,4 +160,4 @@ The identity of the controller.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.

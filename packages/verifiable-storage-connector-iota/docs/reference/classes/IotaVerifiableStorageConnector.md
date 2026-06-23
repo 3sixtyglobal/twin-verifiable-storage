@@ -26,6 +26,10 @@ The options for the storage connector.
 
 `IotaVerifiableStorageConnector`
 
+#### Throws
+
+If the options are invalid.
+
 ## Properties
 
 ### NAMESPACE {#namespace}
@@ -66,7 +70,7 @@ The class name of the component.
 
 > **start**(`nodeLoggingComponentType?`): `Promise`\<`void`\>
 
-Bootstrap the Verifiable Storage contract.
+Resolves and validates the deployed contract package on the configured network.
 
 #### Parameters
 
@@ -80,7 +84,7 @@ The node logging component type.
 
 `Promise`\<`void`\>
 
-True if the bootstrapping process was successful.
+A promise that resolves when the contract has been verified and the connector is ready to use.
 
 #### Implementation of
 

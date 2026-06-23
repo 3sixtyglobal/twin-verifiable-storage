@@ -549,7 +549,7 @@
 					"receipt",
 					"id"
 				],
-				"description": "The data that was stored."
+				"description": "The created verifiable storage item details."
 			},
 			"VerifiableStorageGetRequest": {
 				"type": "object",
@@ -588,7 +588,7 @@
 				"required": [
 					"receipt"
 				],
-				"description": "The data that was obtained."
+				"description": "The retrieved verifiable storage item contents."
 			},
 			"VerifiableStorageUpdateRequest": {
 				"type": "object",
