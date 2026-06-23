@@ -34,6 +34,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	/**
 	 * Create a new instance of VerifiableStorageService.
 	 * @param options The options for the service.
+	 * @throws {GeneralError} If no connectors are registered.
 	 */
 	constructor(options?: IVerifiableStorageServiceConstructorOptions) {
 		const names = VerifiableStorageConnectorFactory.names();
