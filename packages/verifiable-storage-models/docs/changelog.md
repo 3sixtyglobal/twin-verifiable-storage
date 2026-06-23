@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.9.0-next.1](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.9.0-next.0...verifiable-storage-models-v0.9.0-next.1) (2026-06-23)
+
+
+### Features
+
+* add context id features ([#40](https://github.com/iotaledger/twin-verifiable-storage/issues/40)) ([260b96a](https://github.com/iotaledger/twin-verifiable-storage/commit/260b96a8b7d1a26c6c415f2de12e09671ee70220))
+* add support for allowlist ([#17](https://github.com/iotaledger/twin-verifiable-storage/issues/17)) ([9341ea6](https://github.com/iotaledger/twin-verifiable-storage/commit/9341ea6b95dfbf2a5dc70a53e5979d7d0e8b2de6))
+* add validate-locales ([326384f](https://github.com/iotaledger/twin-verifiable-storage/commit/326384fe867604e7cd450460a6a56c6c7bdc8f98))
+* context updates ([#44](https://github.com/iotaledger/twin-verifiable-storage/issues/44)) ([2f92558](https://github.com/iotaledger/twin-verifiable-storage/commit/2f9255835eddc9620268b6eb3bba723bc38a0591))
+* eslint migration to flat config ([b0a0b85](https://github.com/iotaledger/twin-verifiable-storage/commit/b0a0b8585a77c1e541531d60b432916b9dc0867e))
+* typescript 6 update ([66823cf](https://github.com/iotaledger/twin-verifiable-storage/commit/66823cf7a6522622c889afdc49005d016e8574fe))
+* update allow list name case ([278a787](https://github.com/iotaledger/twin-verifiable-storage/commit/278a787e96864c95438f87adaac6f2fc8b6bebcd))
+* update context and namespaces ([#42](https://github.com/iotaledger/twin-verifiable-storage/issues/42)) ([7863833](https://github.com/iotaledger/twin-verifiable-storage/commit/78638336c5cd7dce0c53aaf598aef603fbed7a9e))
+* update dependencies ([44f2a99](https://github.com/iotaledger/twin-verifiable-storage/commit/44f2a99954ab54ecc0726c8c984bccffc3eaa433))
+* update dependencies ([a16a772](https://github.com/iotaledger/twin-verifiable-storage/commit/a16a77244cb1d312ea5ee74232bcdadd25f2b330))
+* update descriptions ([696be4d](https://github.com/iotaledger/twin-verifiable-storage/commit/696be4d253183375d4c96e5b74eca0c814fe2fd1))
+* update framework core ([efa612e](https://github.com/iotaledger/twin-verifiable-storage/commit/efa612e54dbe2d8f223f27ff9e315e08a2fed04b))
+* use new dlt packages with latency fix ([#6](https://github.com/iotaledger/twin-verifiable-storage/issues/6)) ([d81c45b](https://github.com/iotaledger/twin-verifiable-storage/commit/d81c45bce035864a41bbd498815169d7257fbcb8))
+* use shared store mechanism ([#8](https://github.com/iotaledger/twin-verifiable-storage/issues/8)) ([8c8ecb8](https://github.com/iotaledger/twin-verifiable-storage/commit/8c8ecb83d32431952c594ea23d37040991f5b4d3))
+
 ## [0.0.3-next.13](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.0.3-next.12...verifiable-storage-models-v0.0.3-next.13) (2026-06-11)
 
 

@@ -1,6 +1,6 @@
 {
 	"name": "@twin.org/verifiable-storage-models",
-	"version": "0.9.0-next.0",
+	"version": "0.9.0-next.1",
 	"description": "Shared interfaces, API payload models, and connector factory contracts for verifiable storage",
 	"repository": {
 		"type": "git",
