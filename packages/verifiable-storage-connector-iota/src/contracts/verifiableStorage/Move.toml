@@ -1,9 +1,10 @@
 [package]
 name = "verifiable_storage"
-version = "0.0.1"
+version = "0.0.3"
+edition = "2024.beta"
 
 [dependencies]
-Iota = { git = "https://github.com/iotaledger/iota.git", subdir = "crates/iota-framework/packages/iota-framework", rev = "devnet" }
+Iota = { git = "https://github.com/iotaledger/iota.git", subdir = "crates/iota-framework/packages/iota-framework", rev = "mainnet" }
 
 [addresses]
 verifiable_storage = "0x0"

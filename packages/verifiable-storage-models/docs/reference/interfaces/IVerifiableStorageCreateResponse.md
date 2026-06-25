@@ -8,11 +8,11 @@ Response to storing the verifiable storage item.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 
-The data that was stored.
+The created verifiable storage item details.
 
 #### receipt
 

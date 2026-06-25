@@ -4,9 +4,9 @@ Options for the entity storage verifiable storage connector.
 
 ## Properties
 
-### verifiableStorageEntityStorageType?
+### verifiableStorageEntityStorageType? {#verifiablestorageentitystoragetype}
 
-> `optional` **verifiableStorageEntityStorageType**: `string`
+> `optional` **verifiableStorageEntityStorageType?**: `string`
 
 The entity storage for verifiable storage items.
 

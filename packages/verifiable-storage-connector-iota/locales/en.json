@@ -1,9 +1,7 @@
 {
 	"info": {
 		"iotaVerifiableStorageConnector": {
-			"contractAlreadyDeployed": "Contract already deployed",
-			"contractDeploymentStarted": "Contract deployment started",
-			"contractDeploymentCompleted": "Contract deployment completed"
+			"contractReady": "Contract ready for use"
 		}
 	},
 	"error": {
@@ -13,19 +11,21 @@
 			"updatingFailed": "Updating the verifiable item failed",
 			"gettingFailed": "Getting the verifiable item failed",
 			"removingFailed": "Removing the verifiable item failed",
-			"packageIdNotFound": "The package ID \"{id}\" was not found",
+			"updateFailed": "Updating the verifiable item failed",
+			"packageIdNotFound": "Package ID not found for network \"{network}\"",
 			"storingTransactionFailed": "The transaction to store the data failed",
 			"removingTransactionFailed": "The transaction to remove the data failed",
 			"objectNotFound": "The object was not found",
-			"notAuthorized": "The controller address \"{controllerAddress}\" does not match the creator \"{creator}\" of the object",
-			"invalidIdFormat": "The verifiable storage URN \"{id}\" has an invalid format",
+			"objectIdNotFound": "The object ID was not found in the verifiable item for namespace \"{namespace}\"",
 			"connectorNotStarted": "Please call start() before using this connector. Package ID: \"{packageId}\" is missing.",
-			"deployTransactionFailed": "Deploying the contract failed with error: \"{error}\"",
 			"startFailed": "Failed to start the IOTA Verifiable Storage connector.",
 			"invalidGasBudget": "The gas budget must be greater than 0",
 			"notInAllowList": "The user is not in the allow list",
 			"notCreator": "Only the creator can remove the verifiable item",
-			"allowListTooBig": "The number of items in the allow list is larger than the maximum allowed"
+			"allowListTooBig": "The number of items in the allow list is larger than the maximum allowed",
+			"contractDataNotFound": "Contract data not found for network \"{network}\". Available networks: {availableNetworks}",
+			"deployedPackageIdRequired": "deployedPackageId is required for network operations on \"{network}\".",
+			"packageNotFoundOnNetwork": "Package \"{deployedPackageId}\" not found on \"{network}\" network"
 		},
 		"iotaVerifiableStorageUtils": {
 			"invalidVerifiableStorageIdFormat": "The verifiable storage ID \"{id}\" has an invalid format"

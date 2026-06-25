@@ -10,14 +10,15 @@
 		"**/tests/**",
 		"*.yaml",
 		"package.json",
-		"rollup.config.mjs",
 		"vitest.config.*",
 		"tsconfig.json",
+		"tsconfig.eslint.json",
 		"typedoc.json",
-		".eslintrc.cjs",
+		"eslint.config*",
 		"**/wordlists/**",
 		"**/scripts/**",
-		"**/contracts/**"
+		"**/contracts/**",
+		"changelog.md"
 	],
 	"words": ["abbrev", "autorelease", "bech", "devnet", "Faucet", "nameof", "Stiftung", "utxo"],
 	"ignoreRegExpList": [
@@ -25,6 +26,7 @@
 		"/eslint-disable.*/",
 		"/^```shell[\\s\\S]*?```$/gm",
 		"/^```json[\\s\\S]*?```$/gm",
+		"/^```typescript[\\s\\S]*?```$/gm",
 		"/tst1.*/",
 		"/^```(.|\\s)*?```\\s*$/gm"
 	]

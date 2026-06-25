@@ -1,0 +1,13 @@
+{
+	"prefix": "twin-verifiable-storage",
+	"contextUrl": "https://schema.twindev.org/verifiable-storage/",
+	"additionalContextUrls": {
+		"twin-common": "https://schema.twindev.org/common/",
+		"schema": "http://schema.org/"
+	},
+	"fixedMappings": {
+		"id": "@id",
+		"type": "@type"
+	},
+	"types": ["./src/models/IVerifiableStorageEntityStorageReceipt.ts"]
+}

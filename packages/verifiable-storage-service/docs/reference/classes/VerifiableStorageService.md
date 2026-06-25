@@ -26,31 +26,41 @@ The options for the service.
 
 `VerifiableStorageService`
 
+#### Throws
+
+If no connectors are registered.
+
 ## Properties
 
-### NAMESPACE
+### CLASS\_NAME {#class_name}
 
-> `readonly` `static` **NAMESPACE**: `string` = `"verifiable"`
-
-The namespace supported by the verifiableStorage service.
-
-***
-
-### CLASS\_NAME
-
-> `readonly` **CLASS\_NAME**: `string`
+> `readonly` `static` **CLASS\_NAME**: `string`
 
 Runtime name for the class.
 
-#### Implementation of
-
-`IVerifiableStorageComponent.CLASS_NAME`
-
 ## Methods
 
-### create()
+### className() {#classname}
 
-> **create**(`data`, `allowList?`, `options?`, `identity?`, `namespace?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
+> **className**(): `string`
+
+Returns the class name of the component.
+
+#### Returns
+
+`string`
+
+The class name of the component.
+
+#### Implementation of
+
+`IVerifiableStorageComponent.className`
+
+***
+
+### create() {#create}
+
+> **create**(`data`, `allowList?`, `options?`, `namespace?`, `controller?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
 Create a verifiable storage item.
 
@@ -78,17 +88,17 @@ Additional options for creating the item.
 
 The maximum size of the allow list.
 
-##### identity?
-
-`string`
-
-The identity to store the Verifiable Storage operation on.
-
 ##### namespace?
 
 `string`
 
-The namespace to use for the Verifiable Storage.
+The namespace to use for the connector to use.
+
+##### controller?
+
+`string`
+
+The identity of the controller to access the vault keys.
 
 #### Returns
 
@@ -102,9 +112,9 @@ The id of the created verifiable storage item.
 
 ***
 
-### update()
+### update() {#update}
 
-> **update**(`id`, `data?`, `allowList?`, `identity?`): `Promise`\<`IJsonLdNodeObject`\>
+> **update**(`id`, `data?`, `allowList?`, `controller?`): `Promise`\<`IJsonLdNodeObject`\>
 
 Update an item in verifiable storage.
 
@@ -128,11 +138,11 @@ The data to store, optional if updating the allow list.
 
 Updated list of identities that are allowed to modify the item.
 
-##### identity?
+##### controller?
 
 `string`
 
-The identity of the user to access the vault keys.
+The identity of the controller to access the vault keys.
 
 #### Returns
 
@@ -146,11 +156,11 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-Get an Verifiable Storage.
+Get a verifiable storage item.
 
 #### Parameters
 
@@ -180,7 +190,7 @@ Should the allow list be included in the response, defaults to true.
 
 `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; \}\>
 
-The data for the verifiable storage item.
+The data and receipt for the verifiable storage item.
 
 #### Implementation of
 
@@ -188,9 +198,9 @@ The data for the verifiable storage item.
 
 ***
 
-### remove()
+### remove() {#remove}
 
-> **remove**(`id`, `identity?`): `Promise`\<`void`\>
+> **remove**(`id`, `controller?`): `Promise`\<`void`\>
 
 Remove a verifiable storage item.
 
@@ -200,19 +210,19 @@ Remove a verifiable storage item.
 
 `string`
 
-The id of the Verifiable Storage to remove.
+The id of the verifiable storage item to remove.
 
-##### identity?
+##### controller?
 
 `string`
 
-The identity to perform the verifiableStorage operation on.
+The identity of the controller to access the vault keys.
 
 #### Returns
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
 
 #### Implementation of
 

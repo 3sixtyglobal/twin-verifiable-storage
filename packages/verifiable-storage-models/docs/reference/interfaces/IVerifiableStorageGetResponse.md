@@ -4,11 +4,11 @@ Response to getting the verifiable storage item.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 
-The data that was obtained.
+The retrieved verifiable storage item contents.
 
 #### receipt
 
@@ -18,12 +18,12 @@ The receipt associated to the verifiable storage item.
 
 #### data?
 
-> `optional` **data**: `string`
+> `optional` **data?**: `string`
 
 The data of the verifiable storage item, this is a string serialized as base64.
 
 #### allowList?
 
-> `optional` **allowList**: `string`[]
+> `optional` **allowList?**: `string`[]
 
 The list of identities that are allowed to modify the item.

@@ -1,9 +1,9 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type { IotaClient } from "@iota/iota-sdk/client";
-import { Transaction } from "@iota/iota-sdk/transactions";
 import {
 	BaseError,
+	Coerce,
+	ComponentFactory,
 	Converter,
 	GeneralError,
 	Guards,
@@ -13,20 +13,26 @@ import {
 	Urn
 } from "@twin.org/core";
 import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
-import { Iota } from "@twin.org/dlt-iota";
-import { LoggingConnectorFactory, type ILoggingConnector } from "@twin.org/logging-models";
+import {
+	type IContractData,
+	type ISmartContractDeployments,
+	type NetworkTypes,
+	type IIotaClient,
+	Iota
+} from "@twin.org/dlt-iota";
+import type { ILoggingComponent } from "@twin.org/logging-models";
 import { nameof } from "@twin.org/nameof";
 import { VaultConnectorFactory, type IVaultConnector } from "@twin.org/vault-models";
 import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
 } from "@twin.org/verifiable-storage-models";
-import compiledModulesJson from "./contracts/compiledModules/compiled-modules.json";
-import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils";
-import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig";
-import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions";
-import { IotaVerifiableStorageTypes } from "./models/iotaVerifiableStorageTypes";
-import type { IVerifiableStorageIotaReceipt } from "./models/IVerifiableStorageIotaReceipt";
+import compiledModulesJson from "./contracts/smartContractDeployments/smart-contract-deployments.json" with { type: "json" };
+import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils.js";
+import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig.js";
+import type { IIotaVerifiableStorageConnectorConstructorOptions } from "./models/IIotaVerifiableStorageConnectorConstructorOptions.js";
+import { IotaVerifiableStorageTypes } from "./models/iotaVerifiableStorageTypes.js";
+import type { IVerifiableStorageIotaReceipt2026 } from "./models/IVerifiableStorageIotaReceipt2026.js";
 
 /**
  * Class for performing verifiable storage operations on IOTA.
@@ -38,15 +44,15 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	public static readonly NAMESPACE: string = "iota";
 
 	/**
+	 * Runtime name for the class.
+	 */
+	public static readonly CLASS_NAME: string = nameof<IotaVerifiableStorageConnector>();
+
+	/**
 	 * The default maximum size of the allow list.
 	 * @internal
 	 */
 	private static readonly _DEFAULT_ALLOW_LIST_SIZE: number = 100;
-
-	/**
-	 * Runtime name for the class.
-	 */
-	public readonly CLASS_NAME: string = nameof<IotaVerifiableStorageConnector>();
 
 	/**
 	 * The vault connector.
@@ -70,7 +76,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * The IOTA client.
 	 * @internal
 	 */
-	private readonly _client: IotaClient;
+	private readonly _client: IIotaClient;
 
 	/**
 	 * The name of the contract to use.
@@ -82,39 +88,64 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * The package ID of the deployed storage Move module.
 	 * @internal
 	 */
-	private _deployedPackageId: string | undefined;
+	private _deployedPackageId?: string;
 
 	/**
-	 * The logging connector.
+	 * The smart contract deployment configuration.
 	 * @internal
 	 */
-	private readonly _logging?: ILoggingConnector;
+	private readonly _deploymentConfig: ISmartContractDeployments;
+
+	/**
+	 * The logging component.
+	 * @internal
+	 */
+	private readonly _logging?: ILoggingComponent;
 
 	/**
 	 * Create a new instance of IotaVerifiableStorageConnector.
 	 * @param options The options for the storage connector.
+	 * @throws {GeneralError} If the options are invalid.
 	 */
 	constructor(options: IIotaVerifiableStorageConnectorConstructorOptions) {
-		Guards.object(this.CLASS_NAME, nameof(options), options);
+		Guards.object<IIotaVerifiableStorageConnectorConstructorOptions>(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(options),
+			options
+		);
 		Guards.object<IIotaVerifiableStorageConnectorConfig>(
-			this.CLASS_NAME,
+			IotaVerifiableStorageConnector.CLASS_NAME,
 			nameof(options.config),
 			options.config
 		);
-		Guards.stringValue(this.CLASS_NAME, nameof(options.config.network), options.config.network);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(options.config.network),
+			options.config.network
+		);
 		this._vaultConnector = VaultConnectorFactory.get(options?.vaultConnectorType ?? "vault");
 
-		this._logging = LoggingConnectorFactory.getIfExists(options?.loggingConnectorType ?? "logging");
+		this._logging = ComponentFactory.getIfExists(options?.loggingComponentType);
 
 		this._config = options.config;
 
+		this._deploymentConfig = options?.config?.deploymentConfig ?? compiledModulesJson;
+
 		this._contractName = this._config.contractName ?? "verifiable-storage";
-		Guards.stringValue(this.CLASS_NAME, nameof(this._contractName), this._contractName);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(this._contractName),
+			this._contractName
+		);
 
 		this._gasBudget = this._config.gasBudget ?? 1_000_000_000;
-		Guards.number(this.CLASS_NAME, nameof(this._gasBudget), this._gasBudget);
+		Guards.number(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(this._gasBudget),
+			this._gasBudget
+		);
 		if (this._gasBudget <= 0) {
-			throw new GeneralError(this.CLASS_NAME, "invalidGasBudget", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "invalidGasBudget", {
 				gasBudget: this._gasBudget
 			});
 		}
@@ -124,153 +155,93 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	}
 
 	/**
-	 * Bootstrap the Verifiable Storage contract.
-	 * @param nodeIdentity The identity of the node.
-	 * @param nodeLoggingConnectorType The node logging connector type, defaults to "node-logging".
-	 * @param componentState The component state.
-	 * @param componentState.contractDeployments The contract deployments.
-	 * @returns True if the bootstrapping process was successful.
+	 * Returns the class name of the component.
+	 * @returns The class name of the component.
 	 */
-	public async start(
-		nodeIdentity: string,
-		nodeLoggingConnectorType?: string,
-		componentState?: { contractDeployments?: { [id: string]: string } }
-	): Promise<void> {
-		const nodeLogging = LoggingConnectorFactory.getIfExists(
-			nodeLoggingConnectorType ?? "node-logging"
-		);
-		try {
-			const contractData =
-				compiledModulesJson[this._contractName as keyof typeof compiledModulesJson];
+	public className(): string {
+		return IotaVerifiableStorageConnector.CLASS_NAME;
+	}
 
-			if (!contractData) {
-				throw new GeneralError(this.CLASS_NAME, "contractDataNotFound", {
-					contractName: this._contractName
+	/**
+	 * Resolves and validates the deployed contract package on the configured network.
+	 * @param nodeLoggingComponentType The node logging component type.
+	 * @returns A promise that resolves when the contract has been verified and the connector is ready to use.
+	 */
+	public async start(nodeLoggingComponentType?: string): Promise<void> {
+		const nodeLogging = ComponentFactory.getIfExists<ILoggingComponent>(nodeLoggingComponentType);
+		try {
+			let deploymentPackageId: string | undefined = this._config.deploymentPkgId;
+
+			if (!Is.stringValue(deploymentPackageId)) {
+				const contractData = this._deploymentConfig[this._config.network as NetworkTypes];
+
+				if (!Is.objectValue<IContractData>(contractData)) {
+					throw new GeneralError(
+						IotaVerifiableStorageConnector.CLASS_NAME,
+						"contractDataNotFound",
+						{
+							network: this._config.network,
+							availableNetworks: Object.keys(this._deploymentConfig)
+						}
+					);
+				}
+
+				deploymentPackageId = contractData.deployedPackageId;
+			}
+
+			if (!Is.stringValue(deploymentPackageId)) {
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"deployedPackageIdRequired",
+					{
+						network: this._config.network
+					}
+				);
+			}
+
+			this._deployedPackageId = deploymentPackageId;
+
+			if (!this._deployedPackageId) {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "packageIdNotFound", {
+					network: this._config.network
 				});
 			}
 
-			// Convert base64 package(s) to bytes
-			let compiledModules: number[][];
-
-			if (Is.arrayValue<string>(contractData.package)) {
-				compiledModules = contractData.package.map((pkg: string) =>
-					Array.from(Converter.base64ToBytes(pkg))
-				);
-			} else {
-				compiledModules = [Array.from(Converter.base64ToBytes(contractData.package))];
-			}
-
-			const contractDeployments: { [id: string]: string } =
-				(componentState?.contractDeployments as { [id: string]: string }) ?? {};
-
-			if (Is.stringValue(contractDeployments[contractData.packageId])) {
-				this._deployedPackageId = contractDeployments[contractData.packageId];
-
-				// Check if package exists on the network
-				const packageExists = await Iota.packageExistsOnNetwork(
-					this._client,
-					contractDeployments[contractData.packageId]
-				);
-				if (packageExists) {
-					await nodeLogging?.log({
-						level: "info",
-						source: this.CLASS_NAME,
-						ts: Date.now(),
-						message: "contractAlreadyDeployed",
-						data: {
-							network: this._config.network,
-							nodeIdentity,
-							contractId: contractData.packageId,
-							deployedPackageId: contractDeployments[contractData.packageId]
-						}
-					});
-
-					return;
-				}
-			}
-
-			// Package does not exist, proceed to deploy
-			await nodeLogging?.log({
-				level: "info",
-				source: this.CLASS_NAME,
-				ts: Date.now(),
-				message: "contractDeploymentStarted",
-				data: {
-					network: this._config.network,
-					nodeIdentity,
-					contractId: contractData.packageId
-				}
-			});
-
-			const txb = new Transaction();
-			txb.setGasBudget(this._gasBudget);
-
-			// Publish the compiled modules
-			const [upgradeCap] = txb.publish({
-				modules: compiledModules,
-				dependencies: ["0x1", "0x2"]
-			});
-
-			const controllerAddress = await this.getPackageControllerAddress(nodeIdentity);
-
-			// Transfer the upgrade capability to the controller
-			txb.transferObjects([upgradeCap], txb.pure.address(controllerAddress));
-
-			const result = await Iota.prepareAndPostTransaction(
-				this._config,
-				this._vaultConnector,
-				nodeLogging,
-				nodeIdentity,
+			const packageExists = await Iota.packageExistsOnNetwork(
 				this._client,
-				controllerAddress,
-				txb,
-				{
-					dryRunLabel: this._config.enableCostLogging ? "deploy" : undefined
-				}
+				this._deployedPackageId
 			);
 
-			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "deployTransactionFailed", {
-					error: result.effects?.status?.error
-				});
-			}
-
-			// Find the package object (owner field will be Verifiable)
-			const packageObject = result.effects?.created?.find(obj => obj.owner === "Immutable");
-
-			const deployedPackageId = packageObject?.reference?.objectId;
-			if (!Is.stringValue(deployedPackageId)) {
-				throw new GeneralError(this.CLASS_NAME, "packageIdNotFound", {
-					packageId: deployedPackageId
-				});
-			}
-
-			this._deployedPackageId = deployedPackageId;
-
-			if (componentState) {
-				componentState.contractDeployments ??= {};
-				componentState.contractDeployments[contractData.packageId] = deployedPackageId;
+			if (!packageExists) {
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"packageNotFoundOnNetwork",
+					{
+						network: this._config.network,
+						deployedPackageId: this._deployedPackageId
+					}
+				);
 			}
 
 			await nodeLogging?.log({
 				level: "info",
-				source: this.CLASS_NAME,
+				source: IotaVerifiableStorageConnector.CLASS_NAME,
 				ts: Date.now(),
-				message: "contractDeploymentCompleted",
+				message: "contractReady",
 				data: {
+					network: this._config.network,
 					deployedPackageId: this._deployedPackageId
 				}
 			});
 		} catch (error) {
 			await nodeLogging?.log({
 				level: "error",
-				source: this.CLASS_NAME,
+				source: IotaVerifiableStorageConnector.CLASS_NAME,
 				ts: Date.now(),
 				message: "startFailed",
 				error: BaseError.fromError(error),
 				data: {
-					network: this._config.network,
-					nodeIdentity
+					network: this._config.network
 				}
 			});
 
@@ -280,7 +251,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Create an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param data The data to store.
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
@@ -288,7 +259,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	 * @returns The id of the stored verifiable item in URN format and the receipt.
 	 */
 	public async create(
-		controller: string,
+		controllerIdentity: string,
 		data: Uint8Array,
 		allowList?: string[],
 		options?: {
@@ -299,13 +270,21 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		receipt: IJsonLdNodeObject;
 	}> {
 		this.ensureStarted();
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
+		Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(IotaVerifiableStorageConnector.CLASS_NAME, nameof(allowList), allowList);
 		}
 		if (!Is.empty(options?.maxAllowListSize)) {
-			Guards.integer(this.CLASS_NAME, nameof(options.maxAllowListSize), options.maxAllowListSize);
+			Guards.integer(
+				IotaVerifiableStorageConnector.CLASS_NAME,
+				nameof(options.maxAllowListSize),
+				options.maxAllowListSize
+			);
 		}
 		const maxAllowListSize = Math.max(
 			options?.maxAllowListSize ?? IotaVerifiableStorageConnector._DEFAULT_ALLOW_LIST_SIZE,
@@ -313,7 +292,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		);
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const packageId = this._deployedPackageId;
@@ -328,22 +307,21 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			const result = await Iota.prepareAndPostTransaction(
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "store" : undefined
@@ -351,9 +329,13 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "storingTransactionFailed", {
-					error: result.effects?.status?.error
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"storingTransactionFailed",
+					{
+						error: result.effects?.status?.error
+					}
+				);
 			}
 
 			const storageEvent = result.events?.find(event =>
@@ -364,18 +346,20 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 			const objectId = parsedJson?.id;
 
-			if (!objectId) {
-				throw new GeneralError(this.CLASS_NAME, "objectIdNotFound", {
-					namespace: IotaVerifiableStorageConnector.NAMESPACE,
-					id: objectId
+			if (!Is.stringValue(objectId)) {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "objectIdNotFound", {
+					namespace: IotaVerifiableStorageConnector.NAMESPACE
 				});
 			}
 
-			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedJson?.epoch ?? "",
-				digest: result?.digest ?? ""
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
+				"@context": VerifiableStorageContexts.Context,
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
+				digest: result?.digest ?? "",
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			const urn = new Urn(
@@ -389,10 +373,15 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			};
 		} catch (error) {
 			if (Iota.isAbortError(error, 1001)) {
-				throw new GeneralError(this.CLASS_NAME, "allowListTooBig", undefined, error);
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"allowListTooBig",
+					undefined,
+					error
+				);
 			}
 			throw new GeneralError(
-				this.CLASS_NAME,
+				IotaVerifiableStorageConnector.CLASS_NAME,
 				"creatingFailed",
 				undefined,
 				Iota.extractPayloadError(error)
@@ -402,31 +391,35 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Update an item in verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the item to update.
 	 * @param data The data to store.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
 	 * @returns The updated receipt.
 	 */
 	public async update(
-		controller: string,
+		controllerIdentity: string,
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[]
 	): Promise<IJsonLdNodeObject> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
+		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 		if (!Is.empty(data)) {
-			Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
+			Guards.uint8Array(IotaVerifiableStorageConnector.CLASS_NAME, nameof(data), data);
 		}
 		if (!Is.empty(allowList)) {
-			Guards.array<string>(this.CLASS_NAME, nameof(allowList), allowList);
+			Guards.array<string>(IotaVerifiableStorageConnector.CLASS_NAME, nameof(allowList), allowList);
 		}
 
 		const objectId = IotaVerifiableStorageUtils.verifiableStorageIdToObjectId(id);
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const packageId = this._deployedPackageId;
@@ -438,27 +431,25 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 					txb.object(objectId),
 					txb.pure.string(Is.empty(data) ? "" : Converter.bytesToBase64(data)),
 					txb.pure.vector("address", allowList ?? []),
-					// If the allow list is an array with no elements, we need to set the remove_allowlist flag
 					txb.pure.bool(Is.array(allowList) && allowList.length === 0)
 				]
 			});
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			const result = await Iota.prepareAndPostTransaction(
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "update" : undefined
@@ -466,7 +457,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "updateFailed", {
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "updateFailed", {
 					error: result.effects?.status?.error
 				});
 			}
@@ -477,27 +468,40 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 			const parsedJson = storageEvent?.parsedJson as { id: string; epoch: string };
 
-			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedJson?.epoch ?? "",
-				digest: result?.digest ?? ""
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
+				"@context": VerifiableStorageContexts.Context,
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedJson?.epoch) ?? 0,
+				digest: result?.digest ?? "",
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			return receipt as unknown as IJsonLdNodeObject;
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notInAllowList", error);
+				throw new UnauthorizedError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"notInAllowList",
+					undefined,
+					error
+				);
 			}
 			if (Iota.isAbortError(error, 1001)) {
-				throw new GeneralError(this.CLASS_NAME, "allowListTooBig", undefined, error);
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"allowListTooBig",
+					undefined,
+					error
+				);
 			}
-			if (error instanceof GeneralError) {
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
 				throw error;
 			}
 
 			throw new GeneralError(
-				this.CLASS_NAME,
+				IotaVerifiableStorageConnector.CLASS_NAME,
 				"updatingFailed",
 				undefined,
 				Iota.extractPayloadError(error)
@@ -521,7 +525,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 		receipt: IJsonLdNodeObject;
 		allowList?: string[];
 	}> {
-		Guards.stringValue(this.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const includeData = options?.includeData ?? true;
 		const includeAllowList = options?.includeAllowList ?? true;
@@ -537,7 +541,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			});
 
 			if (!objectData.data?.content) {
-				throw new GeneralError(this.CLASS_NAME, "objectNotFound");
+				throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "objectNotFound");
 			}
 
 			const parsedData = objectData.data.content as unknown as {
@@ -549,11 +553,14 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				};
 			};
 
-			const receipt: IVerifiableStorageIotaReceipt = {
-				"@context": VerifiableStorageContexts.ContextRoot,
-				type: IotaVerifiableStorageTypes.IotaReceipt,
-				epoch: parsedData.fields.epoch ?? "",
-				digest: objectData.data?.previousTransaction ?? ""
+			const receipt: IVerifiableStorageIotaReceipt2026 = {
+				"@context": VerifiableStorageContexts.Context,
+				type: IotaVerifiableStorageTypes.IotaReceipt2026,
+				epoch: Coerce.integer(parsedData.fields.epoch) ?? 0,
+				digest: objectData.data?.previousTransaction ?? "",
+				network: this._config.network,
+				objectId,
+				smartContractId: this._deployedPackageId ?? ""
 			};
 
 			let dataResult: Uint8Array | undefined;
@@ -569,11 +576,11 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				allowList: includeAllowList ? parsedData.fields.allowlist : undefined
 			};
 		} catch (error) {
-			if (error instanceof GeneralError) {
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
 				throw error;
 			} else {
 				throw new GeneralError(
-					this.CLASS_NAME,
+					IotaVerifiableStorageConnector.CLASS_NAME,
 					"gettingFailed",
 					undefined,
 					Iota.extractPayloadError(error)
@@ -584,38 +591,41 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 
 	/**
 	 * Remove the item from verifiable storage.
-	 * @param controller The identity of the user to access the vault keys.
+	 * @param controllerIdentity The identity of the user to access the vault keys.
 	 * @param id The id of the verifiable item to remove in URN format.
 	 * @returns A promise that resolves when the item is removed.
 	 */
-	public async remove(controller: string, id: string): Promise<void> {
-		Guards.stringValue(this.CLASS_NAME, nameof(controller), controller);
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+	public async remove(controllerIdentity: string, id: string): Promise<void> {
+		Guards.stringValue(
+			IotaVerifiableStorageConnector.CLASS_NAME,
+			nameof(controllerIdentity),
+			controllerIdentity
+		);
+		Urn.guard(IotaVerifiableStorageConnector.CLASS_NAME, nameof(id), id);
 
 		const urnParsed = Urn.fromValidString(id);
 
 		if (urnParsed.namespaceMethod() !== IotaVerifiableStorageConnector.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "namespaceMismatch", {
 				namespace: IotaVerifiableStorageConnector.NAMESPACE,
 				id
 			});
 		}
 
 		try {
-			const txb = new Transaction();
+			const txb = Iota.createTransaction();
 			txb.setGasBudget(this._gasBudget);
 
 			const objectId = IotaVerifiableStorageUtils.verifiableStorageIdToObjectId(id);
 			const packageId = IotaVerifiableStorageUtils.verifiableStorageIdToPackageId(id);
 			const moduleName = this.getModuleName();
 
-			const seed = await Iota.getSeed(this._config, this._vaultConnector, controller);
-			const addresses = Iota.getAddresses(
-				seed,
-				this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-				0,
-				this._config.walletAddressIndex ?? 0,
-				1
+			const address = await Iota.getAddress(
+				this._vaultConnector,
+				this._config,
+				controllerIdentity,
+				this._config.accountAddressIndex ?? 0,
+				this._config.walletAddressIndex ?? 0
 			);
 
 			txb.moveCall({
@@ -627,9 +637,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				this._config,
 				this._vaultConnector,
 				this._logging,
-				controller,
+				controllerIdentity,
 				this._client,
-				addresses[0],
+				address,
 				txb,
 				{
 					dryRunLabel: this._config.enableCostLogging ? "remove" : undefined
@@ -637,61 +647,45 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			);
 
 			if (result.effects?.status?.status !== "success") {
-				throw new GeneralError(this.CLASS_NAME, "removingTransactionFailed", {
-					error: result.effects?.status?.error
-				});
+				throw new GeneralError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"removingTransactionFailed",
+					{
+						error: result.effects?.status?.error
+					}
+				);
 			}
 		} catch (error) {
 			if (Iota.isAbortError(error, 401)) {
-				throw new UnauthorizedError(this.CLASS_NAME, "notCreator", error);
-			}
-
-			if (error instanceof GeneralError) {
-				throw error;
-			}
-
-			if (error instanceof GeneralError) {
-				throw error;
-			} else {
-				throw new GeneralError(
-					this.CLASS_NAME,
-					"removingFailed",
+				throw new UnauthorizedError(
+					IotaVerifiableStorageConnector.CLASS_NAME,
+					"notCreator",
 					undefined,
-					Iota.extractPayloadError(error)
+					error
 				);
 			}
+
+			if (BaseError.isErrorName(error, GeneralError.CLASS_NAME)) {
+				throw error;
+			}
+
+			throw new GeneralError(
+				IotaVerifiableStorageConnector.CLASS_NAME,
+				"removingFailed",
+				undefined,
+				Iota.extractPayloadError(error)
+			);
 		}
 	}
 
 	/**
-	 * Get the package controller's address.
-	 * @param identity The identity of the user to access the vault keys.
-	 * @returns The controller's address.
-	 * @internal
-	 */
-	private async getPackageControllerAddress(identity: string): Promise<string> {
-		const seed = await Iota.getSeed(this._config, this._vaultConnector, identity);
-		const walletAddressIndex = this._config.packageControllerAddressIndex ?? 0;
-		const addresses = Iota.getAddresses(
-			seed,
-			this._config.coinType ?? Iota.DEFAULT_COIN_TYPE,
-			0,
-			walletAddressIndex,
-			1,
-			false
-		);
-
-		return addresses[0];
-	}
-
-	/**
 	 * Ensure that the connector is bootstrapped.
-	 * @returns void
+	 * @throws GeneralError If the connector has not been started.
 	 * @internal
 	 */
 	private ensureStarted(): void {
 		if (!this._deployedPackageId) {
-			throw new GeneralError(this.CLASS_NAME, "connectorNotStarted", {
+			throw new GeneralError(IotaVerifiableStorageConnector.CLASS_NAME, "connectorNotStarted", {
 				packageId: this._deployedPackageId
 			});
 		}

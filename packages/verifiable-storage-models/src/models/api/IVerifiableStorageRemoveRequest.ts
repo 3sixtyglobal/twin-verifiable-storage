@@ -6,7 +6,7 @@
  */
 export interface IVerifiableStorageRemoveRequest {
 	/**
-	 * The data to be used for resolving.
+	 * The path parameters for the request.
 	 */
 	pathParams: {
 		/**

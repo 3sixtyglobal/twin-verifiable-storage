@@ -7,9 +7,19 @@
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const VerifiableStorageContexts = {
 	/**
-	 * The context root for the verifiable storage types.
+	 * The canonical RDF namespace URI for Verifiable Storage.
 	 */
-	ContextRoot: "https://schema.twindev.org/verifiable-storage/"
+	Namespace: "https://schema.twindev.org/verifiable-storage/",
+
+	/**
+	 * The value to use in context for Verifiable Storage.
+	 */
+	Context: "https://schema.twindev.org/verifiable-storage/",
+
+	/**
+	 * The JSON-LD Context URL for Verifiable Storage.
+	 */
+	JsonLdContext: "https://schema.twindev.org/verifiable-storage/types.jsonld"
 } as const;
 
 /**

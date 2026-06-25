@@ -1,25 +1,25 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { DataTypeHandlerFactory, type IJsonSchema } from "@twin.org/data-core";
+import { DataTypeHandlerFactory } from "@twin.org/data-core";
 import { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
-import { EntityStorageVerifiableStorageTypes } from "../models/entityStorageVerifiableStorageTypes";
-import VerifiableStorageEntityStorageReceiptSchema from "../schemas/VerifiableStorageEntityStorageReceipt.json";
+import { EntityStorageVerifiableStorageTypes } from "../models/entityStorageVerifiableStorageTypes.js";
+import VerifiableStorageEntityStorageReceiptSchema from "../schemas/VerifiableStorageEntityStorageReceipt.json" with { type: "json" };
 
 /**
- * Handle all the data types for verifiable storage connector entity storage.
+ * Handles all the data types for the entity storage verifiable storage connector.
  */
 export class VerifiableStorageConnectorEntityStorageDataTypes {
 	/**
-	 * Register all the data types.
+	 * Registers all data types for the entity storage verifiable storage connector.
 	 */
 	public static registerTypes(): void {
 		DataTypeHandlerFactory.register(
-			`${VerifiableStorageContexts.ContextRoot}${EntityStorageVerifiableStorageTypes.EntityStorageReceipt}`,
+			`${VerifiableStorageContexts.Namespace}${EntityStorageVerifiableStorageTypes.EntityStorageReceipt}`,
 			() => ({
-				context: VerifiableStorageContexts.ContextRoot,
+				namespace: VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				defaultValue: {},
-				jsonSchema: async () => VerifiableStorageEntityStorageReceiptSchema as IJsonSchema
+				jsonSchema: async () => VerifiableStorageEntityStorageReceiptSchema
 			})
 		);
 	}

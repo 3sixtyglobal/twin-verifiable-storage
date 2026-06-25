@@ -4,8 +4,8 @@ Options for the Verifiable Storage service constructor.
 
 ## Properties
 
-### config?
+### config? {#config}
 
-> `optional` **config**: [`IVerifiableStorageServiceConfig`](IVerifiableStorageServiceConfig.md)
+> `optional` **config?**: [`IVerifiableStorageServiceConfig`](IVerifiableStorageServiceConfig.md)
 
 The configuration for the service.

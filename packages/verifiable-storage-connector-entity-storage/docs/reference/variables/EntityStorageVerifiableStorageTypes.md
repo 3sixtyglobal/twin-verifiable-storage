@@ -4,9 +4,9 @@
 
 The types of entity storage verifiable storage data.
 
-## Type declaration
+## Type Declaration
 
-### EntityStorageReceipt
+### EntityStorageReceipt {#entitystoragereceipt}
 
 > `readonly` **EntityStorageReceipt**: `"VerifiableStorageEntityStorageReceipt"` = `"VerifiableStorageEntityStorageReceipt"`
 

@@ -1,6 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type { IVerifiableStorageServiceConfig } from "./IVerifiableStorageServiceConfig";
+import type { IVerifiableStorageServiceConfig } from "./IVerifiableStorageServiceConfig.js";
 
 /**
  * Options for the Verifiable Storage service constructor.

@@ -4,7 +4,7 @@ Options for the IotaVerifiableStorageConnector.
 
 ## Properties
 
-### config
+### config {#config}
 
 > **config**: [`IIotaVerifiableStorageConnectorConfig`](IIotaVerifiableStorageConnectorConfig.md)
 
@@ -12,9 +12,9 @@ The configuration to use for the connector.
 
 ***
 
-### vaultConnectorType?
+### vaultConnectorType? {#vaultconnectortype}
 
-> `optional` **vaultConnectorType**: `string`
+> `optional` **vaultConnectorType?**: `string`
 
 The vault connector type to use.
 
@@ -26,14 +26,8 @@ The vault connector type to use.
 
 ***
 
-### loggingConnectorType?
+### loggingComponentType? {#loggingcomponenttype}
 
-> `optional` **loggingConnectorType**: `string`
+> `optional` **loggingComponentType?**: `string`
 
-The logging connector type.
-
-#### Default
-
-```ts
-logging
-```
+The logging component type.

@@ -1,6 +1,8 @@
 # TWIN Verifiable Storage Connector Entity Storage
 
-Implementation of the Verifiable Storage connector using entity storage.
+This package provides an entity storage based connector for verifiable storage operations. It handles creation, updates, retrieval, and removal of verifiable items while preserving receipt information and allow list controls.
+
+It is intended for deployments where entity storage is the preferred persistence layer and where consistent connector behaviour is required across service and client integrations.
 
 ## Installation
 

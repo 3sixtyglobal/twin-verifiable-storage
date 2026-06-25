@@ -8,7 +8,7 @@ import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
  */
 export interface IVerifiableStorageCreateResponse extends ICreatedResponse {
 	/**
-	 * The data that was stored.
+	 * The created verifiable storage item details.
 	 */
 	body: {
 		/**

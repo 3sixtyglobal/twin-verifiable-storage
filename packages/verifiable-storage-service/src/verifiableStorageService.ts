@@ -8,21 +8,22 @@ import {
 	type IVerifiableStorageComponent,
 	type IVerifiableStorageConnector
 } from "@twin.org/verifiable-storage-models";
-import type { IVerifiableStorageServiceConstructorOptions } from "./models/IVerifiableStorageServiceConstructorOptions";
+import type { IVerifiableStorageServiceConstructorOptions } from "./models/IVerifiableStorageServiceConstructorOptions.js";
 
 /**
  * Service for performing Verifiable Storage operations to a connector.
  */
 export class VerifiableStorageService implements IVerifiableStorageComponent {
 	/**
-	 * The namespace supported by the verifiableStorage service.
-	 */
-	public static readonly NAMESPACE: string = "verifiable";
-
-	/**
 	 * Runtime name for the class.
 	 */
-	public readonly CLASS_NAME: string = nameof<VerifiableStorageService>();
+	public static readonly CLASS_NAME: string = nameof<VerifiableStorageService>();
+
+	/**
+	 * The namespace supported by the verifiableStorage service.
+	 * @internal
+	 */
+	private static readonly _NAMESPACE: string = "verifiable";
 
 	/**
 	 * The default namespace for the connector to use.
@@ -33,14 +34,23 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	/**
 	 * Create a new instance of VerifiableStorageService.
 	 * @param options The options for the service.
+	 * @throws {GeneralError} If no connectors are registered.
 	 */
 	constructor(options?: IVerifiableStorageServiceConstructorOptions) {
 		const names = VerifiableStorageConnectorFactory.names();
 		if (names.length === 0) {
-			throw new GeneralError(this.CLASS_NAME, "noConnectors");
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "noConnectors");
 		}
 
 		this._defaultNamespace = options?.config?.defaultNamespace ?? names[0];
+	}
+
+	/**
+	 * Returns the class name of the component.
+	 * @returns The class name of the component.
+	 */
+	public className(): string {
+		return VerifiableStorageService.CLASS_NAME;
 	}
 
 	/**
@@ -49,8 +59,8 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
 	 * @param options.maxAllowListSize The maximum size of the allow list.
-	 * @param identity The identity to store the Verifiable Storage operation on.
-	 * @param namespace The namespace to use for the Verifiable Storage.
+	 * @param namespace The namespace to use for the connector to use.
+	 * @param controller The identity of the controller to access the vault keys.
 	 * @returns The id of the created verifiable storage item.
 	 */
 	public async create(
@@ -59,14 +69,14 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		options?: {
 			maxAllowListSize?: number;
 		},
-		identity?: string,
-		namespace?: string
+		namespace?: string,
+		controller?: string
 	): Promise<{
 		id: string;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Guards.uint8Array(this.CLASS_NAME, nameof(data), data);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+		Guards.uint8Array(VerifiableStorageService.CLASS_NAME, nameof(data), data);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(controller), controller);
 
 		try {
 			const connectorNamespace = namespace ?? this._defaultNamespace;
@@ -75,7 +85,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 				VerifiableStorageConnectorFactory.get<IVerifiableStorageConnector>(connectorNamespace);
 
 			const verifiableStorageResult = await verifiableStorageConnector.create(
-				identity,
+				controller,
 				data,
 				allowList,
 				options
@@ -83,7 +93,7 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 
 			return verifiableStorageResult;
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "createFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "createFailed", undefined, error);
 		}
 	}
 
@@ -92,22 +102,22 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	 * @param id The id of the item to update.
 	 * @param data The data to store, optional if updating the allow list.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
-	 * @param identity The identity of the user to access the vault keys.
+	 * @param controller The identity of the controller to access the vault keys.
 	 * @returns The updated receipt.
 	 */
 	public async update(
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[],
-		identity?: string
+		controller?: string
 	): Promise<IJsonLdNodeObject> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(controller), controller);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
 			const verifiableStorageResult = await verifiableStorageConnector.update(
-				identity,
+				controller,
 				id,
 				data,
 				allowList
@@ -115,17 +125,17 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 
 			return verifiableStorageResult;
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "updateFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "updateFailed", undefined, error);
 		}
 	}
 
 	/**
-	 * Get an Verifiable Storage.
+	 * Get a verifiable storage item.
 	 * @param id The id of the verifiable storage item to get.
 	 * @param options Additional options for getting the verifiable storage item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
 	 * @param options.includeAllowList Should the allow list be included in the response, defaults to true.
-	 * @returns The data for the verifiable storage item.
+	 * @returns The data and receipt for the verifiable storage item.
 	 */
 	public async get(
 		id: string,
@@ -134,31 +144,32 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 		data?: Uint8Array;
 		receipt: IJsonLdNodeObject;
 	}> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
-			return verifiableStorageConnector.get(id, options);
+			const result = await verifiableStorageConnector.get(id, options);
+			return result;
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "getFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "getFailed", undefined, error);
 		}
 	}
 
 	/**
 	 * Remove a verifiable storage item.
-	 * @param id The id of the Verifiable Storage to remove.
-	 * @param identity The identity to perform the verifiableStorage operation on.
-	 * @returns Nothing.
+	 * @param id The id of the verifiable storage item to remove.
+	 * @param controller The identity of the controller to access the vault keys.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
-	public async remove(id: string, identity?: string): Promise<void> {
-		Urn.guard(this.CLASS_NAME, nameof(id), id);
-		Guards.stringValue(this.CLASS_NAME, nameof(identity), identity);
+	public async remove(id: string, controller?: string): Promise<void> {
+		Urn.guard(VerifiableStorageService.CLASS_NAME, nameof(id), id);
+		Guards.stringValue(VerifiableStorageService.CLASS_NAME, nameof(controller), controller);
 
 		try {
 			const verifiableStorageConnector = this.getConnector(id);
-			await verifiableStorageConnector.remove(identity, id);
+			await verifiableStorageConnector.remove(controller, id);
 		} catch (error) {
-			throw new GeneralError(this.CLASS_NAME, "removeFailed", undefined, error);
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "removeFailed", undefined, error);
 		}
 	}
 
@@ -166,14 +177,15 @@ export class VerifiableStorageService implements IVerifiableStorageComponent {
 	 * Get the connector from the uri.
 	 * @param id The id of the item in urn format.
 	 * @returns The connector.
+	 * @throws GeneralError If the namespace does not match.
 	 * @internal
 	 */
 	private getConnector(id: string): IVerifiableStorageConnector {
 		const idUri = Urn.fromValidString(id);
 
-		if (idUri.namespaceIdentifier() !== VerifiableStorageService.NAMESPACE) {
-			throw new GeneralError(this.CLASS_NAME, "namespaceMismatch", {
-				namespace: VerifiableStorageService.NAMESPACE,
+		if (idUri.namespaceIdentifier() !== VerifiableStorageService._NAMESPACE) {
+			throw new GeneralError(VerifiableStorageService.CLASS_NAME, "namespaceMismatch", {
+				namespace: VerifiableStorageService._NAMESPACE,
 				id
 			});
 		}

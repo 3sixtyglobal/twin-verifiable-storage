@@ -26,9 +26,13 @@ The options for the storage connector.
 
 `IotaVerifiableStorageConnector`
 
+#### Throws
+
+If the options are invalid.
+
 ## Properties
 
-### NAMESPACE
+### NAMESPACE {#namespace}
 
 > `readonly` `static` **NAMESPACE**: `string` = `"iota"`
 
@@ -36,53 +40,51 @@ The namespace supported by the storage connector.
 
 ***
 
-### CLASS\_NAME
+### CLASS\_NAME {#class_name}
 
-> `readonly` **CLASS\_NAME**: `string`
+> `readonly` `static` **CLASS\_NAME**: `string`
 
 Runtime name for the class.
 
-#### Implementation of
-
-`IVerifiableStorageConnector.CLASS_NAME`
-
 ## Methods
 
-### start()
+### className() {#classname}
 
-> **start**(`nodeIdentity`, `nodeLoggingConnectorType?`, `componentState?`): `Promise`\<`void`\>
+> **className**(): `string`
 
-Bootstrap the Verifiable Storage contract.
+Returns the class name of the component.
+
+#### Returns
+
+`string`
+
+The class name of the component.
+
+#### Implementation of
+
+`IVerifiableStorageConnector.className`
+
+***
+
+### start() {#start}
+
+> **start**(`nodeLoggingComponentType?`): `Promise`\<`void`\>
+
+Resolves and validates the deployed contract package on the configured network.
 
 #### Parameters
 
-##### nodeIdentity
+##### nodeLoggingComponentType?
 
 `string`
 
-The identity of the node.
-
-##### nodeLoggingConnectorType?
-
-`string`
-
-The node logging connector type, defaults to "node-logging".
-
-##### componentState?
-
-The component state.
-
-###### contractDeployments?
-
-\{[`id`: `string`]: `string`; \}
-
-The contract deployments.
+The node logging component type.
 
 #### Returns
 
 `Promise`\<`void`\>
 
-True if the bootstrapping process was successful.
+A promise that resolves when the contract has been verified and the connector is ready to use.
 
 #### Implementation of
 
@@ -90,15 +92,15 @@ True if the bootstrapping process was successful.
 
 ***
 
-### create()
+### create() {#create}
 
-> **create**(`controller`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
+> **create**(`controllerIdentity`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
 Create an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -138,15 +140,15 @@ The id of the stored verifiable item in URN format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
-> **update**(`controller`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
+> **update**(`controllerIdentity`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
 
 Update an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -182,7 +184,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
@@ -224,15 +226,15 @@ The data for the item, the receipt and the allow list.
 
 ***
 
-### remove()
+### remove() {#remove}
 
-> **remove**(`controller`, `id`): `Promise`\<`void`\>
+> **remove**(`controllerIdentity`, `id`): `Promise`\<`void`\>
 
 Remove the item from verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 

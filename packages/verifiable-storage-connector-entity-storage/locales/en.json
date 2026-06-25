@@ -2,7 +2,6 @@
 	"error": {
 		"entityStorageVerifiableStorageConnector": {
 			"verifiableStorageNotFound": "The verifiable item with the Id \"{notFoundId}\" was not found",
-			"signatureFailed": "The signature verification failed",
 			"creatingFailed": "Creating the item failed",
 			"updatingFailed": "Updating the item failed",
 			"gettingFailed": "Getting the item failed",

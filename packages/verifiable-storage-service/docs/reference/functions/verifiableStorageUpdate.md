@@ -2,7 +2,7 @@
 
 > **verifiableStorageUpdate**(`httpRequestContext`, `componentName`, `request`): `Promise`\<`IVerifiableStorageUpdateResponse`\>
 
-UPdate an Verifiable Storage.
+Update a verifiable storage item.
 
 ## Parameters
 

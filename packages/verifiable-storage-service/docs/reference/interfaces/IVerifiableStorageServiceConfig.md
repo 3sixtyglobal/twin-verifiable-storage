@@ -4,8 +4,8 @@ Configuration for the Verifiable Storage Service.
 
 ## Properties
 
-### defaultNamespace?
+### defaultNamespace? {#defaultnamespace}
 
-> `optional` **defaultNamespace**: `string`
+> `optional` **defaultNamespace?**: `string`
 
-What is the default connector to use for Verifiable Storage. If not provided the first connector from the factory will be used.
+The default connector namespace to use; falls back to the first registered connector if not provided.

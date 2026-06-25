@@ -1,6 +1,8 @@
 # TWIN Verifiable Storage Models
 
-Contains models and classes for use with verifiable storage.
+This package defines the shared contracts used by verifiable storage components across the repository. It includes common interfaces, API request and response models, and context definitions so integrations can rely on a consistent shape for data and behaviour.
+
+By centralising these reusable contracts, it reduces duplication and helps connectors, services, and clients evolve together without introducing mismatched assumptions.
 
 ## Installation
 

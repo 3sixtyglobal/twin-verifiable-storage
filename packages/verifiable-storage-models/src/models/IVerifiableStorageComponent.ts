@@ -13,8 +13,8 @@ export interface IVerifiableStorageComponent extends IComponent {
 	 * @param allowList The list of identities that are allowed to modify the item.
 	 * @param options Additional options for creating the item.
 	 * @param options.maxAllowListSize The maximum size of the allow list.
-	 * @param identity The identity of the user to access the vault keys.
 	 * @param namespace The namespace to store the item in.
+	 * @param controller The identity of the controller to access the vault keys.
 	 * @returns The id of the stored verifiable item in urn format and the receipt.
 	 */
 	create(
@@ -23,8 +23,8 @@ export interface IVerifiableStorageComponent extends IComponent {
 		options?: {
 			maxAllowListSize?: number;
 		},
-		identity?: string,
-		namespace?: string
+		namespace?: string,
+		controller?: string
 	): Promise<{
 		id: string;
 		receipt: IJsonLdNodeObject;
@@ -35,18 +35,18 @@ export interface IVerifiableStorageComponent extends IComponent {
 	 * @param id The id of the item to update.
 	 * @param data The data to store, optional if updating the allow list.
 	 * @param allowList Updated list of identities that are allowed to modify the item.
-	 * @param identity The identity of the user to access the vault keys.
+	 * @param controller The identity of the controller to access the vault keys.
 	 * @returns The updated receipt.
 	 */
 	update(
 		id: string,
 		data?: Uint8Array,
 		allowList?: string[],
-		identity?: string
+		controller?: string
 	): Promise<IJsonLdNodeObject>;
 
 	/**
-	 * Get an verifiable item.
+	 * Get a verifiable item.
 	 * @param id The id of the item to get.
 	 * @param options Additional options for getting the item.
 	 * @param options.includeData Should the data be included in the response, defaults to true.
@@ -65,8 +65,8 @@ export interface IVerifiableStorageComponent extends IComponent {
 	/**
 	 * Remove the item from verifiable storage.
 	 * @param id The id of the verifiable item to remove in urn format.
-	 * @param controllerIdentity The identity of the controller.
-	 * @returns Nothing.
+	 * @param controller The identity of the controller.
+	 * @returns A promise that resolves when the item has been removed.
 	 */
-	remove(id: string, controllerIdentity?: string): Promise<void>;
+	remove(id: string, controller?: string): Promise<void>;
 }

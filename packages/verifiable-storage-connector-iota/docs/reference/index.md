@@ -10,7 +10,7 @@
 
 - [IIotaVerifiableStorageConnectorConfig](interfaces/IIotaVerifiableStorageConnectorConfig.md)
 - [IIotaVerifiableStorageConnectorConstructorOptions](interfaces/IIotaVerifiableStorageConnectorConstructorOptions.md)
-- [IVerifiableStorageIotaReceipt](interfaces/IVerifiableStorageIotaReceipt.md)
+- [IVerifiableStorageIotaReceipt2026](interfaces/IVerifiableStorageIotaReceipt2026.md)
 
 ## Type Aliases
 

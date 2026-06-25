@@ -7,7 +7,7 @@ import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
  */
 export interface IVerifiableStorageUpdateResponse {
 	/**
-	 * The data that was updated.
+	 * The receipt for the updated verifiable storage item.
 	 */
 	body: IJsonLdNodeObject;
 }

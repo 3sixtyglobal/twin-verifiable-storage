@@ -3,9 +3,9 @@
 import { Converter, ObjectHelper, Urn } from "@twin.org/core";
 import type { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector-memory";
 import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
-import { TEST_USER_IDENTITY_0, TEST_USER_IDENTITY_1 } from "./setupTestEnv";
-import type { VerifiableItem } from "../src/entities/verifiableItem";
-import { EntityStorageVerifiableStorageConnector } from "../src/entityStorageVerifiableStorageConnector";
+import { TEST_USER_IDENTITY_0, TEST_USER_IDENTITY_1 } from "./setupTestEnv.js";
+import type { VerifiableItem } from "../src/entities/verifiableItem.js";
+import { EntityStorageVerifiableStorageConnector } from "../src/entityStorageVerifiableStorageConnector.js";
 
 let verifiableItemId: string;
 
@@ -28,7 +28,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		expect(result.receipt.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store[0].id).toEqual(urn.namespaceSpecific(1));
@@ -53,7 +53,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		expect(result.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store[0].creator).toEqual(TEST_USER_IDENTITY_0);
@@ -75,7 +75,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		await connector.remove(TEST_USER_IDENTITY_0, verifiableItemId);
 
 		const store =
-			EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
+			await EntityStorageConnectorFactory.get<MemoryEntityStorageConnector<VerifiableItem>>(
 				"verifiable-item"
 			).getStore();
 		expect(store?.length).toEqual(0);

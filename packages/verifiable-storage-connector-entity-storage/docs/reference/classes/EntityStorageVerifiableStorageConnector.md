@@ -28,7 +28,7 @@ The options for the class.
 
 ## Properties
 
-### NAMESPACE
+### NAMESPACE {#namespace}
 
 > `static` **NAMESPACE**: `string` = `"entity-storage"`
 
@@ -36,27 +36,41 @@ The namespace supported by the verifiable storage connector.
 
 ***
 
-### CLASS\_NAME
+### CLASS\_NAME {#class_name}
 
-> `readonly` **CLASS\_NAME**: `string`
+> `readonly` `static` **CLASS\_NAME**: `string`
 
 Runtime name for the class.
 
-#### Implementation of
-
-`IVerifiableStorageConnector.CLASS_NAME`
-
 ## Methods
 
-### create()
+### className() {#classname}
 
-> **create**(`controller`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
+> **className**(): `string`
+
+Returns the class name of the component.
+
+#### Returns
+
+`string`
+
+The class name of the component.
+
+#### Implementation of
+
+`IVerifiableStorageConnector.className`
+
+***
+
+### create() {#create}
+
+> **create**(`controllerIdentity`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
 Create an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -96,15 +110,15 @@ The id of the stored verifiable item in URN format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
-> **update**(`controller`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
+> **update**(`controllerIdentity`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
 
 Update an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -140,7 +154,7 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
@@ -182,15 +196,15 @@ The data for the item, the receipt and the allow list.
 
 ***
 
-### remove()
+### remove() {#remove}
 
-> **remove**(`controller`, `id`): `Promise`\<`void`\>
+> **remove**(`controllerIdentity`, `id`): `Promise`\<`void`\>
 
 Remove the item from verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -206,7 +220,7 @@ The id of the verifiable item to remove in urn format.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
 
 #### Implementation of
 

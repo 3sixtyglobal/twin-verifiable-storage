@@ -1,5 +1,5 @@
 {
-	"openapi": "3.1.0",
+	"openapi": "3.1.1",
 	"info": {
 		"title": "TWIN - Test Endpoints",
 		"description": "REST API for TWIN - Test Endpoints.",
@@ -64,7 +64,7 @@
 										"value": {
 											"receipt": {
 												"@context": "https://schema.twindev.org/verifiable-storage/",
-												"type": "VerifiableStorageIotaReceipt"
+												"type": "VerifiableStorageIotaReceipt2026"
 											},
 											"id": "verifiable:iota:aW90YS1uZnQ6dHN0OjB4NzYyYjljNDllYTg2OWUwZWJkYTliYmZhNzY5Mzk0NDdhNDI4ZGNmMTc4YzVkMTVhYjQ0N2UyZDRmYmJiNGViMg=="
 										}
@@ -92,7 +92,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "GeneralError",
-											"message": "component.error",
+											"message": "errorMessage",
 											"properties": {
 												"foo": "bar"
 											}
@@ -113,7 +113,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "UnauthorizedError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -131,7 +131,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "InternalServerError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -190,13 +190,13 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/JsonLdNodeObject"
+									"$ref": "https://schema.twindev.org/json-ld/JsonLdNodeObject"
 								},
 								"examples": {
 									"verifiableStorageUpdateResponseExample": {
 										"value": {
 											"@context": "https://schema.twindev.org/verifiable-storage/",
-											"type": "VerifiableStorageIotaReceipt"
+											"type": "VerifiableStorageIotaReceipt2026"
 										}
 									}
 								}
@@ -214,7 +214,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "GeneralError",
-											"message": "component.error",
+											"message": "errorMessage",
 											"properties": {
 												"foo": "bar"
 											}
@@ -235,7 +235,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "UnauthorizedError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -253,7 +253,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "InternalServerError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -332,7 +332,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "GeneralError",
-											"message": "component.error",
+											"message": "errorMessage",
 											"properties": {
 												"foo": "bar"
 											}
@@ -353,7 +353,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "UnauthorizedError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -371,7 +371,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "InternalServerError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -419,7 +419,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "GeneralError",
-											"message": "component.error",
+											"message": "errorMessage",
 											"properties": {
 												"foo": "bar"
 											}
@@ -440,7 +440,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "UnauthorizedError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -458,7 +458,7 @@
 									"exampleResponse": {
 										"value": {
 											"name": "InternalServerError",
-											"message": "component.error"
+											"message": "errorMessage"
 										}
 									}
 								}
@@ -472,6 +472,7 @@
 	"components": {
 		"schemas": {
 			"Error": {
+				"description": "Model to describe serialized error.",
 				"type": "object",
 				"properties": {
 					"name": {
@@ -480,7 +481,7 @@
 					},
 					"message": {
 						"type": "string",
-						"description": "The message for the error."
+						"description": "The message for the error as an i18n key."
 					},
 					"source": {
 						"type": "string",
@@ -495,973 +496,14 @@
 						"type": "string",
 						"description": "The stack trace for the error."
 					},
-					"inner": {
+					"cause": {
 						"$ref": "#/components/schemas/Error"
 					}
 				},
 				"required": [
 					"name",
 					"message"
-				],
-				"additionalProperties": false,
-				"description": "Model to describe serialized error."
-			},
-			"JsonLdContainerType": {
-				"type": "string",
-				"enum": [
-					"@language",
-					"@index",
-					"@id",
-					"@graph",
-					"@type"
-				],
-				"description": "JSON-LD container types."
-			},
-			"JsonLdContainerTypeArray": {
-				"anyOf": [
-					{
-						"type": "array",
-						"minItems": 2,
-						"maxItems": 2,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@graph"
-							},
-							{
-								"type": "string",
-								"const": "@id"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 2,
-						"maxItems": 2,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@id"
-							},
-							{
-								"type": "string",
-								"const": "@graph"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@set"
-							},
-							{
-								"type": "string",
-								"const": "@graph"
-							},
-							{
-								"type": "string",
-								"const": "@id"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@set"
-							},
-							{
-								"type": "string",
-								"const": "@id"
-							},
-							{
-								"type": "string",
-								"const": "@graph"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@graph"
-							},
-							{
-								"type": "string",
-								"const": "@set"
-							},
-							{
-								"type": "string",
-								"const": "@id"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@id"
-							},
-							{
-								"type": "string",
-								"const": "@set"
-							},
-							{
-								"type": "string",
-								"const": "@graph"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@graph"
-							},
-							{
-								"type": "string",
-								"const": "@id"
-							},
-							{
-								"type": "string",
-								"const": "@set"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 3,
-						"maxItems": 3,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@id"
-							},
-							{
-								"type": "string",
-								"const": "@graph"
-							},
-							{
-								"type": "string",
-								"const": "@set"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 2,
-						"maxItems": 2,
-						"prefixItems": [
-							{
-								"type": "string",
-								"const": "@set"
-							},
-							{
-								"$ref": "#/components/schemas/JsonLdContainerType"
-							}
-						]
-					},
-					{
-						"type": "array",
-						"minItems": 2,
-						"maxItems": 2,
-						"prefixItems": [
-							{
-								"$ref": "#/components/schemas/JsonLdContainerType"
-							},
-							{
-								"type": "string",
-								"const": "@set"
-							}
-						]
-					}
-				],
-				"description": "JSON-LD container type array."
-			},
-			"JsonLdContextDefinition": {
-				"type": "object",
-				"properties": {
-					"@base": {
-						"type": [
-							"string",
-							"null"
-						]
-					},
-					"@direction": {
-						"type": [
-							"string",
-							"null"
-						],
-						"enum": [
-							"ltr",
-							"rtl",
-							null
-						]
-					},
-					"@import": {
-						"type": "string"
-					},
-					"@language": {
-						"type": "string"
-					},
-					"@propagate": {
-						"type": "boolean"
-					},
-					"@protected": {
-						"type": "boolean"
-					},
-					"@type": {
-						"type": "object",
-						"properties": {
-							"@container": {
-								"type": "string",
-								"const": "@set"
-							},
-							"@protected": {
-								"type": "boolean"
-							}
-						},
-						"required": [
-							"@container"
-						],
-						"additionalProperties": false
-					},
-					"@version": {
-						"type": "string",
-						"const": "1.1"
-					},
-					"@vocab": {
-						"type": [
-							"string",
-							"null"
-						]
-					}
-				},
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"type": "null"
-						},
-						{
-							"type": "string"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdExpandedTermDefinition"
-						}
-					]
-				},
-				"description": "A context definition defines a local context in a node object."
-			},
-			"JsonLdContextDefinitionElement": {
-				"anyOf": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdContextDefinition"
-					}
-				],
-				"description": "A context definition element is used to define the types of a context definition."
-			},
-			"JsonLdContextDefinitionRoot": {
-				"anyOf": [
-					{
-						"$ref": "#/components/schemas/JsonLdContextDefinitionElement"
-					},
-					{
-						"type": "array",
-						"prefixItems": [
-							{
-								"$ref": "#/components/schemas/JsonLdContextDefinitionElement"
-							}
-						]
-					}
-				],
-				"description": "A context definition root is used to define the root of a context definition."
-			},
-			"JsonLdExpandedTermDefinition": {
-				"anyOf": [
-					{
-						"type": "object",
-						"additionalProperties": false,
-						"properties": {
-							"@id": {
-								"anyOf": [
-									{
-										"type": "string"
-									},
-									{
-										"type": "array",
-										"prefixItems": [
-											{
-												"type": "string"
-											}
-										]
-									},
-									{
-										"type": "null"
-									}
-								]
-							},
-							"@nest": {
-								"type": "string"
-							},
-							"@container": {
-								"anyOf": [
-									{
-										"type": "string",
-										"const": "@list"
-									},
-									{
-										"type": "string",
-										"const": "@set"
-									},
-									{
-										"$ref": "#/components/schemas/JsonLdContainerType"
-									},
-									{
-										"type": "array",
-										"prefixItems": [
-											{
-												"anyOf": [
-													{
-														"type": "string",
-														"const": "@list"
-													},
-													{
-														"type": "string",
-														"const": "@set"
-													},
-													{
-														"$ref": "#/components/schemas/JsonLdContainerType"
-													}
-												]
-											}
-										]
-									},
-									{
-										"$ref": "#/components/schemas/JsonLdContainerTypeArray"
-									},
-									{
-										"type": "null"
-									}
-								]
-							},
-							"@type": {
-								"type": "string"
-							},
-							"@language": {
-								"type": "string"
-							},
-							"@index": {
-								"type": "string"
-							},
-							"@context": {
-								"$ref": "#/components/schemas/JsonLdContextDefinition"
-							},
-							"@prefix": {
-								"type": "boolean"
-							},
-							"@propagate": {
-								"type": "boolean"
-							},
-							"@protected": {
-								"type": "boolean"
-							}
-						}
-					},
-					{
-						"type": "object",
-						"additionalProperties": false,
-						"properties": {
-							"@reverse": {
-								"type": "string"
-							},
-							"@container": {
-								"type": [
-									"string",
-									"null"
-								],
-								"enum": [
-									"@set",
-									"@index",
-									null
-								]
-							},
-							"@type": {
-								"type": "string"
-							},
-							"@language": {
-								"type": "string"
-							},
-							"@index": {
-								"type": "string"
-							},
-							"@context": {
-								"$ref": "#/components/schemas/JsonLdContextDefinition"
-							},
-							"@prefix": {
-								"type": "boolean"
-							},
-							"@propagate": {
-								"type": "boolean"
-							},
-							"@protected": {
-								"type": "boolean"
-							}
-						},
-						"required": [
-							"@reverse"
-						]
-					}
-				],
-				"description": "An expanded term definition is used to describe the mapping between a term and its expanded identifier, as well as other properties of the value associated with the term when it is used as key in a node object."
-			},
-			"JsonLdGraphObject": {
-				"type": "object",
-				"properties": {
-					"@graph": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/JsonLdNodeObject"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"$ref": "#/components/schemas/JsonLdNodeObject"
-									}
-								]
-							}
-						]
-					},
-					"@index": {
-						"type": "string"
-					},
-					"@id": {
-						"anyOf": [
-							{
-								"type": "string"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"type": "string"
-									}
-								]
-							}
-						]
-					},
-					"@context": {
-						"$ref": "#/components/schemas/JsonLdContextDefinitionRoot"
-					}
-				},
-				"required": [
-					"@graph"
-				],
-				"additionalProperties": false,
-				"description": "A graph object represents a named graph, which MAY include an explicit graph name."
-			},
-			"JsonLdIdMap": {
-				"type": "object",
-				"additionalProperties": {
-					"$ref": "#/components/schemas/JsonLdNodeObject"
-				},
-				"description": "An id map is used to associate an IRI with a value that allows easy programmatic access."
-			},
-			"JsonLdIncludedBlock": {
-				"anyOf": [
-					{
-						"$ref": "#/components/schemas/JsonLdNodeObject"
-					},
-					{
-						"type": "array",
-						"prefixItems": [
-							{
-								"$ref": "#/components/schemas/JsonLdNodeObject"
-							}
-						]
-					}
-				],
-				"description": "An included block is used to provide a set of node objects."
-			},
-			"JsonLdIndexMap": {
-				"type": "object",
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"$ref": "#/components/schemas/JsonLdIndexMapItem"
-						},
-						{
-							"type": "array",
-							"prefixItems": [
-								{
-									"$ref": "#/components/schemas/JsonLdIndexMapItem"
-								}
-							]
-						}
-					]
-				},
-				"description": "An index map allows keys that have no semantic meaning, but should be preserved regardless, to be used in JSON-LD documents."
-			},
-			"JsonLdIndexMapItem": {
-				"anyOf": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdNodeObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdValueObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdListObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdSetObject"
-					}
-				],
-				"description": "The items that can be stored in an index map."
-			},
-			"JsonLdJsonArray": {
-				"type": "array",
-				"description": "JSON Type for array.",
-				"prefixItems": [
-					{
-						"$ref": "#/components/schemas/JsonLdJsonValue"
-					}
 				]
-			},
-			"JsonLdJsonObject": {
-				"type": "object",
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"$ref": "#/components/schemas/JsonLdJsonValue"
-						},
-						{
-							"not": {}
-						}
-					]
-				},
-				"description": "JSON Type for object."
-			},
-			"JsonLdJsonPrimitive": {
-				"type": [
-					"string",
-					"number",
-					"boolean",
-					"null"
-				],
-				"description": "JSON Primitive."
-			},
-			"JsonLdJsonValue": {
-				"anyOf": [
-					{
-						"$ref": "#/components/schemas/JsonLdJsonPrimitive"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdJsonArray"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdJsonObject"
-					}
-				],
-				"description": "JSON Value."
-			},
-			"JsonLdLanguageMap": {
-				"type": "object",
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"type": "null"
-						},
-						{
-							"type": "string"
-						},
-						{
-							"type": "array",
-							"prefixItems": [
-								{
-									"type": "string"
-								}
-							]
-						}
-					]
-				},
-				"description": "A language map is used to associate a language with a value in a way that allows easy programmatic access."
-			},
-			"JsonLdListObject": {
-				"type": "object",
-				"properties": {
-					"@list": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/JsonLdListOrSetItem"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"$ref": "#/components/schemas/JsonLdListOrSetItem"
-									}
-								]
-							}
-						]
-					},
-					"@index": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"@list"
-				],
-				"additionalProperties": false,
-				"description": "A list represents an ordered set of values."
-			},
-			"JsonLdListOrSetItem": {
-				"anyOf": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdNodeObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdValueObject"
-					}
-				],
-				"description": "A list or set item can be a null, boolean, number, string, node object, or value object."
-			},
-			"JsonLdNodeObject": {
-				"type": "object",
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"$ref": "#/components/schemas/JsonLdNodePrimitive"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdLanguageMap"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdIndexMap"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdIncludedBlock"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdIdMap"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdTypeMap"
-						},
-						{
-							"type": "array"
-						}
-					]
-				},
-				"properties": {
-					"@context": {
-						"$ref": "#/components/schemas/JsonLdContextDefinitionRoot"
-					},
-					"@id": {
-						"anyOf": [
-							{
-								"type": "string"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"type": "string"
-									}
-								]
-							}
-						]
-					},
-					"@included": {
-						"$ref": "#/components/schemas/JsonLdIncludedBlock"
-					},
-					"@graph": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/JsonLdNodeObject"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"$ref": "#/components/schemas/JsonLdNodeObject"
-									}
-								]
-							}
-						]
-					},
-					"@nest": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/JsonLdJsonObject"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"$ref": "#/components/schemas/JsonLdJsonObject"
-									}
-								]
-							}
-						]
-					},
-					"@type": {
-						"anyOf": [
-							{
-								"type": "string"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"type": "string"
-									}
-								]
-							}
-						]
-					},
-					"@reverse": {
-						"type": "object",
-						"additionalProperties": {
-							"type": "string"
-						}
-					},
-					"@index": {
-						"type": "string"
-					}
-				},
-				"description": "A node object represents zero or more properties of a node in the graph serialized by the JSON-LD document."
-			},
-			"JsonLdNodePrimitive": {
-				"anyOf": [
-					{
-						"type": "null"
-					},
-					{
-						"type": "boolean"
-					},
-					{
-						"type": "number"
-					},
-					{
-						"type": "string"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdNodeObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdGraphObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdValueObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdListObject"
-					},
-					{
-						"$ref": "#/components/schemas/JsonLdSetObject"
-					}
-				],
-				"description": "A node primitive is a JSON-LD value which is not one of the defined NodeObject properties."
-			},
-			"JsonLdSetObject": {
-				"type": "object",
-				"properties": {
-					"@set": {
-						"anyOf": [
-							{
-								"$ref": "#/components/schemas/JsonLdListOrSetItem"
-							},
-							{
-								"type": "array",
-								"prefixItems": [
-									{
-										"$ref": "#/components/schemas/JsonLdListOrSetItem"
-									}
-								]
-							}
-						]
-					},
-					"@index": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"@set"
-				],
-				"additionalProperties": false,
-				"description": "A set represents an unordered set of values."
-			},
-			"JsonLdTypeMap": {
-				"type": "object",
-				"additionalProperties": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"$ref": "#/components/schemas/JsonLdNodeObject"
-						}
-					]
-				},
-				"description": "A type map is used to associate an IRI with a value that allows easy programmatic access."
-			},
-			"JsonLdValueObject": {
-				"anyOf": [
-					{
-						"type": "object",
-						"additionalProperties": false,
-						"properties": {
-							"@value": {
-								"type": [
-									"null",
-									"boolean",
-									"number",
-									"string"
-								]
-							},
-							"@language": {
-								"type": "string"
-							},
-							"@direction": {
-								"type": [
-									"string",
-									"null"
-								],
-								"enum": [
-									"ltr",
-									"rtl",
-									null
-								]
-							},
-							"@index": {
-								"type": "string"
-							},
-							"@context": {
-								"$ref": "#/components/schemas/JsonLdContextDefinitionRoot"
-							}
-						},
-						"required": [
-							"@value"
-						]
-					},
-					{
-						"type": "object",
-						"additionalProperties": false,
-						"properties": {
-							"@value": {
-								"type": [
-									"null",
-									"boolean",
-									"number",
-									"string"
-								]
-							},
-							"@type": {
-								"type": "string"
-							},
-							"@index": {
-								"type": "string"
-							},
-							"@context": {
-								"$ref": "#/components/schemas/JsonLdContextDefinitionRoot"
-							}
-						},
-						"required": [
-							"@type",
-							"@value"
-						]
-					},
-					{
-						"type": "object",
-						"additionalProperties": false,
-						"properties": {
-							"@value": {
-								"anyOf": [
-									{
-										"type": "null"
-									},
-									{
-										"type": "boolean"
-									},
-									{
-										"type": "number"
-									},
-									{
-										"type": "string"
-									},
-									{
-										"$ref": "#/components/schemas/JsonLdJsonObject"
-									},
-									{
-										"$ref": "#/components/schemas/JsonLdJsonArray"
-									}
-								]
-							},
-							"@type": {
-								"type": "string",
-								"const": "@json"
-							},
-							"@index": {
-								"type": "string"
-							},
-							"@context": {
-								"$ref": "#/components/schemas/JsonLdContextDefinitionRoot"
-							}
-						},
-						"required": [
-							"@type",
-							"@value"
-						]
-					}
-				],
-				"description": "A value object is used to explicitly associate a type or a language with a value to create a typed value or a language-tagged string and possibly associate a base direction."
 			},
 			"VerifiableStorageCreateRequest": {
 				"type": "object",
@@ -1472,12 +514,10 @@
 					},
 					"allowList": {
 						"type": "array",
-						"description": "The list of identities that are allowed to modify the item.",
-						"prefixItems": [
-							{
-								"type": "string"
-							}
-						]
+						"items": {
+							"type": "string"
+						},
+						"description": "The list of identities that are allowed to modify the item."
 					},
 					"maxAllowListSize": {
 						"type": "number",
@@ -1492,14 +532,13 @@
 				"required": [
 					"data"
 				],
-				"additionalProperties": false,
 				"description": "The data to be stored."
 			},
 			"VerifiableStorageCreateResponse": {
 				"type": "object",
 				"properties": {
 					"receipt": {
-						"$ref": "#/components/schemas/JsonLdNodeObject"
+						"$ref": "https://schema.twindev.org/json-ld/JsonLdNodeObject"
 					},
 					"id": {
 						"type": "string",
@@ -1510,8 +549,7 @@
 					"receipt",
 					"id"
 				],
-				"additionalProperties": false,
-				"description": "The data that was stored."
+				"description": "The created verifiable storage item details."
 			},
 			"VerifiableStorageGetRequest": {
 				"type": "object",
@@ -1527,14 +565,13 @@
 						"default": true
 					}
 				},
-				"additionalProperties": false,
 				"description": "The body optional param."
 			},
 			"VerifiableStorageGetResponse": {
 				"type": "object",
 				"properties": {
 					"receipt": {
-						"$ref": "#/components/schemas/JsonLdNodeObject"
+						"$ref": "https://schema.twindev.org/json-ld/JsonLdNodeObject"
 					},
 					"data": {
 						"type": "string",
@@ -1542,19 +579,16 @@
 					},
 					"allowList": {
 						"type": "array",
-						"description": "The list of identities that are allowed to modify the item.",
-						"prefixItems": [
-							{
-								"type": "string"
-							}
-						]
+						"items": {
+							"type": "string"
+						},
+						"description": "The list of identities that are allowed to modify the item."
 					}
 				},
 				"required": [
 					"receipt"
 				],
-				"additionalProperties": false,
-				"description": "The data that was obtained."
+				"description": "The retrieved verifiable storage item contents."
 			},
 			"VerifiableStorageUpdateRequest": {
 				"type": "object",
@@ -1565,15 +599,12 @@
 					},
 					"allowList": {
 						"type": "array",
-						"description": "An updated list of identities that are allowed to modify the item, send an empty list to remove all entries.",
-						"prefixItems": [
-							{
-								"type": "string"
-							}
-						]
+						"items": {
+							"type": "string"
+						},
+						"description": "An updated list of identities that are allowed to modify the item, send an empty list to remove all entries."
 					}
 				},
-				"additionalProperties": false,
 				"description": "The data to be updated."
 			}
 		},

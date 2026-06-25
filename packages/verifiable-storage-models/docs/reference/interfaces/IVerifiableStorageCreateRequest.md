@@ -4,7 +4,7 @@ Store the data and return the verifiable storage item id.
 
 ## Properties
 
-### body
+### body {#body}
 
 > **body**: `object`
 
@@ -18,13 +18,13 @@ The data for the verifiable storage item, this is a string serialized as base64.
 
 #### allowList?
 
-> `optional` **allowList**: `string`[]
+> `optional` **allowList?**: `string`[]
 
 The list of identities that are allowed to modify the item.
 
 #### maxAllowListSize?
 
-> `optional` **maxAllowListSize**: `number`
+> `optional` **maxAllowListSize?**: `number`
 
 The maximum size of the allow list.
 
@@ -36,6 +36,6 @@ The maximum size of the allow list.
 
 #### namespace?
 
-> `optional` **namespace**: `string`
+> `optional` **namespace?**: `string`
 
 The namespace of the connector to use for the verifiable storage item, defaults to component configured namespace.

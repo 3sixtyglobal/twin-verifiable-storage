@@ -1,6 +1,8 @@
 # TWIN Verifiable Storage REST Client
 
-Verifiable Storage contract implementation which can connect to REST endpoints.
+This package provides a REST client for calling verifiable storage service endpoints from external applications and services. It wraps API requests and responses in the shared model contracts so consumers can integrate with predictable request shapes and result handling.
+
+It is intended for client-side or service-to-service use cases where verifiable storage operations are accessed over HTTP rather than through direct connector invocation.
 
 ## Installation
 

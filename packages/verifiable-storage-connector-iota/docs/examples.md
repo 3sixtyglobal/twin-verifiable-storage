@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-connector-iota - Examples
+# Examples
 
 ## Note
 
@@ -50,7 +50,7 @@ Once installed, you can use the iota command to build or manage Move contracts l
 
 In this repository's GitHub Actions, we install the Linux x86_64 binary because the GitHub runner is Ubuntu-based:
 
-```yaml
+````yaml
 name: Download & Install IOTA CLI
 run: |
   wget https://github.com/iotaledger/iota/releases/download/v1.0.0/iota-v1.0.0-linux-x86_64.tgz -O iota-cli.tgz
@@ -58,6 +58,54 @@ run: |
   chmod +x iota
   sudo mv iota /usr/local/bin/iota
   iota --version
+
+# IOTA Verifiable Storage Connector Examples
+
+The following examples show how to use the IOTA verifiable storage connector in TypeScript. These samples demonstrate how to create, retrieve, and update verifiable storage items on the IOTA network, as well as how to configure and instantiate the connector.
+
+## IotaVerifiableStorageConnector
+
+```typescript
+import { IotaVerifiableStorageConnector } from '@twin.org/verifiable-storage-connector-iota';
+
+const config = {
+   config: {
+      network: 'testnet',
+      contractName: 'verifiable-storage',
+      walletAddressIndex: 0
+   }
+};
+const connector = new IotaVerifiableStorageConnector(config);
+await connector.start();
+
+const controllerIdentity = 'did:example:controller1';
+const data = new TextEncoder().encode('IOTA data');
+const allowList = ['did:example:controller1'];
+const { id, receipt } = await connector.create(controllerIdentity, data, allowList, { maxAllowListSize: 2 });
+console.log(id); // Outputs the new item id
+console.log(receipt); // Outputs the receipt object
+````
+
+```typescript
+// Retrieve a verifiable storage item
+const item = await connector.get(id);
+if (item.data) {
+  const decoded = new TextDecoder().decode(item.data);
+  console.log(decoded); // IOTA data
+}
+console.log(item.allowList); // Outputs the allow list
+console.log(item.receipt); // Outputs the receipt object
 ```
 
-Locally, however, you should choose the appropriate binary for your OS (Windows/Mac/Linux) and follow similar steps to extract and run the CLI.
+```typescript
+// Update a verifiable storage item
+const updatedData = new TextEncoder().encode('Updated IOTA data');
+const updatedAllowList = ['did:example:controller1'];
+const updatedReceipt = await connector.update(
+  controllerIdentity,
+  id,
+  updatedData,
+  updatedAllowList
+);
+console.log(updatedReceipt); // Outputs the updated receipt object
+```

@@ -8,15 +8,15 @@ Interface describing a verifiable storage connector.
 
 ## Methods
 
-### create()
+### create() {#create}
 
-> **create**(`controller`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
+> **create**(`controllerIdentity`, `data`, `allowList?`, `options?`): `Promise`\<\{ `id`: `string`; `receipt`: `IJsonLdNodeObject`; \}\>
 
 Create an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -52,15 +52,15 @@ The id of the stored verifiable item in urn format and the receipt.
 
 ***
 
-### update()
+### update() {#update}
 
-> **update**(`controller`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
+> **update**(`controllerIdentity`, `id`, `data?`, `allowList?`): `Promise`\<`IJsonLdNodeObject`\>
 
 Update an item in verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -92,11 +92,11 @@ The updated receipt.
 
 ***
 
-### get()
+### get() {#get}
 
 > **get**(`id`, `options?`): `Promise`\<\{ `data?`: `Uint8Array`\<`ArrayBufferLike`\>; `receipt`: `IJsonLdNodeObject`; `allowList?`: `string`[]; \}\>
 
-Get an verifiable item.
+Get a verifiable item.
 
 #### Parameters
 
@@ -130,15 +130,15 @@ The data for the item, the receipt and the allow list.
 
 ***
 
-### remove()
+### remove() {#remove}
 
-> **remove**(`controller`, `id`): `Promise`\<`void`\>
+> **remove**(`controllerIdentity`, `id`): `Promise`\<`void`\>
 
 Remove the item from verifiable storage.
 
 #### Parameters
 
-##### controller
+##### controllerIdentity
 
 `string`
 
@@ -154,4 +154,4 @@ The id of the verifiable item to remove in urn format.
 
 `Promise`\<`void`\>
 
-Nothing.
+A promise that resolves when the item has been removed.
