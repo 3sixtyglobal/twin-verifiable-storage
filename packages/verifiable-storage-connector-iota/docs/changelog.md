@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.9.0...verifiable-storage-connector-iota-v0.9.0) (2026-06-25)
+
+
+### Features
+
+* release to production ([6ce6744](https://github.com/iotaledger/twin-verifiable-storage/commit/6ce6744c124cca586c1ef0552624378d1207578d))
+* release to production ([#75](https://github.com/iotaledger/twin-verifiable-storage/issues/75)) ([d631cd7](https://github.com/iotaledger/twin-verifiable-storage/commit/d631cd74bba5ac37d67178632eed5a779348170f))
+
 ## [0.9.0-next.1](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.9.0-next.0...verifiable-storage-connector-iota-v0.9.0-next.1) (2026-06-23)
 
 
