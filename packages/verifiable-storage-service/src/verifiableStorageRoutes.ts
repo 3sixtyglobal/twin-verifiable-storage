@@ -1,10 +1,11 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type {
-	IHttpRequestContext,
-	INoContentResponse,
-	IRestRoute,
-	ITag
+import {
+	HttpHeaderHelper,
+	type IHttpRequestContext,
+	type INoContentResponse,
+	type IRestRoute,
+	type ITag
 } from "@twin.org/api-models";
 import { ContextIdHelper, ContextIdKeys, ContextIdStore } from "@twin.org/context";
 import { ComponentFactory, Converter, Guards, Is } from "@twin.org/core";
@@ -19,7 +20,7 @@ import type {
 	IVerifiableStorageUpdateRequest,
 	IVerifiableStorageUpdateResponse
 } from "@twin.org/verifiable-storage-models";
-import { HeaderTypes, HttpStatusCode } from "@twin.org/web";
+import { HeaderTypes, HttpStatusCode, type IHttpHeaders } from "@twin.org/web";
 
 /**
  * The source used when communicating about these routes.
@@ -244,11 +245,13 @@ export async function verifiableStorageCreate(
 		request.body.namespace,
 		contextIds[ContextIdKeys.Organization]
 	);
+
+	const headers: IHttpHeaders = {};
+	HttpHeaderHelper.buildId(headers, result.id);
+
 	return {
 		statusCode: HttpStatusCode.created,
-		headers: {
-			[HeaderTypes.Location]: result.id
-		},
+		headers,
 		body: {
 			receipt: result.receipt,
 			id: result.id

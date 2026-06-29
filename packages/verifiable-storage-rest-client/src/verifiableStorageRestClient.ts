@@ -15,6 +15,7 @@ import type {
 	IVerifiableStorageUpdateRequest,
 	IVerifiableStorageUpdateResponse
 } from "@twin.org/verifiable-storage-models";
+import { HttpMethod } from "@twin.org/web";
 
 /**
  * Client for performing Verifiable Storage through to REST endpoints.
@@ -67,7 +68,7 @@ export class VerifiableStorageRestClient
 		const response = await this.fetch<
 			IVerifiableStorageCreateRequest,
 			IVerifiableStorageCreateResponse
-		>("/", "POST", {
+		>("/", HttpMethod.POST, {
 			body: {
 				data: Converter.bytesToBase64(data),
 				allowList,
@@ -95,7 +96,7 @@ export class VerifiableStorageRestClient
 		const response = await this.fetch<
 			IVerifiableStorageUpdateRequest,
 			IVerifiableStorageUpdateResponse
-		>("/:id", "PUT", {
+		>("/:id", HttpMethod.PUT, {
 			pathParams: {
 				id
 			},
@@ -126,7 +127,7 @@ export class VerifiableStorageRestClient
 
 		const response = await this.fetch<IVerifiableStorageGetRequest, IVerifiableStorageGetResponse>(
 			"/:id",
-			"GET",
+			HttpMethod.GET,
 			{
 				pathParams: {
 					id
@@ -151,10 +152,14 @@ export class VerifiableStorageRestClient
 	public async remove(id: string): Promise<void> {
 		Urn.guard(VerifiableStorageRestClient.CLASS_NAME, nameof(id), id);
 
-		await this.fetch<IVerifiableStorageRemoveRequest, INoContentResponse>("/:id", "DELETE", {
-			pathParams: {
-				id
+		await this.fetch<IVerifiableStorageRemoveRequest, INoContentResponse>(
+			"/:id",
+			HttpMethod.DELETE,
+			{
+				pathParams: {
+					id
+				}
 			}
-		});
+		);
 	}
 }
