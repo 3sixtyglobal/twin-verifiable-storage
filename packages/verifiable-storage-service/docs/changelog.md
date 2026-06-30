@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.9.1-next.3](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-service-v0.9.1-next.2...verifiable-storage-service-v0.9.1-next.3) (2026-06-30)
+
+
+### Features
+
+* enhanced rest testing ([1b79b4f](https://github.com/iotaledger/twin-verifiable-storage/commit/1b79b4f7997152dbf2edc9ff9a1281f9bf7b6053))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.9.1-next.2 to 0.9.1-next.3
+  * devDependencies
+    * @twin.org/verifiable-storage-connector-entity-storage bumped from 0.9.1-next.2 to 0.9.1-next.3
+
 ## [0.9.1-next.2](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-service-v0.9.1-next.1...verifiable-storage-service-v0.9.1-next.2) (2026-06-29)
 
 

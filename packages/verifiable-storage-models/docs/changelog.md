@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1-next.3](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.9.1-next.2...verifiable-storage-models-v0.9.1-next.3) (2026-06-30)
+
+
+### Miscellaneous Chores
+
+* **verifiable-storage-models:** Synchronize repo versions
+
 ## [0.9.1-next.2](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.9.1-next.1...verifiable-storage-models-v0.9.1-next.2) (2026-06-29)
 
 
