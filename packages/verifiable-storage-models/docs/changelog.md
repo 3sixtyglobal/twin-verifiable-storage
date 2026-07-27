@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.1](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.9.1...verifiable-storage-models-v0.9.1) (2026-07-27)
+
+
+### Features
+
+* release to production ([6ce6744](https://github.com/iotaledger/twin-verifiable-storage/commit/6ce6744c124cca586c1ef0552624378d1207578d))
+* release to production ([#75](https://github.com/iotaledger/twin-verifiable-storage/issues/75)) ([d631cd7](https://github.com/iotaledger/twin-verifiable-storage/commit/d631cd74bba5ac37d67178632eed5a779348170f))
+* release to production ([#85](https://github.com/iotaledger/twin-verifiable-storage/issues/85)) ([a31f482](https://github.com/iotaledger/twin-verifiable-storage/commit/a31f4827556724694729deaa81d78445d96e4462))
+
 ## [0.9.1-next.3](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-models-v0.9.1-next.2...verifiable-storage-models-v0.9.1-next.3) (2026-06-30)
 
 
