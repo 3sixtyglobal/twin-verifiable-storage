@@ -1,10 +1,13 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type {
-	IHttpRequestContext,
-	INoContentResponse,
-	IRestRoute,
-	ITag
+import {
+	HttpContextIdKeys,
+	HttpHeaderHelper,
+	HttpUrlHelper,
+	type IHttpRequestContext,
+	type INoContentResponse,
+	type IRestRoute,
+	type ITag
 } from "@twin.org/api-models";
 import { ContextIdHelper, ContextIdKeys, ContextIdStore } from "@twin.org/context";
 import { ComponentFactory, Converter, Guards, Is } from "@twin.org/core";
@@ -19,7 +22,7 @@ import type {
 	IVerifiableStorageUpdateRequest,
 	IVerifiableStorageUpdateResponse
 } from "@twin.org/verifiable-storage-models";
-import { HeaderTypes, HttpStatusCode } from "@twin.org/web";
+import { HeaderTypes, HttpStatusCode, type IHttpHeaders } from "@twin.org/web";
 
 /**
  * The source used when communicating about these routes.
@@ -54,7 +57,7 @@ export function generateRestRoutesVerifiableStorage(
 			method: "POST",
 			path: `${baseRouteName}/`,
 			handler: async (httpRequestContext, request) =>
-				verifiableStorageCreate(httpRequestContext, componentName, request),
+				verifiableStorageCreate(httpRequestContext, componentName, request, baseRouteName),
 			requestType: {
 				type: nameof<IVerifiableStorageCreateRequest>(),
 				examples: [
@@ -216,12 +219,14 @@ export function generateRestRoutesVerifiableStorage(
  * @param httpRequestContext The request context for the API.
  * @param componentName The name of the component to use in the routes.
  * @param request The request.
+ * @param baseRouteName The base route name for the API.
  * @returns The response object with additional http response properties.
  */
 export async function verifiableStorageCreate(
 	httpRequestContext: IHttpRequestContext,
 	componentName: string,
-	request: IVerifiableStorageCreateRequest
+	request: IVerifiableStorageCreateRequest,
+	baseRouteName: string
 ): Promise<IVerifiableStorageCreateResponse> {
 	Guards.object<IVerifiableStorageCreateRequest>(ROUTES_SOURCE, nameof(request), request);
 	Guards.object<IVerifiableStorageCreateRequest["body"]>(
@@ -244,11 +249,19 @@ export async function verifiableStorageCreate(
 		request.body.namespace,
 		contextIds[ContextIdKeys.Organization]
 	);
+
+	const publicOrigin = contextIds?.[HttpContextIdKeys.PublicOrigin];
+
+	const headers: IHttpHeaders = {};
+	HttpHeaderHelper.buildId(
+		headers,
+		result.id,
+		HttpUrlHelper.combineOriginPath(publicOrigin, `${baseRouteName}/:id`)
+	);
+
 	return {
 		statusCode: HttpStatusCode.created,
-		headers: {
-			[HeaderTypes.Location]: result.id
-		},
+		headers,
 		body: {
 			receipt: result.receipt,
 			id: result.id

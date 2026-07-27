@@ -1,6 +1,6 @@
 # Function: verifiableStorageCreate()
 
-> **verifiableStorageCreate**(`httpRequestContext`, `componentName`, `request`): `Promise`\<`IVerifiableStorageCreateResponse`\>
+> **verifiableStorageCreate**(`httpRequestContext`, `componentName`, `request`, `baseRouteName`): `Promise`\<`IVerifiableStorageCreateResponse`\>
 
 Create a verifiable storage item.
 
@@ -23,6 +23,12 @@ The name of the component to use in the routes.
 `IVerifiableStorageCreateRequest`
 
 The request.
+
+### baseRouteName
+
+`string`
+
+The base route name for the API.
 
 ## Returns
 
