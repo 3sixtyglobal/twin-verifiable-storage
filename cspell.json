@@ -20,7 +20,17 @@
 		"**/contracts/**",
 		"changelog.md"
 	],
-	"words": ["abbrev", "autorelease", "bech", "devnet", "Faucet", "nameof", "Stiftung", "utxo"],
+	"words": [
+		"abbrev",
+		"autorelease",
+		"bech",
+		"devnet",
+		"Faucet",
+		"hotfixes",
+		"nameof",
+		"Stiftung",
+		"utxo"
+	],
 	"ignoreRegExpList": [
 		"/from\\s+(['\"]).*\\1/",
 		"/eslint-disable.*/",
