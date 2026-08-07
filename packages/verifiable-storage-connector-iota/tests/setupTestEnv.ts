@@ -129,7 +129,7 @@ await AccountHelper.createAccountKeys(
 	process.env.TEST_MNEMONIC
 );
 
-const testAddresses = await AccountHelper.getAddress(
+const testAddress = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
 	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY,
@@ -137,7 +137,7 @@ const testAddresses = await AccountHelper.getAddress(
 	0
 );
 
-const testAddresses2 = await AccountHelper.getAddress(
+const testAddress2 = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
 	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY_2,
@@ -145,7 +145,7 @@ const testAddresses2 = await AccountHelper.getAddress(
 	0
 );
 
-const nodeAddresses = await AccountHelper.getAddress(
+const nodeAddress = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
 	TEST_VAULT_CONNECTOR,
 	TEST_NODE_IDENTITY,
@@ -153,7 +153,7 @@ const nodeAddresses = await AccountHelper.getAddress(
 	0
 );
 
-const deployerAddresses = await AccountHelper.getAddress(
+const deployerAddress = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
 	TEST_VAULT_CONNECTOR,
 	TEST_DEPLOYER_IDENTITY,
@@ -161,10 +161,10 @@ const deployerAddresses = await AccountHelper.getAddress(
 	0
 );
 
-export const TEST_ADDRESS = testAddresses[0];
-export const TEST_ADDRESS_2 = testAddresses2[0];
-export const NODE_ADDRESS = nodeAddresses[0];
-export const DEPLOYER_ADDRESS = deployerAddresses[0];
+export const TEST_ADDRESS = testAddress;
+export const TEST_ADDRESS_2 = testAddress2;
+export const NODE_ADDRESS = nodeAddress;
+export const DEPLOYER_ADDRESS = deployerAddress;
 
 /**
  * Global variable to store test deployment configuration.
