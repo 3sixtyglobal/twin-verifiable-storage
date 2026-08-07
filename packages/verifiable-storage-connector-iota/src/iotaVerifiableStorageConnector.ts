@@ -13,6 +13,7 @@ import {
 	Urn
 } from "@twin.org/core";
 import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
+import { AccountHelper } from "@twin.org/dlt-account";
 import {
 	type IContractData,
 	type ISmartContractDeployments,
@@ -307,9 +308,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const address = await Iota.getAddress(
-				this._vaultConnector,
+			const address = await AccountHelper.getAddress(
 				this._config,
+				this._vaultConnector,
 				controllerIdentity,
 				this._config.accountAddressIndex ?? 0,
 				this._config.walletAddressIndex ?? 0
@@ -435,9 +436,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 				]
 			});
 
-			const address = await Iota.getAddress(
-				this._vaultConnector,
+			const address = await AccountHelper.getAddress(
 				this._config,
+				this._vaultConnector,
 				controllerIdentity,
 				this._config.accountAddressIndex ?? 0,
 				this._config.walletAddressIndex ?? 0
@@ -620,9 +621,9 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 			const packageId = IotaVerifiableStorageUtils.verifiableStorageIdToPackageId(id);
 			const moduleName = this.getModuleName();
 
-			const address = await Iota.getAddress(
-				this._vaultConnector,
+			const address = await AccountHelper.getAddress(
 				this._config,
+				this._vaultConnector,
 				controllerIdentity,
 				this._config.accountAddressIndex ?? 0,
 				this._config.walletAddressIndex ?? 0

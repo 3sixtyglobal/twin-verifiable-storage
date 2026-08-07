@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import { requestIotaFromFaucetV0 } from "@iota/iota-sdk/faucet";
 import { Guards, Is } from "@twin.org/core";
 import { Bip39 } from "@twin.org/crypto";
+import { AccountHelper } from "@twin.org/dlt-account";
 import { Iota, type ISmartContractDeployments } from "@twin.org/dlt-iota";
 import { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector-memory";
 import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
@@ -121,40 +122,43 @@ export const TEST_IOTA_CONFIG = {
 	vaultMnemonicId: TEST_MNEMONIC_NAME
 };
 
-const testAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+await AccountHelper.createAccountKeys(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
+	TEST_USER_IDENTITY,
+	process.env.TEST_MNEMONIC
+);
+
+const testAddresses = await AccountHelper.getAddress(
+	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
-const testAddresses2 = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const testAddresses2 = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY_2,
 	0,
-	0,
-	1
+	0
 );
 
-const nodeAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const nodeAddresses = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_NODE_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
-const deployerAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const deployerAddresses = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_DEPLOYER_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
 export const TEST_ADDRESS = testAddresses[0];

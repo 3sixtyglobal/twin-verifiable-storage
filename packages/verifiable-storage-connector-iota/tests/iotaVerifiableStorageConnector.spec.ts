@@ -279,7 +279,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const getResult1 = await connector.get(itemId);
 		expect(getResult1.allowList).toEqual([TEST_ADDRESS, TEST_ADDRESS_2]);
 
-		// Update data only (no allowList parameter) — allowlist must be preserved
+		// Update data only (no allowList parameter) - allowlist must be preserved
 		const updateData = Converter.utf8ToBytes("Updated data, allowlist should be intact!");
 		await connector.update(TEST_USER_IDENTITY, itemId, updateData);
 
@@ -304,7 +304,7 @@ describe("IotaVerifiableStorageConnector", () => {
 		const getResult1 = await connector.get(itemId);
 		expect(getResult1.allowList).toEqual([TEST_ADDRESS, TEST_ADDRESS_2]);
 
-		// Update with a new address — should replace, not merge
+		// Update with a new address - should replace, not merge
 		const newAddress = "0x0000000000000000000000000000000000000000000000000000000000000001";
 		await connector.update(TEST_USER_IDENTITY, itemId, undefined, [newAddress]);
 
