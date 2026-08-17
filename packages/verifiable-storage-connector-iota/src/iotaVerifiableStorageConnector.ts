@@ -106,7 +106,7 @@ export class IotaVerifiableStorageConnector implements IVerifiableStorageConnect
 	/**
 	 * Create a new instance of IotaVerifiableStorageConnector.
 	 * @param options The options for the storage connector.
-	 * @throws {GeneralError} If the options are invalid.
+	 * @throws GeneralError If the options are invalid.
 	 */
 	constructor(options: IIotaVerifiableStorageConnectorConstructorOptions) {
 		Guards.object<IIotaVerifiableStorageConnectorConstructorOptions>(
