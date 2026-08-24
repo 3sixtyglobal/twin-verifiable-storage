@@ -28,7 +28,7 @@ The options for the service.
 
 #### Throws
 
-If no connectors are registered.
+GeneralError If no connectors are registered.
 
 ## Properties
 

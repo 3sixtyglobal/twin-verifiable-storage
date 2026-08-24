@@ -28,7 +28,7 @@ The options for the storage connector.
 
 #### Throws
 
-If the options are invalid.
+GeneralError If the options are invalid.
 
 ## Properties
 
