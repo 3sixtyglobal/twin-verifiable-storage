@@ -6,6 +6,7 @@ import { promisify } from "node:util";
 import { requestIotaFromFaucetV0 } from "@iota/iota-sdk/faucet";
 import { Guards, Is } from "@twin.org/core";
 import { Bip39 } from "@twin.org/crypto";
+import { AccountHelper } from "@twin.org/dlt-account";
 import { Iota, type ISmartContractDeployments } from "@twin.org/dlt-iota";
 import { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector-memory";
 import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
@@ -121,46 +122,49 @@ export const TEST_IOTA_CONFIG = {
 	vaultMnemonicId: TEST_MNEMONIC_NAME
 };
 
-const testAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+await AccountHelper.createAccountKeys(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
+	TEST_USER_IDENTITY,
+	process.env.TEST_MNEMONIC
+);
+
+const testAddress = await AccountHelper.getAddress(
+	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
-const testAddresses2 = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const testAddress2 = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_USER_IDENTITY_2,
 	0,
-	0,
-	1
+	0
 );
 
-const nodeAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const nodeAddress = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_NODE_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
-const deployerAddresses = await Iota.getAddresses(
-	TEST_VAULT_CONNECTOR,
+const deployerAddress = await AccountHelper.getAddress(
 	TEST_IOTA_CONFIG,
+	TEST_VAULT_CONNECTOR,
 	TEST_DEPLOYER_IDENTITY,
 	0,
-	0,
-	1
+	0
 );
 
-export const TEST_ADDRESS = testAddresses[0];
-export const TEST_ADDRESS_2 = testAddresses2[0];
-export const NODE_ADDRESS = nodeAddresses[0];
-export const DEPLOYER_ADDRESS = deployerAddresses[0];
+export const TEST_ADDRESS = testAddress;
+export const TEST_ADDRESS_2 = testAddress2;
+export const NODE_ADDRESS = nodeAddress;
+export const DEPLOYER_ADDRESS = deployerAddress;
 
 /**
  * Global variable to store test deployment configuration.
