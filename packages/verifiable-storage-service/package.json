@@ -1,6 +1,6 @@
 {
 	"name": "@twin.org/verifiable-storage-service",
-	"version": "0.10.1-next.0",
+	"version": "0.10.1-next.1",
 	"description": "Service component and REST routes that expose verifiable storage operations",
 	"repository": {
 		"type": "git",
@@ -38,7 +38,7 @@
 		"@twin.org/data-json-ld": "next",
 		"@twin.org/entity": "next",
 		"@twin.org/nameof": "next",
-		"@twin.org/verifiable-storage-models": "0.10.1-next.0",
+		"@twin.org/verifiable-storage-models": "0.10.1-next.1",
 		"@twin.org/web": "next"
 	},
 	"devDependencies": {
@@ -46,7 +46,7 @@
 		"@twin.org/nameof-vitest-plugin": "next",
 		"@twin.org/ts-to-openapi": "next",
 		"@twin.org/validate-locales": "next",
-		"@twin.org/verifiable-storage-connector-entity-storage": "0.10.1-next.0",
+		"@twin.org/verifiable-storage-connector-entity-storage": "0.10.1-next.1",
 		"@vitest/coverage-v8": "4.1.10",
 		"copyfiles": "2.4.1",
 		"nodemon": "3.1.14",
