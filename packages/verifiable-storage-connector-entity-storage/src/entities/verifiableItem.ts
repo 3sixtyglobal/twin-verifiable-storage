@@ -10,13 +10,13 @@ export class VerifiableItem {
 	/**
 	 * The id of the item.
 	 */
-	@property({ type: "string", isPrimary: true })
+	@property({ type: "string", isPrimary: true, maxLength: 255 })
 	public id!: string;
 
 	/**
 	 * The creator of the item.
 	 */
-	@property({ type: "string" })
+	@property({ type: "string", maxLength: 255 })
 	public creator!: string;
 
 	/**
