@@ -1,5 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
+export * from "./compiled/validators.js";
 export * from "./dataTypes/verifiableStorageConnectorIotaDataTypes.js";
 export * from "./iotaVerifiableStorageConnector.js";
 export * from "./iotaVerifiableStorageUtils.js";

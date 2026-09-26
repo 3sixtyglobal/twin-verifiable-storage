@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0.
 import { DataTypeHandlerFactory } from "@twin.org/data-core";
 import { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
+import * as CompiledValidators from "../compiled/validators.js";
 import { EntityStorageVerifiableStorageTypes } from "../models/entityStorageVerifiableStorageTypes.js";
 import VerifiableStorageEntityStorageReceiptSchema from "../schemas/VerifiableStorageEntityStorageReceipt.json" with { type: "json" };
 
@@ -19,7 +20,9 @@ export class VerifiableStorageConnectorEntityStorageDataTypes {
 				namespace: VerifiableStorageContexts.Namespace,
 				type: EntityStorageVerifiableStorageTypes.EntityStorageReceipt,
 				defaultValue: {},
-				jsonSchema: async () => VerifiableStorageEntityStorageReceiptSchema
+				jsonSchema: async () => VerifiableStorageEntityStorageReceiptSchema,
+				compiledValidator: async () =>
+					CompiledValidators.CompiledVerifiableStorageEntityStorageReceipt
 			})
 		);
 	}
