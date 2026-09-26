@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.10.1-next.2](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.10.1-next.1...verifiable-storage-connector-iota-v0.10.1-next.2) (2026-09-26)
+
+
+### Features
+
+* compiles schemas ([0d8ffbb](https://github.com/iotaledger/twin-verifiable-storage/commit/0d8ffbb39043ae8a08717b267de113f3c3a53578))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * dependencies
+    * @twin.org/verifiable-storage-models bumped from 0.10.1-next.1 to 0.10.1-next.2
+
 ## [0.10.1-next.1](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-connector-iota-v0.10.1-next.0...verifiable-storage-connector-iota-v0.10.1-next.1) (2026-09-18)
 
 

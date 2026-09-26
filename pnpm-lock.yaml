@@ -263,7 +263,7 @@ importers:
         specifier: next
         version: 0.10.1-next.12
       '@twin.org/verifiable-storage-models':
-        specifier: 0.10.1-next.1
+        specifier: 0.10.1-next.2
         version: link:../verifiable-storage-models
     devDependencies:
       '@twin.org/entity-storage-connector-memory':
@@ -348,7 +348,7 @@ importers:
         specifier: next
         version: 0.10.1-next.4
       '@twin.org/verifiable-storage-models':
-        specifier: 0.10.1-next.1
+        specifier: 0.10.1-next.2
         version: link:../verifiable-storage-models
     devDependencies:
       '@iota/iota-sdk':
@@ -519,7 +519,7 @@ importers:
         specifier: next
         version: 0.10.1-next.12
       '@twin.org/verifiable-storage-models':
-        specifier: 0.10.1-next.1
+        specifier: 0.10.1-next.2
         version: link:../verifiable-storage-models
       '@vitest/coverage-v8':
         specifier: 5.0.1
@@ -573,7 +573,7 @@ importers:
         specifier: next
         version: 0.10.1-next.12
       '@twin.org/verifiable-storage-models':
-        specifier: 0.10.1-next.1
+        specifier: 0.10.1-next.2
         version: link:../verifiable-storage-models
       '@twin.org/web':
         specifier: next
@@ -592,7 +592,7 @@ importers:
         specifier: next
         version: 0.10.1-next.12
       '@twin.org/verifiable-storage-connector-entity-storage':
-        specifier: 0.10.1-next.1
+        specifier: 0.10.1-next.2
         version: link:../verifiable-storage-connector-entity-storage
       '@vitest/coverage-v8':
         specifier: 5.0.1
