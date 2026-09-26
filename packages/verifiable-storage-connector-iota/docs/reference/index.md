@@ -18,4 +18,5 @@
 
 ## Variables
 
+- [CompiledVerifiableStorageIotaReceipt2026](variables/CompiledVerifiableStorageIotaReceipt2026.md)
 - [IotaVerifiableStorageTypes](variables/IotaVerifiableStorageTypes.md)
