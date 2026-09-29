@@ -17,6 +17,7 @@
 
 ## Variables
 
+- [CompiledVerifiableStorageEntityStorageReceipt](variables/CompiledVerifiableStorageEntityStorageReceipt.md)
 - [EntityStorageVerifiableStorageTypes](variables/EntityStorageVerifiableStorageTypes.md)
 
 ## Functions

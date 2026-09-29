@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.10.1-next.2](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-rest-client-v0.10.1-next.1...verifiable-storage-rest-client-v0.10.1-next.2) (2026-09-26)
+
+
+### Miscellaneous Chores
+
+* **verifiable-storage-rest-client:** Synchronize repo versions
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @twin.org/verifiable-storage-models bumped from 0.10.1-next.1 to 0.10.1-next.2
+
+## [0.10.1-next.1](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-rest-client-v0.10.1-next.0...verifiable-storage-rest-client-v0.10.1-next.1) (2026-09-18)
+
+
+### Features
+
+* add context id features ([#40](https://github.com/iotaledger/twin-verifiable-storage/issues/40)) ([260b96a](https://github.com/iotaledger/twin-verifiable-storage/commit/260b96a8b7d1a26c6c415f2de12e09671ee70220))
+* add support for allowlist ([#17](https://github.com/iotaledger/twin-verifiable-storage/issues/17)) ([9341ea6](https://github.com/iotaledger/twin-verifiable-storage/commit/9341ea6b95dfbf2a5dc70a53e5979d7d0e8b2de6))
+* add validate-locales ([326384f](https://github.com/iotaledger/twin-verifiable-storage/commit/326384fe867604e7cd450460a6a56c6c7bdc8f98))
+* enhanced rest testing ([1b79b4f](https://github.com/iotaledger/twin-verifiable-storage/commit/1b79b4f7997152dbf2edc9ff9a1281f9bf7b6053))
+* enhanced rest testing ([#79](https://github.com/iotaledger/twin-verifiable-storage/issues/79)) ([8fbf9e5](https://github.com/iotaledger/twin-verifiable-storage/commit/8fbf9e54dac994145d190c7684b0246c4ae24474))
+* eslint migration to flat config ([b0a0b85](https://github.com/iotaledger/twin-verifiable-storage/commit/b0a0b8585a77c1e541531d60b432916b9dc0867e))
+* linting and dependency update ([11ea881](https://github.com/iotaledger/twin-verifiable-storage/commit/11ea881f228b7ab4bfe11c02c2e06c56394b1023))
+* typescript 6 update ([66823cf](https://github.com/iotaledger/twin-verifiable-storage/commit/66823cf7a6522622c889afdc49005d016e8574fe))
+* update dependencies ([a16a772](https://github.com/iotaledger/twin-verifiable-storage/commit/a16a77244cb1d312ea5ee74232bcdadd25f2b330))
+* update framework core ([efa612e](https://github.com/iotaledger/twin-verifiable-storage/commit/efa612e54dbe2d8f223f27ff9e315e08a2fed04b))
+* use new dlt packages with latency fix ([#6](https://github.com/iotaledger/twin-verifiable-storage/issues/6)) ([d81c45b](https://github.com/iotaledger/twin-verifiable-storage/commit/d81c45bce035864a41bbd498815169d7257fbcb8))
+* use shared store mechanism ([#8](https://github.com/iotaledger/twin-verifiable-storage/issues/8)) ([8c8ecb8](https://github.com/iotaledger/twin-verifiable-storage/commit/8c8ecb83d32431952c594ea23d37040991f5b4d3))
+
+
+### Dependencies
+
+* The following workspace dependencies were updated
+  * devDependencies
+    * @twin.org/verifiable-storage-models bumped from 0.10.1-next.0 to 0.10.1-next.1
+
 ## [0.10.0](https://github.com/iotaledger/twin-verifiable-storage/compare/verifiable-storage-rest-client-v0.10.0...verifiable-storage-rest-client-v0.10.0) (2026-09-16)
 
 
