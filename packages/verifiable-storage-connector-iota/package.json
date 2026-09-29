@@ -1,6 +1,6 @@
 {
 	"name": "@twin.org/verifiable-storage-connector-iota",
-	"version": "0.10.1-next.2",
+	"version": "0.11.1-next.0",
 	"description": "IOTA connector that anchors verifiable storage operations on-chain and returns receipts",
 	"repository": {
 		"type": "git",
@@ -45,7 +45,7 @@
 		"@twin.org/logging-models": "next",
 		"@twin.org/nameof": "next",
 		"@twin.org/vault-models": "next",
-		"@twin.org/verifiable-storage-models": "0.10.1-next.2"
+		"@twin.org/verifiable-storage-models": "0.11.1-next.0"
 	},
 	"devDependencies": {
 		"@iota/iota-sdk": "1.15.0",
