@@ -21,3 +21,7 @@ Detailed reference documentation for the API can be found in [docs/reference/ind
 ## Changelog
 
 The changes between each version can be found in [docs/changelog.md](docs/changelog.md)
+
+## Origin
+
+This package is derived from the original [iotaledger/twin-verifiable-storage](https://github.com/iotaledger/twin-verifiable-storage/tree/next/packages/verifiable-storage-models) repository.

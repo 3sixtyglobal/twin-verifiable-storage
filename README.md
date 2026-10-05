@@ -15,3 +15,7 @@ The overall goal is to make verifiable data operations dependable and interopera
 ## Contributing
 
 To contribute to this package see the guidelines for building and publishing in [CONTRIBUTING](./CONTRIBUTING.md)
+
+## Origin
+
+This repository is derived from the original [iotaledger/twin-verifiable-storage](https://github.com/iotaledger/twin-verifiable-storage) repository.

@@ -4,7 +4,7 @@
 	"description": "Entity storage connector that persists verifiable items with allow list controls",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/iotaledger/twin-verifiable-storage.git",
+		"url": "git+https://github.com/3sixtyglobal/twin-verifiable-storage.git",
 		"directory": "packages/verifiable-storage-connector-entity-storage"
 	},
 	"author": "martyn.janes@iota.org",
@@ -94,7 +94,7 @@
 		"integration"
 	],
 	"bugs": {
-		"url": "git+https://github.com/iotaledger/twin-verifiable-storage/issues"
+		"url": "git+https://github.com/3sixtyglobal/twin-verifiable-storage/issues"
 	},
 	"homepage": "https://twindev.org"
 }

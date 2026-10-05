@@ -4,7 +4,7 @@
 	"description": "REST client component for calling verifiable storage service endpoints",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/iotaledger/twin-verifiable-storage.git",
+		"url": "git+https://github.com/3sixtyglobal/twin-verifiable-storage.git",
 		"directory": "packages/verifiable-storage-rest-client"
 	},
 	"contributors": [
@@ -84,7 +84,7 @@
 		"immutable"
 	],
 	"bugs": {
-		"url": "git+https://github.com/iotaledger/twin-verifiable-storage/issues"
+		"url": "git+https://github.com/3sixtyglobal/twin-verifiable-storage/issues"
 	},
 	"homepage": "https://twindev.org"
 }
