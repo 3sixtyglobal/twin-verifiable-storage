@@ -1,6 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { Converter, Urn } from "@twin.org/core";
+import { Converter, Urn } from "@3sixty/core";
 import {
 	cleanupTestEnv,
 	getTestDeploymentConfig,
@@ -150,7 +150,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			const receipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);
@@ -212,7 +212,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			);
 			const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);
@@ -239,7 +239,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			const receipt = result as unknown as IVerifiableStorageIotaReceipt2026;
 
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);
@@ -278,7 +278,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			);
 			const receipt = getResult.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);
@@ -314,7 +314,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 
 			const receipt = result.receipt as unknown as IVerifiableStorageIotaReceipt2026;
 
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);
@@ -345,7 +345,7 @@ describe("IotaVerifiableStorageConnector with Gas Station", () => {
 			const result2 = await gasStationConnector.update(TEST_USER_IDENTITY_2, testItemId, data2);
 
 			const receipt = result2 as unknown as IVerifiableStorageIotaReceipt2026;
-			expect(receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+			expect(receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 			expect(receipt.type).toEqual("VerifiableStorageIotaReceipt2026");
 			expect(receipt.epoch).greaterThan(0);
 			expect(receipt.digest.length).greaterThan(0);

@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-models
+# @3sixty/verifiable-storage-models
 
 ## Interfaces
 

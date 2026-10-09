@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-connector-iota
+# @3sixty/verifiable-storage-connector-iota
 
 ## Classes
 

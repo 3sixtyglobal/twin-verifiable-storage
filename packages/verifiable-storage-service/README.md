@@ -1,4 +1,4 @@
-# TWIN Verifiable Storage Service
+# 3Sixty Verifiable Storage Service
 
 This package provides the service layer for verifiable storage, exposing component logic and REST route definitions that can be mounted in API applications. It translates storage operations into a consistent service interface for upstream consumers.
 
@@ -7,7 +7,7 @@ The package is useful when you need to host verifiable storage capabilities behi
 ## Installation
 
 ```shell
-npm install @twin.org/verifiable-storage-service
+npm install @3sixty/verifiable-storage-service
 ```
 
 ## Examples

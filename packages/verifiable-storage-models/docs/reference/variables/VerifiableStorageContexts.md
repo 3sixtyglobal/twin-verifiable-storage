@@ -8,18 +8,18 @@ The contexts of verifiable storage data.
 
 ### Namespace {#namespace}
 
-> `readonly` **Namespace**: `"https://schema.twindev.org/verifiable-storage/"` = `"https://schema.twindev.org/verifiable-storage/"`
+> `readonly` **Namespace**: `"https://schema.3sixty.global/verifiable-storage/"` = `"https://schema.3sixty.global/verifiable-storage/"`
 
 The canonical RDF namespace URI for Verifiable Storage.
 
 ### Context {#context}
 
-> `readonly` **Context**: `"https://schema.twindev.org/verifiable-storage/"` = `"https://schema.twindev.org/verifiable-storage/"`
+> `readonly` **Context**: `"https://schema.3sixty.global/verifiable-storage/"` = `"https://schema.3sixty.global/verifiable-storage/"`
 
 The value to use in context for Verifiable Storage.
 
 ### JsonLdContext {#jsonldcontext}
 
-> `readonly` **JsonLdContext**: `"https://schema.twindev.org/verifiable-storage/types.jsonld"` = `"https://schema.twindev.org/verifiable-storage/types.jsonld"`
+> `readonly` **JsonLdContext**: `"https://schema.3sixty.global/verifiable-storage/types.jsonld"` = `"https://schema.3sixty.global/verifiable-storage/types.jsonld"`
 
 The JSON-LD Context URL for Verifiable Storage.

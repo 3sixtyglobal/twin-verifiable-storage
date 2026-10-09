@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-rest-client
+# @3sixty/verifiable-storage-rest-client
 
 ## Classes
 

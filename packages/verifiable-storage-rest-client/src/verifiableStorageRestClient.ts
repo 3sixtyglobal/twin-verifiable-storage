@@ -1,10 +1,10 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { BaseRestClient } from "@twin.org/api-core";
-import type { IBaseRestClientConfig, INoContentResponse } from "@twin.org/api-models";
-import { Converter, Guards, Is, Urn } from "@twin.org/core";
-import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
-import { nameof } from "@twin.org/nameof";
+import { BaseRestClient } from "@3sixty/api-core";
+import type { IBaseRestClientConfig, INoContentResponse } from "@3sixty/api-models";
+import { Converter, Guards, Is, Urn } from "@3sixty/core";
+import type { IJsonLdNodeObject } from "@3sixty/data-json-ld";
+import { nameof } from "@3sixty/nameof";
 import type {
 	IVerifiableStorageRemoveRequest,
 	IVerifiableStorageComponent,
@@ -14,8 +14,8 @@ import type {
 	IVerifiableStorageGetResponse,
 	IVerifiableStorageUpdateRequest,
 	IVerifiableStorageUpdateResponse
-} from "@twin.org/verifiable-storage-models";
-import { HttpMethod } from "@twin.org/web";
+} from "@3sixty/verifiable-storage-models";
+import { HttpMethod } from "@3sixty/web";
 
 /**
  * Client for performing Verifiable Storage through to REST endpoints.

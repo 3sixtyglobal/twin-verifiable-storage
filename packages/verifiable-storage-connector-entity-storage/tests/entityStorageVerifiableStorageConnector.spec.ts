@@ -1,8 +1,8 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import { Converter, ObjectHelper, Urn } from "@twin.org/core";
-import type { MemoryEntityStorageConnector } from "@twin.org/entity-storage-connector-memory";
-import { EntityStorageConnectorFactory } from "@twin.org/entity-storage-models";
+import { Converter, ObjectHelper, Urn } from "@3sixty/core";
+import type { MemoryEntityStorageConnector } from "@3sixty/entity-storage-connector-memory";
+import { EntityStorageConnectorFactory } from "@3sixty/entity-storage-models";
 import { TEST_USER_IDENTITY_0, TEST_USER_IDENTITY_1 } from "./setupTestEnv.js";
 import type { VerifiableItem } from "../src/entities/verifiableItem.js";
 import { EntityStorageVerifiableStorageConnector } from "../src/entityStorageVerifiableStorageConnector.js";
@@ -24,7 +24,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		expect(urn.namespaceMethod()).toEqual("entity-storage");
 		expect(urn.namespaceSpecific(1).length).toEqual(64);
 
-		expect(result.receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+		expect(result.receipt["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 		expect(result.receipt.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
@@ -49,7 +49,7 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 			})
 		);
 
-		expect(result["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+		expect(result["@context"]).toEqual("https://schema.3sixty.global/verifiable-storage/");
 		expect(result.type).toEqual("VerifiableStorageEntityStorageReceipt");
 
 		const store =
@@ -65,7 +65,9 @@ describe("EntityStorageVerifiableStorageConnector", () => {
 		const connector = new EntityStorageVerifiableStorageConnector();
 		const response = await connector.get(verifiableItemId);
 
-		expect(response.receipt["@context"]).toEqual("https://schema.twindev.org/verifiable-storage/");
+		expect(response.receipt["@context"]).toEqual(
+			"https://schema.3sixty.global/verifiable-storage/"
+		);
 		expect(response.receipt.type).toEqual("VerifiableStorageEntityStorageReceipt");
 		expect(response.data).toEqual(ObjectHelper.toBytes({ bar: "bar" }));
 	});

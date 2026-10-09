@@ -6,7 +6,7 @@ Receipt for the IOTA Verifiable Storage connector.
 
 ### @context {#context}
 
-> **@context**: `"https://schema.twindev.org/verifiable-storage/"`
+> **@context**: `"https://schema.3sixty.global/verifiable-storage/"`
 
 JSON-LD Context.
 

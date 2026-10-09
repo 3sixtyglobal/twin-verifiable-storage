@@ -1,6 +1,6 @@
 // Copyright 2024 IOTA Stiftung.
 // SPDX-License-Identifier: Apache-2.0.
-import type { VerifiableStorageContexts } from "@twin.org/verifiable-storage-models";
+import type { VerifiableStorageContexts } from "@3sixty/verifiable-storage-models";
 import type { IotaVerifiableStorageTypes } from "./iotaVerifiableStorageTypes.js";
 
 /**

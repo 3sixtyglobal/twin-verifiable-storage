@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-connector-entity-storage
+# @3sixty/verifiable-storage-connector-entity-storage
 
 ## Classes
 

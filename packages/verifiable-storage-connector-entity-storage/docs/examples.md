@@ -5,7 +5,7 @@ This page provides practical TypeScript examples for using the entity storage co
 ## EntityStorageVerifiableStorageConnector
 
 ```typescript
-import { EntityStorageVerifiableStorageConnector } from '@twin.org/verifiable-storage-connector-entity-storage';
+import { EntityStorageVerifiableStorageConnector } from '@3sixty/verifiable-storage-connector-entity-storage';
 
 const connector = new EntityStorageVerifiableStorageConnector();
 // Create a new verifiable item
@@ -46,7 +46,7 @@ console.log(updatedReceipt); // Outputs the updated receipt object
 ## VerifiableItem
 
 ```typescript
-import { VerifiableItem } from '@twin.org/verifiable-storage-connector-entity-storage';
+import { VerifiableItem } from '@3sixty/verifiable-storage-connector-entity-storage';
 
 const item = new VerifiableItem();
 item.id = 'item-123';
@@ -61,7 +61,7 @@ console.log(item.creator); // did:example:creator
 ## VerifiableStorageConnectorEntityStorageDataTypes
 
 ```typescript
-import { VerifiableStorageConnectorEntityStorageDataTypes } from '@twin.org/verifiable-storage-connector-entity-storage';
+import { VerifiableStorageConnectorEntityStorageDataTypes } from '@3sixty/verifiable-storage-connector-entity-storage';
 
 // Register all data types for the connector
 VerifiableStorageConnectorEntityStorageDataTypes.registerTypes();
@@ -70,7 +70,7 @@ VerifiableStorageConnectorEntityStorageDataTypes.registerTypes();
 ## initSchema
 
 ```typescript
-import { initSchema } from '@twin.org/verifiable-storage-connector-entity-storage';
+import { initSchema } from '@3sixty/verifiable-storage-connector-entity-storage';
 
 // Initialise the schema for verifiable items
 initSchema();

@@ -5,7 +5,7 @@ This page provides TypeScript examples for using the verifiable storage service.
 ## VerifiableStorageService
 
 ```typescript
-import { VerifiableStorageService } from '@twin.org/verifiable-storage-service';
+import { VerifiableStorageService } from '@3sixty/verifiable-storage-service';
 
 const service = new VerifiableStorageService();
 

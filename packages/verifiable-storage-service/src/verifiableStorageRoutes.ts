@@ -8,10 +8,10 @@ import {
 	type INoContentResponse,
 	type IRestRoute,
 	type ITag
-} from "@twin.org/api-models";
-import { ContextIdHelper, ContextIdKeys, ContextIdStore } from "@twin.org/context";
-import { ComponentFactory, Converter, Guards, Is } from "@twin.org/core";
-import { nameof } from "@twin.org/nameof";
+} from "@3sixty/api-models";
+import { ContextIdHelper, ContextIdKeys, ContextIdStore } from "@3sixty/context";
+import { ComponentFactory, Converter, Guards, Is } from "@3sixty/core";
+import { nameof } from "@3sixty/nameof";
 import type {
 	IVerifiableStorageComponent,
 	IVerifiableStorageCreateRequest,
@@ -21,8 +21,8 @@ import type {
 	IVerifiableStorageRemoveRequest,
 	IVerifiableStorageUpdateRequest,
 	IVerifiableStorageUpdateResponse
-} from "@twin.org/verifiable-storage-models";
-import { HeaderTypes, HttpStatusCode, type IHttpHeaders } from "@twin.org/web";
+} from "@3sixty/verifiable-storage-models";
+import { HeaderTypes, HttpStatusCode, type IHttpHeaders } from "@3sixty/web";
 
 /**
  * The source used when communicating about these routes.
@@ -85,7 +85,7 @@ export function generateRestRoutesVerifiableStorage(
 								},
 								body: {
 									receipt: {
-										"@context": "https://schema.twindev.org/verifiable-storage/",
+										"@context": "https://schema.3sixty.global/verifiable-storage/",
 										type: "VerifiableStorageIotaReceipt2026"
 									},
 									id: "verifiable:iota:aW90YS1uZnQ6dHN0OjB4NzYyYjljNDllYTg2OWUwZWJkYTliYmZhNzY5Mzk0NDdhNDI4ZGNmMTc4YzVkMTVhYjQ0N2UyZDRmYmJiNGViMg=="
@@ -130,7 +130,7 @@ export function generateRestRoutesVerifiableStorage(
 							id: "verifiableStorageUpdateResponseExample",
 							response: {
 								body: {
-									"@context": "https://schema.twindev.org/verifiable-storage/",
+									"@context": "https://schema.3sixty.global/verifiable-storage/",
 									type: "VerifiableStorageIotaReceipt2026"
 								}
 							}

@@ -1,4 +1,4 @@
-# TWIN Verifiable Storage REST Client
+# 3Sixty Verifiable Storage REST Client
 
 This package provides a REST client for calling verifiable storage service endpoints from external applications and services. It wraps API requests and responses in the shared model contracts so consumers can integrate with predictable request shapes and result handling.
 
@@ -7,7 +7,7 @@ It is intended for client-side or service-to-service use cases where verifiable 
 ## Installation
 
 ```shell
-npm install @twin.org/verifiable-storage-rest-client
+npm install @3sixty/verifiable-storage-rest-client
 ```
 
 ## Examples

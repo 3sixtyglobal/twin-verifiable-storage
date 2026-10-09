@@ -1,4 +1,4 @@
-# TWIN Verifiable Storage Connector Entity Storage
+# 3Sixty Verifiable Storage Connector Entity Storage
 
 This package provides an entity storage based connector for verifiable storage operations. It handles creation, updates, retrieval, and removal of verifiable items while preserving receipt information and allow list controls.
 
@@ -7,7 +7,7 @@ It is intended for deployments where entity storage is the preferred persistence
 ## Installation
 
 ```shell
-npm install @twin.org/verifiable-storage-connector-entity-storage
+npm install @3sixty/verifiable-storage-connector-entity-storage
 ```
 
 ## Examples

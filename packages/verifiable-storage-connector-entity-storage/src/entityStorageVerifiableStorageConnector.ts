@@ -10,17 +10,17 @@ import {
 	RandomHelper,
 	UnauthorizedError,
 	Urn
-} from "@twin.org/core";
-import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
+} from "@3sixty/core";
+import type { IJsonLdNodeObject } from "@3sixty/data-json-ld";
 import {
 	EntityStorageConnectorFactory,
 	type IEntityStorageConnector
-} from "@twin.org/entity-storage-models";
-import { nameof } from "@twin.org/nameof";
+} from "@3sixty/entity-storage-models";
+import { nameof } from "@3sixty/nameof";
 import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
-} from "@twin.org/verifiable-storage-models";
+} from "@3sixty/verifiable-storage-models";
 import type { VerifiableItem } from "./entities/verifiableItem.js";
 import { EntityStorageVerifiableStorageTypes } from "./models/entityStorageVerifiableStorageTypes.js";
 import type { IEntityStorageVerifiableStorageConnectorConstructorOptions } from "./models/IEntityStorageVerifiableStorageConnectorConstructorOptions.js";

@@ -1,4 +1,4 @@
-# TWIN Verifiable Storage
+# 3Sixty Verifiable Storage
 
 This repository provides a modular set of components for creating, exposing, and consuming verifiable storage capabilities across different environments. The packages work together to model shared contracts, connect to storage back ends, and expose consistent service interfaces for application integration.
 

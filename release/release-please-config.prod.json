@@ -8,6 +8,7 @@
 	"release-type": "node",
 	"initial-version": "0.0.1",
 	"versioning": "default",
+	"last-release-sha": "89b8674d97f009ab7839a67b7c101e01df7f739b",
 	"packages": {
 		"packages/verifiable-storage-models": {
 			"package-name": "verifiable-storage-models",

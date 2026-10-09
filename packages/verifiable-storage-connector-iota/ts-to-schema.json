@@ -1,7 +1,7 @@
 {
-	"baseUrl": "https://schema.twindev.org/verifiable-storage/",
+	"baseUrl": "https://schema.3sixty.global/verifiable-storage/",
 	"types": ["./src/models/IVerifiableStorageIotaReceipt2026.ts"],
 	"externalReferences": {
-		"JsonLd(.*)": "https://schema.twindev.org/json-ld/JsonLd$1"
+		"JsonLd(.*)": "https://schema.3sixty.global/json-ld/JsonLd$1"
 	}
 }

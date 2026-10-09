@@ -11,23 +11,23 @@ import {
 	StringHelper,
 	UnauthorizedError,
 	Urn
-} from "@twin.org/core";
-import type { IJsonLdNodeObject } from "@twin.org/data-json-ld";
-import { AccountHelper } from "@twin.org/dlt-account";
+} from "@3sixty/core";
+import type { IJsonLdNodeObject } from "@3sixty/data-json-ld";
+import { AccountHelper } from "@3sixty/dlt-account";
 import {
 	type IContractData,
 	type ISmartContractDeployments,
 	type NetworkTypes,
 	type IIotaClient,
 	Iota
-} from "@twin.org/dlt-iota";
-import type { ILoggingComponent } from "@twin.org/logging-models";
-import { nameof } from "@twin.org/nameof";
-import { VaultConnectorFactory, type IVaultConnector } from "@twin.org/vault-models";
+} from "@3sixty/dlt-iota";
+import type { ILoggingComponent } from "@3sixty/logging-models";
+import { nameof } from "@3sixty/nameof";
+import { VaultConnectorFactory, type IVaultConnector } from "@3sixty/vault-models";
 import {
 	VerifiableStorageContexts,
 	type IVerifiableStorageConnector
-} from "@twin.org/verifiable-storage-models";
+} from "@3sixty/verifiable-storage-models";
 import compiledModulesJson from "./contracts/smartContractDeployments/smart-contract-deployments.json" with { type: "json" };
 import { IotaVerifiableStorageUtils } from "./iotaVerifiableStorageUtils.js";
 import type { IIotaVerifiableStorageConnectorConfig } from "./models/IIotaVerifiableStorageConnectorConfig.js";

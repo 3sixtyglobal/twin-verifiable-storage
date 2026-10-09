@@ -1,4 +1,4 @@
-# @twin.org/verifiable-storage-service
+# @3sixty/verifiable-storage-service
 
 ## Classes
 

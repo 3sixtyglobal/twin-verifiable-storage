@@ -5,7 +5,7 @@ This page provides TypeScript examples for the verifiable storage models, includ
 ## VerifiableStorageConnectorFactory
 
 ```typescript
-import { VerifiableStorageConnectorFactory } from '@twin.org/verifiable-storage-models';
+import { VerifiableStorageConnectorFactory } from '@3sixty/verifiable-storage-models';
 
 // List available connector names
 const connectorNames = VerifiableStorageConnectorFactory.names();
@@ -19,7 +19,7 @@ console.log(connector.className()); // Outputs the class name of the connector
 ## IVerifiableStorageConnector
 
 ```typescript
-import type { IVerifiableStorageConnector } from '@twin.org/verifiable-storage-models';
+import type { IVerifiableStorageConnector } from '@3sixty/verifiable-storage-models';
 
 async function createAndGetItem(connector: IVerifiableStorageConnector) {
   const controllerIdentity = 'did:example:controller1';
@@ -40,7 +40,7 @@ async function createAndGetItem(connector: IVerifiableStorageConnector) {
 ## IVerifiableStorageComponent
 
 ```typescript
-import type { IVerifiableStorageComponent } from '@twin.org/verifiable-storage-models';
+import type { IVerifiableStorageComponent } from '@3sixty/verifiable-storage-models';
 
 async function createItem(component: IVerifiableStorageComponent) {
   const data = new TextEncoder().encode('Component data');

@@ -5,7 +5,7 @@ This page provides TypeScript examples for using the REST client to interact wit
 ## VerifiableStorageRestClient
 
 ```typescript
-import { VerifiableStorageRestClient } from '@twin.org/verifiable-storage-rest-client';
+import { VerifiableStorageRestClient } from '@3sixty/verifiable-storage-rest-client';
 
 const config = { baseUrl: 'https://api.example.com', apiKey: 'your-api-key' };
 const client = new VerifiableStorageRestClient(config);

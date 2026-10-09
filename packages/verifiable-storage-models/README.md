@@ -1,4 +1,4 @@
-# TWIN Verifiable Storage Models
+# 3Sixty Verifiable Storage Models
 
 This package defines the shared contracts used by verifiable storage components across the repository. It includes common interfaces, API request and response models, and context definitions so integrations can rely on a consistent shape for data and behaviour.
 
@@ -7,7 +7,7 @@ By centralising these reusable contracts, it reduces duplication and helps conne
 ## Installation
 
 ```shell
-npm install @twin.org/verifiable-storage-models
+npm install @3sixty/verifiable-storage-models
 ```
 
 ## Examples

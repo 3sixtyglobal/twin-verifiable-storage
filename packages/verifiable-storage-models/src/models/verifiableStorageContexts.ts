@@ -9,17 +9,17 @@ export const VerifiableStorageContexts = {
 	/**
 	 * The canonical RDF namespace URI for Verifiable Storage.
 	 */
-	Namespace: "https://schema.twindev.org/verifiable-storage/",
+	Namespace: "https://schema.3sixty.global/verifiable-storage/",
 
 	/**
 	 * The value to use in context for Verifiable Storage.
 	 */
-	Context: "https://schema.twindev.org/verifiable-storage/",
+	Context: "https://schema.3sixty.global/verifiable-storage/",
 
 	/**
 	 * The JSON-LD Context URL for Verifiable Storage.
 	 */
-	JsonLdContext: "https://schema.twindev.org/verifiable-storage/types.jsonld"
+	JsonLdContext: "https://schema.3sixty.global/verifiable-storage/types.jsonld"
 } as const;
 
 /**

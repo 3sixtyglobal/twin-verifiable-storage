@@ -66,7 +66,7 @@ The following examples show how to use the IOTA verifiable storage connector in 
 ## IotaVerifiableStorageConnector
 
 ```typescript
-import { IotaVerifiableStorageConnector } from '@twin.org/verifiable-storage-connector-iota';
+import { IotaVerifiableStorageConnector } from '@3sixty/verifiable-storage-connector-iota';
 
 const config = {
    config: {
